@@ -1,10 +1,11 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, { Fragment } from 'react';
+// import Typography from '@material-ui/core/Typography';
+import ProjectCount from './components/ProjectCount';
 function App() {
   return (
-    <Typography variant='h1' style={{ textAlign: 'center' }}>
-      Hello ☯
-    </Typography>
+    <Fragment>
+      <ProjectCount></ProjectCount>
+    </Fragment>
   );
 }
 
