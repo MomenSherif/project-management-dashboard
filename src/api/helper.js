@@ -2,7 +2,7 @@
 const isEmailExists = async (email) => {
   console.log(email);
 
-  return Promise.resolve(false);
+  return Promise.resolve(true);
 };
 
 export { isEmailExists };

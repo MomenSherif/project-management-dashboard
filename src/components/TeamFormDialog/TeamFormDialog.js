@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
 
+import { useForm } from 'react-hook-form';
 import { string, object } from 'yup';
 import { toast } from 'react-toastify';
 
@@ -14,6 +15,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import useStyles from './TeamFormDialogStyle';
 import { isEmailExists } from '../../api/helper';
+import { addTeam } from '../../actions/teams';
 
 const schema = object().shape({
   name: string()
@@ -29,7 +31,7 @@ const schema = object().shape({
     .required('Team leader email is required!'),
 });
 
-const TeamFormDialog = () => {
+const TeamFormDialog = ({ addTeam }) => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
@@ -40,6 +42,8 @@ const TeamFormDialog = () => {
     const isValid = await isEmailExists(data.leader);
     if (!isValid) return toast.error('Email not exist!');
 
+    // TODO: Don't forget to update when using async actions
+    addTeam({ id: Math.random(), ...data, createdAt: Date.now() });
     toast.success(`Team ${data.name} created successfully!`);
     setOpen(false);
   };
@@ -120,4 +124,8 @@ const TeamFormDialog = () => {
   );
 };
 
-export default TeamFormDialog;
+const mapDispatchToProps = (dispatch) => ({
+  addTeam: (team) => dispatch(addTeam(team)),
+});
+
+export default connect(null, mapDispatchToProps)(TeamFormDialog);
