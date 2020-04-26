@@ -4,10 +4,6 @@ const useStyles = makeStyles((theme) => ({
   cardContainer: {
     display: 'block',
     transition: 'transform 0.2s ease-in-out',
-
-    '&:hover': {
-      transform: 'translateY(-4px)',
-    },
   },
   card: {
     borderLeft: `4px solid ${theme.palette.primary.main}`,
