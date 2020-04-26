@@ -1,3 +1,4 @@
+// ❗ Dummy data will be removed later
 const teamsReducerDefaultState = [
   {
     id: 1,

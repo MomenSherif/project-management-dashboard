@@ -80,8 +80,8 @@ const TeamCard = ({
           className={classes.createdAt}
         >
           <EventAvailableIcon style={{ marginRight: '3px' }} />
-          <time dateTime={moment(new Date()).format()}>
-            {moment(new Date()).format('D MMMM YYYY')}
+          <time dateTime={moment(createdAt).format()}>
+            {moment(createdAt).format('D MMMM YYYY')}
           </time>
         </Grid>
       </Paper>
