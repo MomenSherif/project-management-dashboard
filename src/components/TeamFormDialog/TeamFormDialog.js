@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { string, object } from 'yup';
+import { toast } from 'react-toastify';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,9 +12,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import { string, object } from 'yup';
-
 import useStyles from './TeamFormDialogStyle';
+import { isEmailExists } from '../../api/helper';
 
 const schema = object().shape({
   name: string()
@@ -31,11 +33,17 @@ const TeamFormDialog = () => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
+    mode: 'onBlur',
   });
 
-  const onSubmit = (data) => {
-    console.log({ data });
+  const onSubmit = async (data) => {
+    const isValid = await isEmailExists(data.leader);
+    if (!isValid) return toast.error('Email not exist!');
+
+    toast.success(`Team ${data.name} created successfully!`);
+    setOpen(false);
   };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
