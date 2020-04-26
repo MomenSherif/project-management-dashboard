@@ -31,6 +31,12 @@ const TeamCard = () => {
             <Typography variant='h4'>Front End</Typography>
           </Grid>
         </Grid>
+        <Typography variant='subtitle1' className={classes.mt}>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio
+          ratione qui eum, voluptate omnis aut? Voluptatibus, enim veritatis ad
+          repellendus reiciendis eveniet excepturi velit aperiam provident in
+          optio necessitatibus officia!
+        </Typography>
         <Grid
           container
           alignItems='center'
@@ -40,11 +46,11 @@ const TeamCard = () => {
         >
           <Grid item className={classes.flex}>
             <AssignmentIcon color='secondary' fontSize='large' />
-            <Typography variant='subtitle1'> 6 Projects</Typography>
+            <Typography variant='overline'> 6 Projects</Typography>
           </Grid>
           <Grid item className={classes.flex}>
             <GroupIcon color='secondary' />
-            <Typography variant='subtitle1'> 6 Members</Typography>
+            <Typography variant='overline'> 6 Members</Typography>
           </Grid>
         </Grid>
         <Grid container alignItems='center' spacing={2} className={classes.mt}>

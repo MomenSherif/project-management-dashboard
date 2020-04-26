@@ -1,8 +1,10 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+
 import TeamCard from '../components/TeamCard/TeamCard';
-import { Grid } from '@material-ui/core';
+import TeamFormDialog from '../components/TeamFormDialog/TeamFormDialog';
 
 const Teams = () => {
   return (
@@ -19,10 +21,11 @@ const Teams = () => {
           style={{ marginBottom: '16px' }}
         >
           <div style={{ transform: 'translate(10px, -15px)' }}>
-            <TeamCard></TeamCard>
+            <TeamCard />
           </div>
         </Grid>
       </Grid>
+      <TeamFormDialog />
     </Container>
   );
 };
