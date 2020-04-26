@@ -11,7 +11,15 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import moment from 'moment';
 import useStyles from './TeamCardStyle';
 
-const TeamCard = () => {
+const TeamCard = ({
+  id,
+  name,
+  description,
+  leader,
+  projects,
+  employees,
+  createdAt,
+}) => {
   const classes = useStyles();
 
   return (
@@ -19,23 +27,16 @@ const TeamCard = () => {
       <Paper className={classes.card} elevation={2}>
         <Grid container alignItems='center' spacing={2}>
           <Grid item>
-            <Avatar
-              title='Front end'
-              variant='rounded'
-              className={classes.avatar}
-            >
-              F
+            <Avatar title={name} variant='rounded' className={classes.avatar}>
+              {name.charAt(0)}
             </Avatar>
           </Grid>
           <Grid item>
-            <Typography variant='h4'>Front End</Typography>
+            <Typography variant='h4'>{name}</Typography>
           </Grid>
         </Grid>
         <Typography variant='subtitle1' className={classes.mt}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio
-          ratione qui eum, voluptate omnis aut? Voluptatibus, enim veritatis ad
-          repellendus reiciendis eveniet excepturi velit aperiam provident in
-          optio necessitatibus officia!
+          {description}
         </Typography>
         <Grid
           container
@@ -46,22 +47,30 @@ const TeamCard = () => {
         >
           <Grid item className={classes.flex}>
             <AssignmentIcon color='secondary' fontSize='large' />
-            <Typography variant='overline'> 6 Projects</Typography>
+            <Typography variant='overline'>
+              {projects?.length
+                ? `${projects?.length} Projects`
+                : 'No Projects Assigned!'}
+            </Typography>
           </Grid>
           <Grid item className={classes.flex}>
             <GroupIcon color='secondary' />
-            <Typography variant='overline'> 6 Members</Typography>
+            <Typography variant='overline'>
+              {employees?.length
+                ? `${employees?.length} Members`
+                : 'No Members Assigned!'}
+            </Typography>
           </Grid>
         </Grid>
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
             <Avatar
-              alt='Wes Bos'
+              alt={leader}
               src='https://storage.googleapis.com/indie-hackers.appspot.com/podcast-thumbnails/028-wes-bos.jpg'
             />
           </Grid>
           <Typography variant='body1' color='textSecondary'>
-            Wes Bos
+            {leader}
           </Typography>
         </Grid>
         <Grid
