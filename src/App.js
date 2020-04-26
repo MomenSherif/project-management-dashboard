@@ -1,11 +1,8 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Teams from './pages/Teams';
+
 function App() {
-  return (
-    <Typography variant='h1' style={{ textAlign: 'center' }}>
-      Hello ☯
-    </Typography>
-  );
+  return <Teams></Teams>;
 }
 
 export default App;
