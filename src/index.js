@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -11,7 +12,6 @@ import store from './store';
 ReactDOM.render(
   <Provider store={store}>
     <CssBaseline />
-
     <App />
   </Provider>,
   document.getElementById('root')

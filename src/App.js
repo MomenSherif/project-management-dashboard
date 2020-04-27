@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Teams from './pages/Teams';
 
 import TeamDetails from './pages/TeamDetails';
@@ -6,8 +7,9 @@ import TeamDetails from './pages/TeamDetails';
 function App() {
   return (
     <Fragment>
-      {/* <Teams></Teams> */}
-      <TeamDetails></TeamDetails>
+      <ToastContainer />
+      <Teams></Teams>
+      <TeamDetails />
     </Fragment>
   );
 }
