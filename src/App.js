@@ -1,11 +1,17 @@
-import React from 'react';
-import Project from './pages/Project';
+
+import React, { Fragment } from 'react';
+import { ToastContainer } from 'react-toastify';
+import Teams from './pages/Teams';
+import ProjectDetails from './pages/ProjectDetails';
+
+import TeamDetails from './pages/TeamDetails';
 
 function App() {
   return (
-    <React.Fragment>
-      <Project />
-    </React.Fragment>
+    <Fragment>
+      <h1>Hello</h1>
+    </Fragment>
+
   );
 }
 

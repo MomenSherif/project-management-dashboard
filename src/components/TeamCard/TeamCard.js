@@ -11,7 +11,15 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import moment from 'moment';
 import useStyles from './TeamCardStyle';
 
-const TeamCard = () => {
+const TeamCard = ({
+  id,
+  name,
+  description,
+  leader,
+  projects,
+  employees,
+  createdAt,
+}) => {
   const classes = useStyles();
 
   return (
@@ -19,18 +27,17 @@ const TeamCard = () => {
       <Paper className={classes.card} elevation={2}>
         <Grid container alignItems='center' spacing={2}>
           <Grid item>
-            <Avatar
-              title='Front end'
-              variant='rounded'
-              className={classes.avatar}
-            >
-              F
+            <Avatar title={name} variant='rounded' className={classes.avatar}>
+              {name.charAt(0)}
             </Avatar>
           </Grid>
           <Grid item>
-            <Typography variant='h4'>Front End</Typography>
+            <Typography variant='h4'>{name}</Typography>
           </Grid>
         </Grid>
+        <Typography variant='subtitle1' className={classes.mt}>
+          {description}
+        </Typography>
         <Grid
           container
           alignItems='center'
@@ -40,22 +47,30 @@ const TeamCard = () => {
         >
           <Grid item className={classes.flex}>
             <AssignmentIcon color='secondary' fontSize='large' />
-            <Typography variant='subtitle1'> 6 Projects</Typography>
+            <Typography variant='overline'>
+              {projects?.length
+                ? `${projects?.length} Projects`
+                : 'No Projects Assigned!'}
+            </Typography>
           </Grid>
           <Grid item className={classes.flex}>
             <GroupIcon color='secondary' />
-            <Typography variant='subtitle1'> 6 Members</Typography>
+            <Typography variant='overline'>
+              {employees?.length
+                ? `${employees?.length} Members`
+                : 'No Members Assigned!'}
+            </Typography>
           </Grid>
         </Grid>
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
             <Avatar
-              alt='Wes Bos'
+              alt={leader}
               src='https://storage.googleapis.com/indie-hackers.appspot.com/podcast-thumbnails/028-wes-bos.jpg'
             />
           </Grid>
           <Typography variant='body1' color='textSecondary'>
-            Wes Bos
+            {leader}
           </Typography>
         </Grid>
         <Grid
@@ -65,8 +80,8 @@ const TeamCard = () => {
           className={classes.createdAt}
         >
           <EventAvailableIcon style={{ marginRight: '3px' }} />
-          <time dateTime={moment(new Date()).format()}>
-            {moment(new Date()).format('D MMMM YYYY')}
+          <time dateTime={moment(createdAt).format()}>
+            {moment(createdAt).format('D MMMM YYYY')}
           </time>
         </Grid>
       </Paper>
