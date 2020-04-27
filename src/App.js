@@ -8,7 +8,7 @@ function App() {
   return (
     <Fragment>
       <ToastContainer />
-      <Teams></Teams>
+      {/* <Teams></Teams> */}
       <TeamDetails />
     </Fragment>
   );

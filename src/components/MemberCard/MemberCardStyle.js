@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minWidth: 275,
-    borderLeft: `10px solid ${theme.palette.primary.main}`
+    minWidth: 250,
+    borderLeft: `10px solid ${theme.palette.primary.dark}`
   },
   flex: {
     display: 'flex',
@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '15px'
   },
   large: {
-    width: theme.spacing(16),
-    height: theme.spacing(16),
+    width: theme.spacing(14),
+    height: theme.spacing(14),
     alignSelf: 'center'
   }
 }));
