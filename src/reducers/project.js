@@ -39,10 +39,14 @@ const projectsReducerDefaultState = [
 
 const projectsReducer = (state = projectsReducerDefaultState, action) => {
   switch (action.type) {
-    case 'GET_PROJECT_BY_ID':
-      const projectIndex = state.find((project) => project.id === +action.id);
-      console.log(state[projectIndex]);
-      return state[projectIndex];
+    case 'ADD_PROJECT':
+      return state.concat(action.project);
+    case 'DELETE_PROJECT':
+      return state.filter((project) => project.id !== action.id);
+    case 'UPDATE_PROJECT':
+      return state.map((project) =>
+        project.id !== action.id ? project : { ...project, ...action.updates }
+      );
     default:
       return state;
   }

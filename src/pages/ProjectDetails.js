@@ -13,7 +13,6 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelineIcon from '@material-ui/icons/Timeline';
 
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
-import { getProjectById } from '../actions/projects';
 
 import moment from 'moment';
 
