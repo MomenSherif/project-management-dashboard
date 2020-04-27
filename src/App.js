@@ -1,10 +1,11 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Project from './pages/Project';
+
 function App() {
   return (
-    <Typography variant="h1" style={{ textAlign: 'center' }}>
-      Hello ☯
-    </Typography>
+    <React.Fragment>
+      <Project />
+    </React.Fragment>
   );
 }
 
