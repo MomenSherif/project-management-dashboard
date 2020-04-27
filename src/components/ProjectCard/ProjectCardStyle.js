@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {},
   spanTextColor: {
     color: theme.palette.primary.main,
-
+  },
   root: {
     minWidth: 275,
   },

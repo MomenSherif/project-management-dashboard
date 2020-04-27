@@ -7,15 +7,15 @@ import Typography from '@material-ui/core/Typography';
 const Project = (props) => {
   return (
     <Fragment>
-      <Typography variant="h3" gutterBottom align="center">
+      <Typography variant='h3' gutterBottom align='center'>
         Projects
       </Typography>
-      <Grid container justify="center">
+      <Grid container justify='center'>
         <Grid item component={ProjectCard}></Grid>
         <Grid item component={ProjectCard}></Grid>
         <Grid item component={ProjectCard}></Grid>
         <Grid item>
-          <Pagination count={10} color="primary" />
+          <Pagination count={10} color='primary' />
         </Grid>
       </Grid>
       <ProjectFormDialog />

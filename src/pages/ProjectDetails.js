@@ -14,51 +14,51 @@ import moment from 'moment';
 const ProjectDetails = () => {
   return (
     <Container>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant='h2' gutterBottom>
         Project Overview
       </Typography>
-      <Grid container justify="space-evenly" spacing={6}>
+      <Grid container justify='space-evenly' spacing={6}>
         <Grid item xs={12} md={6}>
           <ProjectCard
-            title="Project Name"
-            description="Project Management Dashboard"
+            title='Project Name'
+            description='Project Management Dashboard'
           >
-            <CreateIcon color="secondary" fontSize="large"></CreateIcon>
+            <CreateIcon color='secondary' fontSize='large'></CreateIcon>
           </ProjectCard>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ProjectCard title="Organization/Company" description="ITI">
-            <BusinessIcon color="secondary" fontSize="large" />
+          <ProjectCard title='Organization/Company' description='ITI'>
+            <BusinessIcon color='secondary' fontSize='large' />
           </ProjectCard>
         </Grid>
         <Grid item xs={12}>
           <ProjectCard
-            title="Description"
-            description="balalhsdhjsdsdshfsfjhffhffhffgjhfvf"
+            title='Description'
+            description='balalhsdhjsdsdshfsfjhffhffhffgjhfvf'
           >
-            <AssignmentIcon color="secondary" fontSize="large" />
+            <AssignmentIcon color='secondary' fontSize='large' />
           </ProjectCard>
         </Grid>
         <Grid item xs={3}>
-          <ProjectCard title="Budget" description="200000$">
-            <MonetizationOnIcon color="secondary" fontSize="large" />
+          <ProjectCard title='Budget' description='200000$'>
+            <MonetizationOnIcon color='secondary' fontSize='large' />
           </ProjectCard>
         </Grid>
         <Grid item xs={3}>
-          <ProjectCard title="State" description="In Progress">
-            <TimelineIcon color="secondary" fontSize="large" />
+          <ProjectCard title='State' description='In Progress'>
+            <TimelineIcon color='secondary' fontSize='large' />
           </ProjectCard>
         </Grid>
         <Grid item xs={3}>
           <ProjectCard
-            title="Deadline"
+            title='Deadline'
             description={
               <time dateTime={moment(new Date()).format()}>
                 {moment(new Date()).format('D MMMM YYYY')}
               </time>
             }
           >
-            <ScheduleIcon color="secondary" fontSize="large" />
+            <ScheduleIcon color='secondary' fontSize='large' />
           </ProjectCard>
         </Grid>
       </Grid>
