@@ -2,8 +2,9 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import useStyles from './ProjectCardStyle';
-const ProjectCard = ({ children, title, description }) => {
+import useStyles from './ProjectDetailsCardStyle';
+
+const ProjectDetailsCard = ({ children, title, description }) => {
   const classes = useStyles();
   return (
     <div className={classes.mainSec}>
@@ -27,4 +28,4 @@ const ProjectCard = ({ children, title, description }) => {
   );
 };
 
-export default ProjectCard;
+export default ProjectDetailsCard;
