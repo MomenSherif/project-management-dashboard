@@ -5,14 +5,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import { useForm } from 'react-hook-form';
-import { string, object, date } from 'yup';
+import { string, object } from 'yup';
 import { toast } from 'react-toastify';
-import moment from 'moment';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -45,19 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = object().shape({
-  organizationName: string()
-    .min(3, 'Organization name needs to be at least 3 characters!')
-    .required('Organization name is required!'),
-  firstName: string().required('First Name is required!'),
-  lastName: string().required('Last Name is required!'),
-  phoneNumber: string().matches(
-    /^(01)(0|2|1|5)[0-9]{8}$/,
-    'Inavalid phone number!'
-  ),
-  dateOfBirth: date()
-    .required('Birthdate is required!')
-    .min(new Date(1900, 0, 1))
-    .max(moment().subtract(10, 'y').toDate(), 'Needs to be at least 10 years'),
   email: string()
     .lowercase()
     .email('Invalid email address!')
@@ -67,7 +53,7 @@ const schema = object().shape({
     .required('Password is required!'),
 });
 
-const SignUp = ({ history }) => {
+const SignIn = ({ history }) => {
   const classes = useStyles();
 
   const { register, handleSubmit, errors, formState } = useForm({
@@ -76,7 +62,8 @@ const SignUp = ({ history }) => {
   });
 
   const onSubmit = async (data) => {
-    toast.success(`Signed up Successfully & You're logged in now`);
+    // Sign in action
+    toast.success(`Welcome`);
     history.replace('/');
   };
 
@@ -84,10 +71,10 @@ const SignUp = ({ history }) => {
     <Container component='main' maxWidth='xs'>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOpenIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign up
+          Sign in
         </Typography>
         <form
           className={classes.form}
@@ -95,73 +82,6 @@ const SignUp = ({ history }) => {
           noValidate
         >
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                name='organizationName'
-                variant='standard'
-                fullWidth
-                id='organizationName'
-                label='Organization Name'
-                error={!!errors.organizationName}
-                helperText={errors.organizationName?.message}
-                inputRef={register}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name='firstName'
-                variant='standard'
-                fullWidth
-                id='firstName'
-                label='First Name'
-                error={!!errors.firstName}
-                helperText={errors.firstName?.message}
-                inputRef={register}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant='standard'
-                fullWidth
-                id='lastName'
-                label='Last Name'
-                name='lastName'
-                error={!!errors.lastName}
-                helperText={errors.lastName?.message}
-                inputRef={register}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name='phoneNumber'
-                variant='standard'
-                fullWidth
-                id='phoneNumber'
-                label='Phone Number'
-                error={!!errors.phoneNumber}
-                helperText={errors.phoneNumber?.message}
-                inputRef={register}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                defaultValue={moment().subtract(10, 'y').format('YYYY-MM-DD')}
-                name='dateOfBirth'
-                variant='standard'
-                fullWidth
-                id='dateOfBirth'
-                label='Birthday'
-                type='date'
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                error={!!errors.dateOfBirth}
-                helperText={errors.dateOfBirth?.message}
-                inputRef={register}
-              />
-            </Grid>
-
             <Grid item xs={12}>
               <TextField
                 variant='standard'
@@ -200,8 +120,8 @@ const SignUp = ({ history }) => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link to='/sign-in' className={classes.link}>
-                Already have an account? Sign in
+              <Link to='/sign-up' className={classes.link}>
+                Don't have an account? Sign up
               </Link>
             </Grid>
           </Grid>
@@ -211,4 +131,4 @@ const SignUp = ({ history }) => {
   );
 };
 
-export default SignUp;
+export default SignIn;
