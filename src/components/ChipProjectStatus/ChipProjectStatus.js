@@ -11,14 +11,20 @@ const ChipProjectStatus = (props) => {
 
   switch (props.statusType) {
     case 'done':
-      chipIcon = <Chip icon={<DoneIcon />} label="Done" color="primary" />;
+      chipIcon = (
+        <Chip
+          icon={<DoneIcon className={classes.statusDoneIconColor} />}
+          className={classes.statusDoneColor}
+          label="Done"
+        />
+      );
       break;
     case 'in-review':
       chipIcon = (
         <Chip
-          icon={<RateReviewIcon className={classes.statusIconColor} />}
+          icon={<RateReviewIcon className={classes.statusInReviewIconColor} />}
           label="In Review"
-          className={classes.statusColor}
+          className={classes.statusInReviewColor}
         />
       );
       break;

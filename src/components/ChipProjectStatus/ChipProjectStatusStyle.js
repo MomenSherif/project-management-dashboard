@@ -1,11 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  statusColor: {
+  statusInReviewColor: {
     color: theme.palette.common.white,
-    backgroundColor: theme.palette.warning.light,
+    backgroundColor: theme.palette.warning.main,
   },
-  statusIconColor: {
+  statusInReviewIconColor: {
+    color: theme.palette.common.white,
+  },
+  statusDoneColor: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.success.main,
+  },
+  statusDoneIconColor: {
     color: theme.palette.common.white,
   },
 }));

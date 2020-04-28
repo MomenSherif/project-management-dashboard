@@ -5,14 +5,14 @@ import Homepage from './pages/Homepage';
 import { Link, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ProjectDetails from './pages/ProjectDetails';
-import Teams from './pages/Teams';
+// import Project from './pages/Project';
 
 function App() {
   return (
     <Fragment>
-      <Teams></Teams>
+      {/* <Project></Project> */}
       <Switch>
-        <Route path='/project-details/:id' exact component={ProjectDetails} />
+        <Route path="/project-details/:id" exact component={ProjectDetails} />
       </Switch>
       <ToastContainer />
     </Fragment>

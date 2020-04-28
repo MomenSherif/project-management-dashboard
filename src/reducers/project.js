@@ -6,9 +6,9 @@ const projectsReducerDefaultState = [
       asperiores culpa quidem iste cum, labore sequi ex eaque obcaecati
       facilis provident minima aspernatur eligendi cupiditate assumenda,
       incidunt praesentium. Accusantium.`,
-    state: 'In Progress',
+    state: 'in-progress',
     budget: 200000,
-    deadline: new Date().now,
+    deadline: new Date(),
     createdAt: Date.now(),
   },
   {
@@ -18,9 +18,9 @@ const projectsReducerDefaultState = [
         asperiores culpa quidem iste cum, labore sequi ex eaque obcaecati
         facilis provident minima aspernatur eligendi cupiditate assumenda,
         incidunt praesentium. Accusantium.`,
-    state: 'In Progress',
+    state: 'in-review',
     budget: 200000,
-    deadline: new Date().now,
+    deadline: new Date(),
     createdAt: Date.now(),
   },
   {
@@ -30,9 +30,9 @@ const projectsReducerDefaultState = [
         asperiores culpa quidem iste cum, labore sequi ex eaque obcaecati
         facilis provident minima aspernatur eligendi cupiditate assumenda,
         incidunt praesentium. Accusantium.`,
-    state: 'In Progress',
+    state: 'done',
     budget: 200000,
-    deadline: new Date().now,
+    deadline: new Date(),
     createdAt: Date.now(),
   },
 ];
@@ -40,6 +40,7 @@ const projectsReducerDefaultState = [
 const projectsReducer = (state = projectsReducerDefaultState, action) => {
   switch (action.type) {
     case 'ADD_PROJECT':
+      console.log(action.project);
       return state.concat(action.project);
     case 'DELETE_PROJECT':
       return state.filter((project) => project.id !== action.id);
