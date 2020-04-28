@@ -29,7 +29,7 @@ const Teams = ({ teams }) => {
       <Typography variant='h2' gutterBottom>
         Teams
       </Typography>
-      <Grid container justify='space-between' alignItems='stretch'>
+      <Grid container justify='space-between' alignItems='flex-start'>
         {teamList}
       </Grid>
       <TeamFormDialog />
