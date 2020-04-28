@@ -9,7 +9,7 @@ import useStyles from './ProjectPanelStyle';
 const ProjectPanel = () => {
   const classes = useStyles();
   return (
-    <Paper elevation={0} className={classes.root}>
+    <Paper elevation={2} className={classes.root}>
       <TextField
         id='standard-search'
         label='Search field'
@@ -23,9 +23,10 @@ const ProjectPanel = () => {
         <ProjectItem></ProjectItem>
         <ProjectItem></ProjectItem>
         <ProjectItem></ProjectItem>
+        <ProjectItem></ProjectItem>
       </div>
 
-      <Pagination count={3} color='primary' />
+      <Pagination count={3} color='primary' className={classes.paging} />
     </Paper>
   );
 };

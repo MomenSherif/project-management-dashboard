@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import cx from 'clsx';
 
 import TeamFormDialog from '../TeamFormDialog/TeamFormDialog';
-import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import useStyles from './TeamInfoStyle';

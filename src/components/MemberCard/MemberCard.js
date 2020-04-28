@@ -13,7 +13,10 @@ const MemberCard = () => {
   const classes = useStyles();
   return (
     <Grid item>
-      <Card className={cx(classes.root, classes.flex)}>
+      <Card
+        className={cx(classes.root, classes.flex, classes.cardmargin)}
+        elevation={2}
+      >
         <CardHeader
           avatar={
             <Avatar alt='Wes Bos' src='/avatar.png' className={classes.large} />

@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const ConfirmDialog = ({ children, title, content, onConfirm, btnStyle }) => {
   const [open, setOpen] = useState(false);
@@ -20,10 +21,12 @@ const ConfirmDialog = ({ children, title, content, onConfirm, btnStyle }) => {
 
   return (
     <div>
-      <Fab color='primary' onClick={handleClick} className={btnStyle}>
-        {children}
-      </Fab>
-      <Dialog open={open} onClose={handleClick}>
+      <Tooltip title={title} placement='left'>
+        <Fab color='primary' onClick={handleClick} className={btnStyle}>
+          {children}
+        </Fab>
+      </Tooltip>
+      <Dialog open={open} onClose={handleClick} fullWidth>
         <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
         <DialogContent>{content}</DialogContent>
         <DialogActions>

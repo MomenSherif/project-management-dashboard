@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minWidth: 250,
+    maxWidth: 250,
     borderLeft: `10px solid ${theme.palette.primary.dark}`
   },
   flex: {
@@ -14,7 +14,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14
   },
   mb: {
-    marginBottom: '15px'
+    marginBottom: '8px'
+  },
+  cardmargin: {
+    marginBottom: '25px'
   },
   large: {
     width: theme.spacing(14),
