@@ -10,6 +10,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import { addProject } from '../../actions/projects';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const ProjectSchema = object().shape({
   title: string().required('project title is required!'),
@@ -20,7 +24,7 @@ const ProjectSchema = object().shape({
   deadLine: date().typeError('Deadline for the project is required'),
 });
 
-const ProjectFormDialog = () => {
+const ProjectFormDialog = ({ addProject }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -29,7 +33,13 @@ const ProjectFormDialog = () => {
     mode: 'onBlur',
   });
   const onSubmit = (data) => {
-    console.log(data);
+    addProject({
+      ...data,
+      id: Math.random(),
+      state: 'in-progress',
+      createdAt: Date.now(),
+    });
+    toast.success(`Project ${data.title} created successfully!`);
     handleClose();
   };
 
@@ -42,7 +52,7 @@ const ProjectFormDialog = () => {
   };
 
   return (
-    <Fragment>
+    <Box m={2} p={2}>
       <Fab
         className={classes.addBtn}
         color="primary"
@@ -109,15 +119,17 @@ const ProjectFormDialog = () => {
               inputRef={register}
             />
 
-            {/* register your input into hooks so we can subscribe and listen if any changes and validate data */}
             <Button type="submit" color="primary" className={classes.submitBtn}>
               Add
             </Button>
           </form>
         </DialogContent>
       </Dialog>
-    </Fragment>
+    </Box>
   );
 };
+const mapDispatchToProps = (dispatch) => ({
+  addProject: (project) => dispatch(addProject(project)),
+});
 
-export default ProjectFormDialog;
+export default connect(null, mapDispatchToProps)(ProjectFormDialog);
