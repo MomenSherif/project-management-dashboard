@@ -12,9 +12,9 @@ function App() {
   return (
     <Fragment>
       <Switch>
-        <Route path='/project-details/:id' exact component={ProjectDetails} />
         <Route path='/sign-up' exact component={SignUp} />
         <Route path='/sign-in' exact component={SignIn} />
+        <Route path='/project-details/:id' exact component={ProjectDetails} />
         <Route path='/team-details' exact component={TeamDetails} />
       </Switch>
       <ToastContainer />
