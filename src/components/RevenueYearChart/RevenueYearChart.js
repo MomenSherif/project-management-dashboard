@@ -1,32 +1,16 @@
 import React, { Fragment } from 'react';
 import { Line } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-  },
-}));
+import useStyles from './RevenueYearChartStyle';
+import moment from 'moment';
 
 const RevenueYearChart = (props) => {
   const classes = useStyles();
+  const months = moment.monthsShort();
 
   const data = {
-    labels: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
+    labels: months,
     datasets: [
       {
         label: 'Revenue this year',
