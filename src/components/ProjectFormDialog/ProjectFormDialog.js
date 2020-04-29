@@ -1,19 +1,21 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { object, string, number, date } from 'yup';
 import useStyles from './ProjectFormDialogStyle';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { addProject } from '../../actions/projects';
+import { addProject, updateProject } from '../../actions/projects';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 const ProjectSchema = object().shape({
   title: string().required('project title is required!'),
@@ -24,7 +26,12 @@ const ProjectSchema = object().shape({
   deadLine: date().typeError('Deadline for the project is required'),
 });
 
-const ProjectFormDialog = ({ addProject }) => {
+const ProjectFormDialog = ({
+  addProject,
+  isEdit,
+  editingProject,
+  updateProject,
+}) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -33,13 +40,19 @@ const ProjectFormDialog = ({ addProject }) => {
     mode: 'onBlur',
   });
   const onSubmit = (data) => {
-    addProject({
-      ...data,
-      id: Math.random(),
-      state: 'in-progress',
-      createdAt: Date.now(),
-    });
-    toast.success(`Project ${data.title} created successfully!`);
+    if (!isEdit) {
+      addProject({
+        ...data,
+        id: Math.random(),
+        state: 'in-progress',
+        createdAt: Date.now(),
+      });
+      toast.success(`Project ${data.title} created successfully!`);
+    } else {
+      console.log(data);
+      updateProject(editingProject.id, { ...data });
+      toast.success(`Project ${data.title} Updated successfully!`);
+    }
     handleClose();
   };
 
@@ -55,72 +68,104 @@ const ProjectFormDialog = ({ addProject }) => {
     <Box m={2} p={2}>
       <Fab
         className={classes.addBtn}
-        color="primary"
-        aria-label="add"
+        color={isEdit ? 'secondary' : 'primary'}
+        aria-label={isEdit ? 'edit' : 'add'}
         onClick={handleClickOpen}
       >
-        <AddIcon />
+        {isEdit ? <EditIcon /> : <AddIcon />}
       </Fab>
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
+        aria-labelledby='form-dialog-title'
       >
-        <DialogTitle id="form-dialog-title">Add New Project</DialogTitle>
+        <DialogTitle id='form-dialog-title'>
+          {isEdit ? 'Edit Project' : 'Add New Project'}
+        </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <TextField
-              id="title"
-              name="title"
-              label="Project Title"
-              type="text"
+              id='title'
+              name='title'
+              label='Project Title'
+              type='text'
+              defaultValue={isEdit ? editingProject.title : ''}
               fullWidth
-              margin="normal"
+              margin='normal'
               error={!!errors.title}
               helperText={errors.title?.message}
               inputRef={register}
             />
             <TextField
-              id="description"
-              name="description"
-              label="Project description"
+              id='description'
+              name='description'
+              label='Project description'
+              defaultValue={isEdit ? editingProject.description : ''}
               multiline
-              rows="4"
+              rows='4'
               fullWidth
-              margin="normal"
+              margin='normal'
               error={!!errors.description}
               helperText={errors.description?.message}
               inputRef={register}
             />
             <TextField
-              id="budget"
-              name="budget"
-              label="Project budget"
-              type="number"
+              id='budget'
+              name='budget'
+              label='Project budget'
+              defaultValue={isEdit ? editingProject.budget : ''}
+              type='number'
               fullWidth
-              margin="normal"
+              margin='normal'
               error={!!errors.budget}
               helperText={errors.budget?.message}
               inputRef={register}
             />
+            {isEdit ? (
+              <TextField
+                id='state'
+                name='state'
+                label='Project State'
+                type='text'
+                defaultValue={isEdit ? editingProject.state : ''}
+                fullWidth
+                margin='normal'
+                error={!!errors.title}
+                helperText={errors.title?.message}
+                inputRef={register}
+              />
+            ) : (
+              ''
+            )}
             <TextField
-              id="deadLine"
-              name="deadLine"
-              label="DeadLine"
-              type="date"
+              id='deadline'
+              name='deadline'
+              label='DeadLine'
+              type='date'
+              defaultValue={
+                isEdit
+                  ? moment(new Date(editingProject.deadline)).format(
+                      'YYYY-MM-DD'
+                    )
+                  : ''
+              }
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
               }}
               fullWidth
-              margin="normal"
+              margin='normal'
               error={!!errors.deadLine}
               helperText={errors.deadLine?.message}
               inputRef={register}
             />
 
-            <Button type="submit" color="primary" className={classes.submitBtn}>
-              Add
+            <Button
+              type='submit'
+              color={isEdit ? 'secondary' : 'primary'}
+              className={classes.submitBtn}
+            >
+              {isEdit ? 'Save' : 'Add'}
             </Button>
           </form>
         </DialogContent>
@@ -130,6 +175,7 @@ const ProjectFormDialog = ({ addProject }) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   addProject: (project) => dispatch(addProject(project)),
+  updateProject: (id, project) => dispatch(updateProject(id, project)),
 });
 
 export default connect(null, mapDispatchToProps)(ProjectFormDialog);

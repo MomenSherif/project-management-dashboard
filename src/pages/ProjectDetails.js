@@ -15,6 +15,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import GroupIcon from '@material-ui/icons/Group';
 
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
+import ProjectFormDialog from '../components/ProjectFormDialog/ProjectFormDialog';
 import TeamCard from '../components/TeamCard/TeamCard';
 import { toggleTeam } from '../actions/projects';
 
@@ -27,6 +28,9 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
     return acc;
   }, {});
 
+  {
+    console.log(project);
+  }
   const [switchState, setSwitchState] = React.useState(switchBtnsState);
 
   const handleChange = (event) => {
@@ -80,8 +84,10 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
           <ProjectDetailsCard
             title='Deadline'
             description={
-              <time dateTime={project.deadline}>
-                {moment(new Date()).format('D MMMM YYYY')}
+              <time
+                date={moment(new Date(project.deadline)).format('YYYY-MM-DD')}
+              >
+                {moment(new Date(project.deadline)).format('D MMMM YYYY')}
               </time>
             }
           >
@@ -109,6 +115,7 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
           </ProjectDetailsCard>
         </Grid>
       </Grid>
+      <ProjectFormDialog isEdit={true} editingProject={project} />
     </Container>
   );
 };
