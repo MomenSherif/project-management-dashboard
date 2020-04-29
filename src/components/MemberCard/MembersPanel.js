@@ -1,12 +1,13 @@
 import React from 'react';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 import useStyles from './MemberPanelStyle';
 import MemberCard from './MemberCard';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import cx from 'clsx';
 import EmailDialog from '../Dialogs/EmailDialog/EmailDialog';
 
 const MembersPanel = () => {

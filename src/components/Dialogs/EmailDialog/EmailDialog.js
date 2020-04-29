@@ -8,9 +8,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
-import { toast } from 'react-toastify';
-
-// import { isEmailExists } from '../../api/helper';
 
 const EmailDialog = ({ children, title, content, onConfirm, btnStyle }) => {
   const [open, setOpen] = useState(false);
@@ -20,8 +17,7 @@ const EmailDialog = ({ children, title, content, onConfirm, btnStyle }) => {
   };
 
   const onSubmit = () => {
-    // const isValid = await isEmailExists(data.leader);
-    // if (!isValid) return toast.error('Email not exist!');
+    //Email validatio
     handleClick();
     onConfirm();
   };
@@ -42,17 +38,16 @@ const EmailDialog = ({ children, title, content, onConfirm, btnStyle }) => {
         <DialogTitle id='form-dialog-title'>{title}</DialogTitle>
         <DialogContent>
           <DialogContentText>{content}</DialogContentText>
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <TextField
-              autoFocus
-              margin='dense'
-              id='name'
-              label='Email Address'
-              type='email'
-              value
-              fullWidth
-            />
-          </form>
+
+          <TextField
+            autoFocus
+            margin='dense'
+            id='name'
+            label='Email Address'
+            type='email'
+            value
+            fullWidth
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => onSubmit()} color='primary'>

@@ -1,24 +1,32 @@
 import React from 'react';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import MemberCard from '../components/MemberCard/MemberCard';
+
+import MembersPanel from '../components/MemberCard/MembersPanel';
+import TeamInfo from '../components/TeamInfo/TeamInfo';
+import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
 
 const TeamDetails = () => {
   return (
-    <Container>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography>Team Details</Typography>
+    <Container style={{ display: 'flex' }}>
+      <Grid container xs={4}>
+        <Grid item xs={4}>
+          <TeamInfo></TeamInfo>
         </Grid>
-        <Grid item xs={12}>
-          <Typography>Team projects</Typography>
-        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        style={{ display: 'flex', flexDirection: 'column' }}
+        xs={6}
+      >
         <Grid item>
-          <Typography>Team members</Typography>
-          <Grid container spacing={4}>
-            <MemberCard></MemberCard>
-          </Grid>
+          <ProjectPanel></ProjectPanel>
+        </Grid>
+
+        <Grid item style={{ marginTop: '25px' }}>
+          <MembersPanel></MembersPanel>
         </Grid>
       </Grid>
     </Container>
