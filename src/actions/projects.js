@@ -13,4 +13,10 @@ const updateProject = (id, updates) => ({
   id,
   updates,
 });
-export { addProject, deleteProject, updateProject };
+
+const toggleTeam = (teamId, projectId) => ({
+  type: 'TOGGLE_TEAM',
+  teamId,
+  projectId,
+});
+export { addProject, deleteProject, updateProject, toggleTeam };
