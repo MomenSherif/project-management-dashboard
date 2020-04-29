@@ -10,6 +10,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
+    teams: [],
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
+    teams: [],
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
+    teams: [],
   },
 ];
 
@@ -47,6 +50,17 @@ const projectsReducer = (state = projectsReducerDefaultState, action) => {
     case 'UPDATE_PROJECT':
       return state.map((project) =>
         project.id !== action.id ? project : { ...project, ...action.updates }
+      );
+    case 'TOGGLE_TEAM':
+      const project = state.find((project) => project.id === action.projectId);
+      if (!project.teams.includes(action.teamId)) {
+        project.teams.push(action.teamId);
+      } else {
+        const teams = project.teams.filter((ele) => ele !== action.teamId);
+        project.teams = teams;
+      }
+      return state.map((proj) =>
+        proj.id !== action.projectId ? proj : { ...project }
       );
     default:
       return state;
