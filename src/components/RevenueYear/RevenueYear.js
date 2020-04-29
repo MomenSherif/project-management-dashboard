@@ -1,17 +1,8 @@
 import React, { Fragment } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    minHeight: '130px',
-  },
-  center: {
-    textAlign: 'center',
-  },
-}));
+import useStyles from './RevenueYearStyle';
 
 const RevenueYear = (props) => {
   const classes = useStyles();

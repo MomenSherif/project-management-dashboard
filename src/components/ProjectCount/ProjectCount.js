@@ -2,28 +2,10 @@ import React, { Fragment } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    minHeight: '130px',
-  },
-  center: {
-    textAlign: 'center',
-  },
-  projectCount: {
-    display: 'inline-block',
-    borderRadius: '50%',
-    border: `5px solid`,
-    borderColor: theme.palette.success.main,
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-    lineHeight: `45px`,
-  },
-}));
+import useStyles from './ProjectCountStyle';
 
-const ProjectCount = (props) => {
+const ProjectCount = ({ count }) => {
   const classes = useStyles();
 
   return (
@@ -43,7 +25,7 @@ const ProjectCount = (props) => {
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6" className={classes.projectCount}>
-              7
+              {count}
             </Typography>
           </Grid>
         </Grid>

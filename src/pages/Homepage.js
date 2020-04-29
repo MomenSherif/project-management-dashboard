@@ -11,6 +11,7 @@ import ProjectsOverview from '../components/ProjectsOverview/ProjectsOverview';
 import RevenueMonth from '../components/RevenueMonth/RevenueMonth';
 import RevenueYear from '../components/RevenueYear/RevenueYear';
 import RevenueYearChart from '../components/RevenueYearChart/RevenueYearChart';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   pt: {
@@ -18,20 +19,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Homepage = (props) => {
+const Homepage = ({ projects, teams }) => {
   const classes = useStyles();
 
   return (
     <Container className={classes.pt}>
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <ProjectCount></ProjectCount>
+          <ProjectCount count={projects.length}></ProjectCount>
         </Grid>
         <Grid item xs={3}>
           <RevenueMonth></RevenueMonth>
         </Grid>
         <Grid item xs={3}>
-          <TeamCount></TeamCount>
+          <TeamCount count={teams.length}></TeamCount>
         </Grid>
         <Grid item xs={3}>
           <RevenueYear></RevenueYear>
@@ -50,4 +51,11 @@ const Homepage = (props) => {
   );
 };
 
-export default Homepage;
+const mapStateToProps = (state) => {
+  return {
+    projects: state.projects,
+    teams: state.teams,
+  };
+};
+
+export default connect(mapStateToProps)(Homepage);
