@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import CountUp from 'react-countup';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
@@ -17,7 +18,8 @@ const RevenueMonth = (props) => {
           Total/Planned
         </Typography>
         <Typography variant="h6" className={classes.center}>
-          15,600/50,000
+          <CountUp end={15600} duration={1} separator=","></CountUp>/
+          <CountUp end={50000} duration={1} separator=","></CountUp>
         </Typography>
       </Paper>
     </Fragment>

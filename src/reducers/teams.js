@@ -8,7 +8,7 @@ const teamsReducerDefaultState = [
     asperiores culpa quidem iste cum, labore sequi ex eaque obcaecati
     facilis provident minima aspernatur eligendi cupiditate assumenda,
     incidunt praesentium. Accusantium.`,
-    employees: [1, 2, 3],
+    employees: [1, 2],
     projects: [1, 2, 3],
     createdAt: Date.now(),
   },
@@ -32,6 +32,7 @@ const teamsReducerDefaultState = [
     asperiores culpa quidem iste cum, labore sequi ex eaque obcaecati
     facilis provident minima aspernatur eligendi cupiditate assumenda,
     incidunt praesentium. Accusantium.`,
+    employees: [1, 2, 3],
     createdAt: Date.now(),
   },
 ];
