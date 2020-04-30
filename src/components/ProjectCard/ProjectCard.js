@@ -11,6 +11,8 @@ import useStyles from './ProjectCardStyle';
 import ChipProjectStatus from '../ChipProjectStatus/ChipProjectStatus';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import { Link } from 'react-router-dom';
+
 const ProjectCard = ({ project }) => {
   const { title, description, state, deadline } = project;
   const classes = useStyles();
@@ -27,12 +29,12 @@ const ProjectCard = ({ project }) => {
         subheader={new Date().toDateString()}
       />
       <CardContent className={classes.cardContent}>
-        <Grid container spacing={1} justify="space-between">
+        <Grid container spacing={1} justify='space-between'>
           <Grid item xs={12}>
             <Typography
-              variant="subtitle1"
-              color="textSecondary"
-              component="p"
+              variant='subtitle1'
+              color='textSecondary'
+              component='p'
               gutterBottom
             >
               {description}
@@ -42,11 +44,13 @@ const ProjectCard = ({ project }) => {
             <ChipProjectStatus statusType={state} />
           </Grid>
           <Grid item>
-            <Tooltip title="More Details" aria-label="More Details">
-              <IconButton aria-label="share">
-                <ArrowForwardOutlinedIcon />
-              </IconButton>
-            </Tooltip>
+            <Link to={`/project-details/${project.id}`}>
+              <Tooltip title='More Details' aria-label='More Details'>
+                <IconButton aria-label='share'>
+                  <ArrowForwardOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
           </Grid>
         </Grid>
       </CardContent>

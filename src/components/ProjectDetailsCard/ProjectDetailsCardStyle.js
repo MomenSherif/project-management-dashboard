@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   mainCard: {
     borderRadius: '20px',
     position: 'inherit',
-    top: '25px',
+    top: '20px',
     transition: 'transform 0.2s ease-in-out',
     '&:hover': {
       transform: 'translateY(-4px)',

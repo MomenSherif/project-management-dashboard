@@ -5,6 +5,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
+import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
 
 import CreateIcon from '@material-ui/icons/Create';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -28,9 +30,6 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
     return acc;
   }, {});
 
-  {
-    console.log(project);
-  }
   const [switchState, setSwitchState] = React.useState(switchBtnsState);
 
   const handleChange = (event) => {
@@ -45,7 +44,12 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
       toast.warn('Team removed!');
     }
   };
-
+  const useStyles = makeStyles((theme) => ({
+    avatar: {
+      backgroundColor: theme.palette.primary.main,
+    },
+  }));
+  const classes = useStyles();
   return (
     <Container>
       <Typography variant='h2' gutterBottom>
@@ -94,20 +98,32 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
             <ScheduleIcon color='secondary' fontSize='large' />
           </ProjectDetailsCard>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <ProjectDetailsCard
             title='Teams'
             description={teams.map((team) => (
-              <Grid item xs={8} key={team.id}>
-                <TeamCard name={team.name} leader={team.leader} />
-                <Switch
-                  //checked={switchState.teamCheck}
-                  checked={switchState[`teamCheck-${team.id}`]}
-                  onChange={handleChange}
-                  name={`teamCheck-${team.id}`}
-                  value={team.id}
-                  inputProps={{ 'team-id': team.id }}
-                />
+              <Grid container alignItems='center' key={team.id} spacing={3}>
+                <Grid item>
+                  <Avatar
+                    title={team.name}
+                    variant='rounded'
+                    className={classes.avatar}
+                  >
+                    {team.name.charAt(0)}
+                  </Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography variant='h4'>{team.name}</Typography>
+                </Grid>
+                <Grid item>
+                  <Switch
+                    checked={switchState[`teamCheck-${team.id}`]}
+                    onChange={handleChange}
+                    name={`teamCheck-${team.id}`}
+                    value={team.id}
+                    inputProps={{ 'team-id': team.id }}
+                  />
+                </Grid>
               </Grid>
             ))}
           >
