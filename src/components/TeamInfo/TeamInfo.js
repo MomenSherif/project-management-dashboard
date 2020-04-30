@@ -49,7 +49,7 @@ const TeamInfo = ({ deleteTeam, team }) => {
           className={cx(classes.flexCol, classes.mr, classes.box)}
           borderRadius={8}
         >
-          <AssignmentIcon fontSize='medium' />
+          <AssignmentIcon fontSize='large' />
           <Typography variant='caption'>
             {team.projects?.length
               ? `${team.projects?.length} projects`
@@ -60,7 +60,7 @@ const TeamInfo = ({ deleteTeam, team }) => {
           className={cx(classes.flexCol, classes.mr, classes.box)}
           borderRadius={8}
         >
-          <GroupIcon fontSize='medium' />
+          <GroupIcon fontSize='large' />
           <Typography variant='caption'>
             {team.employees?.length
               ? `${team.employees?.length} members`

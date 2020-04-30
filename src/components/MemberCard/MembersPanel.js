@@ -39,7 +39,6 @@ const MembersPanel = ({ team, addTeamMember, teamId, members }) => {
         )}
       </Grid>
       <Pagination count={3} color='secondary' className={classes.paging} />
-      {console.log('team in memeber panel -> ', team)}
       <EmailDialog
         title='Add Member To Team'
         content='Enter Member Email'
