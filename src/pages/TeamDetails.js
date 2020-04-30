@@ -1,28 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import MemberCard from '../components/MemberCard/MemberCard';
 
-const TeamDetails = () => {
+import MembersPanel from '../components/MemberCard/MembersPanel';
+import TeamInfo from '../components/TeamInfo/TeamInfo';
+import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
+
+const TeamDetails = props => {
   return (
-    <Container>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography>Team Details</Typography>
+    <Container style={{ display: 'flex' }}>
+      <Grid container>
+        <Grid item xs={4}>
+          <TeamInfo team={props.team}></TeamInfo>
         </Grid>
-        <Grid item xs={12}>
-          <Typography>Team projects</Typography>
+      </Grid>
+
+      <Grid container style={{ display: 'flex', flexDirection: 'column' }}>
+        <Grid item xs={4}>
+          <ProjectPanel projects={props.team.projects}></ProjectPanel>
         </Grid>
-        <Grid item>
-          <Typography>Team members</Typography>
-          <Grid container spacing={4}>
-            <MemberCard></MemberCard>
-          </Grid>
+
+        <Grid item style={{ marginTop: '25px' }} xs={4}>
+          <MembersPanel
+            teamId={props.team.id}
+            members={props.team.employees}
+          ></MembersPanel>
         </Grid>
       </Grid>
     </Container>
   );
 };
-
-export default TeamDetails;
+const mapStateToProps = (state, ownProps) => ({
+  team: state.teams.filter(team => team.id === +ownProps.match.params.id)[0]
+});
+export default connect(mapStateToProps)(TeamDetails);

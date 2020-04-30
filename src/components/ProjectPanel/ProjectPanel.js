@@ -6,7 +6,7 @@ import ProjectItem from './ProjectItem';
 import Pagination from '@material-ui/lab/Pagination';
 import useStyles from './ProjectPanelStyle';
 
-const ProjectPanel = () => {
+const ProjectPanel = ({ projects }) => {
   const classes = useStyles();
   return (
     <Paper elevation={2} className={classes.root}>
@@ -20,10 +20,11 @@ const ProjectPanel = () => {
         Team's Project
       </Typography>
       <div className={classes.mb}>
-        <ProjectItem></ProjectItem>
-        <ProjectItem></ProjectItem>
-        <ProjectItem></ProjectItem>
-        <ProjectItem></ProjectItem>
+        {projects ? (
+          projects.map(p => <ProjectItem key={p.id} project={p}></ProjectItem>)
+        ) : (
+          <Typography>No projects yet!</Typography>
+        )}
       </div>
 
       <Pagination count={3} color='primary' className={classes.paging} />

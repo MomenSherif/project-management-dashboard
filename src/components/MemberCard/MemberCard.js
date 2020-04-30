@@ -9,7 +9,7 @@ import cx from 'clsx';
 
 import useStyles from './MemberCardStyle';
 
-const MemberCard = () => {
+const MemberCard = ({ member }) => {
   const classes = useStyles();
   return (
     <Grid item>
@@ -23,16 +23,16 @@ const MemberCard = () => {
           }
         />
         <CardContent>
-          <Typography variant='h5' component='h2'>
-            Cady Emad
+          <Typography variant='h6' component='h2'>
+            {member.firstName + ' ' + member.lastName}
           </Typography>
           <Typography className={classes.mb} color='textSecondary'>
-            Frontend Developer
+            {member.jobTitle}
           </Typography>
-          <Typography variant='body3' component='p'>
-            020-123-456-567
+          <Typography variant='body2' component='p'>
+            {member.phoneNumber}
             <br />
-            cady.emad@hotmail.com
+            {member.email}
           </Typography>
         </CardContent>
       </Card>

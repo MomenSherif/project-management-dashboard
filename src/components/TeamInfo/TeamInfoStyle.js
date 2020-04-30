@@ -38,7 +38,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: ' #F3F7FA',
     padding: '20px',
     borderLeft: `6px solid ${theme.palette.primary.dark} `
-    // lineHeight: '5px'
   },
   edtBtn: {
     position: 'fixed',

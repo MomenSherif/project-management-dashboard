@@ -16,12 +16,12 @@ function App() {
     <Fragment>
       <Project pageSize={3} />
       <Switch>
-        <Route path="/project-details/:id" exact component={ProjectDetails} />
-        <Route path="/sign-up" exact component={SignUp} />
-        <Route path="/sign-in" exact component={SignIn} />
-        <Route path="/team-details" exact component={TeamDetails} />
-        <Route path="/teams" exact component={Teams} />
-        <Route path="/" exact component={Homepage} />
+        <Route path='/project-details/:id' exact component={ProjectDetails} />
+        <Route path='/sign-up' exact component={SignUp} />
+        <Route path='/sign-in' exact component={SignIn} />
+        <Route path='/team-details/:id' exact component={TeamDetails} />
+        <Route path='/teams' exact component={Teams} />
+        <Route path='/' exact component={Homepage} />
       </Switch>
       <ToastContainer />
     </Fragment>
