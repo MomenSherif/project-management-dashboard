@@ -8,11 +8,13 @@ import Homepage from './pages/Homepage';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Teams from './pages/Teams';
+import Project from './pages/Project';
 import TeamDetails from './pages/TeamDetails';
 
 function App() {
   return (
     <Fragment>
+      <Project pageSize={3} />
       <Switch>
         <Route path="/project-details/:id" exact component={ProjectDetails} />
         <Route path="/sign-up" exact component={SignUp} />
