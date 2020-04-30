@@ -1,37 +1,12 @@
 import React, { Fragment } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import CountUp from 'react-countup';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import GroupIcon from '@material-ui/icons/Group';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 
-import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment';
-// import useStyles from './ProjectCountStyle';
+import useStyles from './TeamCountStyle';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    minHeight: '130px',
-  },
-  center: {
-    textAlign: 'center',
-  },
-  projectCount: {
-    display: 'inline-block',
-    borderRadius: '50%',
-    border: `5px solid`,
-    borderColor: theme.palette.primary.light,
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-    lineHeight: `45px`,
-  },
-}));
-
-const TeamCount = (props) => {
+const TeamCount = ({ count }) => {
   const classes = useStyles();
 
   return (
@@ -46,12 +21,12 @@ const TeamCount = (props) => {
           alignItems="center"
           spacing={1}
         >
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Total</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6" className={classes.projectCount}>
-              10
+              <CountUp end={count} duration={1}></CountUp>
             </Typography>
           </Grid>
         </Grid>

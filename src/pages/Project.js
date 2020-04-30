@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
@@ -9,12 +10,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import DoneIcon from '@material-ui/icons/Done';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
+import AutoRenewIcon from '@material-ui/icons/Autorenew';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 import ProjectCard from '../components/ProjectCard/ProjectCard';
 import ProjectFormDialog from '../components/ProjectFormDialog/ProjectFormDialog';
-// import { GetProjectsByStatus } from '../actions/projects';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,47 +24,55 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
     margin: 'auto',
   },
-  pagging: {
+  paging: {
     '& > *': {
       marginTop: theme.spacing(2),
     },
   },
 }));
 
-const Project = ({ projects }) => {
+const Project = ({ projects, pages, pageSize }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const [filteredProjects, setFilteredProjects] = React.useState(projects);
+  const [value, setValue] = useState(0);
+  const [page, setPage] = useState(1);
+  const [numOfPages, setNumOfPages] = useState(pages);
+  const [filteredProjects, setFilteredProjects] = useState(
+    projects.slice(0, pageSize)
+  );
+  const firstCardInPage = pageSize * (page - 1);
+  const projectStatusArr = ['in-progress', 'in-review', 'done'];
+
+  useEffect(() => {
+    if (value === 0)
+      return setNumOfPages(Math.ceil(projects.length / pageSize));
+
+    setNumOfPages(Math.ceil(filteredProjects.length / pageSize));
+  }, [filteredProjects]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    switch (newValue) {
-      case 1:
-        setFilteredProjects(
-          projects.filter((project) => project.state === 'in-progress')
-        );
-        break;
-      case 2:
-        setFilteredProjects(
-          projects.filter((project) => project.state === 'in-review')
-        );
+    setPage(1);
 
-        break;
-      case 3:
-        setFilteredProjects(
-          projects.filter((project) => project.state === 'done')
-        );
-        break;
-      default:
-        setFilteredProjects(projects);
-        break;
-    }
+    if (newValue === 0) return setFilteredProjects(projects);
+
+    setFilteredProjects(
+      projects.filter(
+        (project) => project.state === projectStatusArr[newValue - 1]
+      )
+    );
   };
-  const projectList = filteredProjects.map((project) => (
-    <Grid item key={project.id} xs={12}>
-      <ProjectCard project={project} />
-    </Grid>
-  ));
+
+  const handelPagination = (event, page) => {
+    setPage(page);
+  };
+
+  const projectList = filteredProjects
+    .slice(firstCardInPage, firstCardInPage + pageSize)
+    .map((project) => (
+      <Grid item key={project.id} xs={12}>
+        <ProjectCard project={project} />
+      </Grid>
+    ));
   return (
     <Container>
       <Typography variant="h3" gutterBottom align="center" color="primary">
@@ -78,24 +87,30 @@ const Project = ({ projects }) => {
           textColor="primary"
           aria-label="icon label tabs example"
         >
-          <Tab icon={<AutorenewIcon />} label="ALL" />
-          <Tab icon={<AutorenewIcon />} label="IN PROGRESS" />
+          <Tab icon={<GitHubIcon />} label="ALL" />
+          <Tab icon={<AutoRenewIcon />} label="IN PROGRESS" />
           <Tab icon={<RateReviewIcon />} label="IN REVIEW" />
           <Tab icon={<DoneIcon />} label="DONE" />
         </Tabs>
       </Paper>
       <Grid container spacing={1} direction="row" justify="center">
         {projectList}
-        <Grid item className={classes.pagging}>
-          <Pagination count={10} color="primary" />
+        <Grid item className={classes.paging}>
+          <Pagination
+            count={numOfPages}
+            onChange={handelPagination}
+            color="primary"
+            page={page}
+          />
         </Grid>
       </Grid>
       <ProjectFormDialog />
     </Container>
   );
 };
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownPops) => ({
   projects: state.projects,
+  pages: state.projects.length / ownPops.pageSize,
 });
 
 export default connect(mapStateToProps)(Project);

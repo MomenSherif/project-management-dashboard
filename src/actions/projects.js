@@ -19,4 +19,5 @@ const toggleTeam = (teamId, projectId) => ({
   teamId,
   projectId,
 });
+
 export { addProject, deleteProject, updateProject, toggleTeam };

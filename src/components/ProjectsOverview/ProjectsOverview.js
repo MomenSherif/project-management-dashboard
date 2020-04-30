@@ -6,22 +6,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-  },
-  subtitle2: {
-    color: theme.palette.text.secondary,
-  },
-  status: {
-    borderRadius: theme.spacing(1),
-    maxWidth: 'max-content',
-  },
-  success: {},
-}));
+import useStyles from './ProjectsOverviewStyle';
+import ChipProjectStatus from '../ChipProjectStatus/ChipProjectStatus';
 
 const ProjectsOverview = (props) => {
   const classes = useStyles();
@@ -49,14 +36,7 @@ const ProjectsOverview = (props) => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <Box
-                  bgcolor="success.main"
-                  color="info.contrastText"
-                  p={1}
-                  className={classes.status}
-                >
-                  Done
-                </Box>
+                <ChipProjectStatus statusType="done" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -69,15 +49,7 @@ const ProjectsOverview = (props) => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <Box
-                  bgcolor="success.main"
-                  size="small"
-                  color="info.contrastText"
-                  p={1}
-                  className={classes.status}
-                >
-                  Done
-                </Box>
+                <ChipProjectStatus statusType="done" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -90,15 +62,7 @@ const ProjectsOverview = (props) => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <Box
-                  bgcolor="warning.main"
-                  size="small"
-                  color="info.contrastText"
-                  p={1}
-                  className={classes.status}
-                >
-                  In review
-                </Box>
+                <ChipProjectStatus statusType="in-review" />
               </TableCell>
             </TableRow>
           </TableBody>

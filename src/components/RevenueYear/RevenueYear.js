@@ -1,17 +1,9 @@
 import React, { Fragment } from 'react';
+import CountUp from 'react-countup';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    minHeight: '130px',
-  },
-  center: {
-    textAlign: 'center',
-  },
-}));
+import useStyles from './RevenueYearStyle';
 
 const RevenueYear = (props) => {
   const classes = useStyles();
@@ -26,7 +18,8 @@ const RevenueYear = (props) => {
           Total/Planned
         </Typography>
         <Typography variant="h6" className={classes.center}>
-          102,400/150,000
+          <CountUp end={421300} duration={1} separator=","></CountUp>/
+          <CountUp end={1000000} duration={1} separator=","></CountUp>
         </Typography>
       </Paper>
     </Fragment>
