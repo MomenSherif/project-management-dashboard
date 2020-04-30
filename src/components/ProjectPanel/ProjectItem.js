@@ -5,8 +5,9 @@ import Button from '@material-ui/core/Button';
 import cx from 'clsx';
 
 import useStyles from './ProjectItemStyle';
+import { Link } from 'react-router-dom';
 
-const ProjectItem = () => {
+const ProjectItem = ({ project }) => {
   const classes = useStyles();
   return (
     <Box
@@ -15,14 +16,14 @@ const ProjectItem = () => {
     >
       <div className={classes.flexCol}>
         <Typography className={classes.mr} varient='body1'>
-          Project title
+          {project.title}
         </Typography>
         <Typography
           varient='body2'
           color='textSecondary'
           className={classes.mr}
         >
-          organization
+          {project.organizationId}
         </Typography>
       </div>
       <div className={classes.flexCol}>
@@ -31,16 +32,18 @@ const ProjectItem = () => {
           color='secondary'
           className={classes.mr}
         >
-          In Progress
+          {project.state}
         </Typography>
-        <Button
-          variant='contained'
-          size='small'
-          color='primary'
-          className={cx(classes.margin, classes.btn)}
-        >
-          View
-        </Button>
+        <Link to={`/project-details/${project.id}`} className={classes.Link}>
+          <Button
+            variant='contained'
+            size='small'
+            color='primary'
+            className={classes.margin}
+          >
+            View
+          </Button>
+        </Link>
       </div>
     </Box>
   );

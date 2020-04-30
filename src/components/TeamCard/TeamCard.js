@@ -18,7 +18,7 @@ const TeamCard = ({
   leader,
   projects,
   employees,
-  createdAt,
+  createdAt
 }) => {
   const classes = useStyles();
 
@@ -65,12 +65,12 @@ const TeamCard = ({
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
             <Avatar
-              alt={leader}
+              alt={leader.name}
               src='https://storage.googleapis.com/indie-hackers.appspot.com/podcast-thumbnails/028-wes-bos.jpg'
             />
           </Grid>
           <Typography variant='body1' color='textSecondary'>
-            {leader}
+            {leader.firstName + ' ' + leader.lastName}
           </Typography>
         </Grid>
         <Grid

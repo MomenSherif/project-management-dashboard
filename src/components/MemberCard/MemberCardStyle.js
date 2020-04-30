@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 250,
+    maxHeight: 350,
     borderLeft: `10px solid ${theme.palette.primary.dark}`
   },
   flex: {
