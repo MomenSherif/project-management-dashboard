@@ -26,7 +26,9 @@ import { toast } from 'react-toastify';
 
 const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
   const switchBtnsState = teams.reduce((acc, team) => {
-    acc[`teamCheck-${team.id}`] = false;
+    acc[`teamCheck-${team.id}`] = project.teams.includes(team.id)
+      ? true
+      : false;
     return acc;
   }, {});
 
