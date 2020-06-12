@@ -14,8 +14,12 @@ import TeamDetails from './pages/TeamDetails';
 function App() {
   return (
     <Fragment>
-      <Project pageSize={3} />
       <Switch>
+        <Route
+          path='/projects'
+          exact
+          render={(props) => <Project {...props} pageSize={3} />}
+        />
         <Route path='/project-details/:id' exact component={ProjectDetails} />
         <Route path='/sign-up' exact component={SignUp} />
         <Route path='/sign-in' exact component={SignIn} />

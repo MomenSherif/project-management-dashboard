@@ -1,25 +1,25 @@
-/* Will be uses to set teams to redux store,
+/* Will be used to set teams to redux store,
 when be fetched by async action fetchTeams*/
-const setTeams = teams => ({
+const setTeams = (teams) => ({
   type: 'SET_TEAMS',
-  teams
+  teams,
 });
 
 const fetchTeams = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     // get teams from DB
     // dispatch(setTeams(teams))
   };
 };
 
-const addTeam = team => ({
+const addTeam = (team) => ({
   type: 'ADD_TEAM',
-  team
+  team,
 });
 
-const deleteTeam = id => ({
+const deleteTeam = (id) => ({
   type: 'DELETE_TEAM',
-  id
+  id,
 });
 
 /**
@@ -30,23 +30,23 @@ const deleteTeam = id => ({
 const updateTeam = (id, updates) => ({
   type: 'UPDATE_TEAM',
   id,
-  updates
+  updates,
 });
 
-const getTeamMembers = teamId => ({
+const getTeamMembers = (teamId) => ({
   type: 'GET_MEMBERS',
-  teamId
+  teamId,
 });
 
-const getTeamProjects = teamId => ({
+const getTeamProjects = (teamId) => ({
   type: 'GET_TEAM_PROJECTS',
-  teamId
+  teamId,
 });
 
 const addTeamMember = (teamId, member) => ({
   type: 'ADD_MEMBER',
   teamId,
-  member
+  member,
 });
 
 export {
@@ -56,5 +56,5 @@ export {
   fetchTeams,
   getTeamMembers,
   getTeamProjects,
-  addTeamMember
+  addTeamMember,
 };
