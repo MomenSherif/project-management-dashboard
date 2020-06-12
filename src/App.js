@@ -10,6 +10,7 @@ import SignIn from './pages/SignIn';
 import Teams from './pages/Teams';
 import Project from './pages/Project';
 import TeamDetails from './pages/TeamDetails';
+import UserDetails from './pages/UserDetails';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/sign-in' exact component={SignIn} />
         <Route path='/team-details/:id' exact component={TeamDetails} />
         <Route path='/teams' exact component={Teams} />
+        <Route path='/user-details/:id' exact component={UserDetails} />
         <Route path='/' exact component={Homepage} />
       </Switch>
       <ToastContainer />
