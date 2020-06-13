@@ -49,22 +49,6 @@ const addTeamMember = (teamId, member) => ({
   member
 });
 
-const getTeamMembers = teamId => ({
-  type: 'GET_MEMBERS',
-  teamId
-});
-
-const getTeamProjects = teamId => ({
-  type: 'GET_TEAM_PROJECTS',
-  teamId
-});
-
-const addTeamMember = (teamId, member) => ({
-  type: 'ADD_MEMBER',
-  teamId,
-  member
-});
-
 export {
   addTeam,
   deleteTeam,

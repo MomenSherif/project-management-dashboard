@@ -37,7 +37,7 @@ const EmailDialog = ({ children, title, content, onConfirm, btnStyle }) => {
     toast.success(`Member is added successfully!`);
 
     handleClick();
-    onConfirm();
+    onConfirm(data.email);
   };
   return (
     <div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -11,10 +11,13 @@ import EmailDialog from '../Dialogs/EmailDialog/EmailDialog';
 import { addTeamMember } from '../../actions/teams';
 import { connect } from 'react-redux';
 
-const MembersPanel = ({ team, addTeamMember, teamId, members }) => {
+const MembersPanel = ({ team, addTeamMember, teamId, Members, pageSize }) => {
   const classes = useStyles();
+  const [page, setPage] = useState(1);
+  const [members, setMembers] = useState();
 
-  const onAddMember = () => {
+  const onAddMember = email => {
+    //get user by email
     const member = {
       id: 5,
       firstName: `cady`,
@@ -25,20 +28,46 @@ const MembersPanel = ({ team, addTeamMember, teamId, members }) => {
     };
 
     addTeamMember(teamId, member);
+    setPage(1);
   };
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, []);
+
+  useEffect(() => {
+    setMembers(
+      Members.slice(pageSize * (page - 1), pageSize * (page - 1) + pageSize)
+    );
+  }, [page]);
+
   return (
     <Paper elevation={2} className={classes.root}>
       <Typography variant='h4' className={classes.mb} align='center'>
         Team's Members
       </Typography>
       <Grid container className={classes.flex}>
-        {members ? (
+        {members?.length ? (
           members.map(member => <MemberCard key={member.id} member={member} />)
         ) : (
           <Typography>No members yet!</Typography>
         )}
       </Grid>
-      <Pagination count={3} color='secondary' className={classes.paging} />
+      {Members.length > pageSize ? (
+        <Pagination
+          count={Math.ceil(Members.length / pageSize)}
+          page={page}
+          onChange={handlePageChange}
+          color='secondary'
+          className={classes.paging}
+        />
+      ) : (
+        ''
+      )}
       <EmailDialog
         title='Add Member To Team'
         content='Enter Member Email'
@@ -57,4 +86,8 @@ const MapStateToProps = state => ({
 const MapDispatchToProps = dispatch => ({
   addTeamMember: (teamId, member) => dispatch(addTeamMember(teamId, member))
 });
+
+MembersPanel.defaultProps = {
+  pageSize: 2
+};
 export default connect(MapStateToProps, MapDispatchToProps)(MembersPanel);
