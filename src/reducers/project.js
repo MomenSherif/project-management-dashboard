@@ -10,7 +10,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
-    teams: [],
+    teams: [1, 2],
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
-    teams: [],
+    teams: [2, 3],
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
-    teams: [],
+    teams: [1, 3],
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
-    teams: [],
+    teams: [2, 3],
   },
   {
     id: 5,
@@ -62,7 +62,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
-    teams: [],
+    teams: [1, 2, 3],
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ const projectsReducerDefaultState = [
     budget: 200000,
     deadline: new Date(),
     createdAt: Date.now(),
-    teams: [],
+    teams: [1, 2],
   },
   {
     id: 7,

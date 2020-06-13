@@ -68,12 +68,12 @@ const SignIn = ({ history }) => {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOpenIcon />
         </Avatar>
-        <Typography component='h1' variant='h5'>
+        <Typography component="h1" variant="h5">
           Sign in
         </Typography>
         <form
@@ -84,11 +84,11 @@ const SignIn = ({ history }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                variant='standard'
+                variant="standard"
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
+                id="email"
+                label="Email Address"
+                name="email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 inputRef={register}
@@ -96,12 +96,12 @@ const SignIn = ({ history }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant='standard'
+                variant="standard"
                 fullWidth
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
                 inputRef={register}
@@ -109,18 +109,18 @@ const SignIn = ({ history }) => {
             </Grid>
           </Grid>
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
             disabled={formState.isSubmitting}
           >
-            Sign Up
+            Sign In
           </Button>
-          <Grid container justify='flex-end'>
+          <Grid container justify="flex-end">
             <Grid item>
-              <Link to='/sign-up' className={classes.link}>
+              <Link to="/sign-up" className={classes.link}>
                 Don't have an account? Sign up
               </Link>
             </Grid>
