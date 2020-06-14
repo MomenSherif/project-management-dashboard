@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
 import cx from 'clsx';
 
 import useStyles from './MemberCardStyle';

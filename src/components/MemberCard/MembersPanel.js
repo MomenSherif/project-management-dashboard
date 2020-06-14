@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +11,7 @@ import useStyles from './MemberPanelStyle';
 import MemberCard from './MemberCard';
 import EmailDialog from '../Dialogs/EmailDialog/EmailDialog';
 import { addTeamMember } from '../../actions/teams';
-import { connect } from 'react-redux';
+import TaskForm from '../TaskFormDialog/Taskform';
 
 const MembersPanel = ({ team, addTeamMember, teamId, Members, pageSize }) => {
   const classes = useStyles();
@@ -76,6 +78,7 @@ const MembersPanel = ({ team, addTeamMember, teamId, Members, pageSize }) => {
       >
         <AccountCircleIcon />
       </EmailDialog>
+      <TaskForm teamId={teamId} />
     </Paper>
   );
 };
