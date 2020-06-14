@@ -53,6 +53,30 @@ const teamsReducerDefaultState = [
         title: 'Angular project',
         state: 'In-progress',
         organizationId: 'ITI'
+      },
+      {
+        id: 3,
+        title: 'Angular project',
+        state: 'In-progress',
+        organizationId: 'ITI'
+      },
+      {
+        id: 4,
+        title: 'Angular project',
+        state: 'In-progress',
+        organizationId: 'ITI'
+      },
+      {
+        id: 5,
+        title: 'Angular project',
+        state: 'In-progress',
+        organizationId: 'ITI'
+      },
+      {
+        id: 6,
+        title: 'Angular project',
+        state: 'In-progress',
+        organizationId: 'ITI'
       }
     ],
     createdAt: Date.now()

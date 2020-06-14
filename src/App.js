@@ -19,7 +19,7 @@ function App() {
         <Route
           path='/projects'
           exact
-          render={(props) => <Project {...props} pageSize={3} />}
+          render={props => <Project {...props} pageSize={3} />}
         />
         <Route path='/project-details/:id' exact component={ProjectDetails} />
         <Route path='/sign-up' exact component={SignUp} />

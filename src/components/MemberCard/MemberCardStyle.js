@@ -24,6 +24,10 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(14),
     height: theme.spacing(14),
     alignSelf: 'center'
+  },
+  icon: {
+    // marginTop: '7px',
+    marginLeft: '140px'
   }
 }));
 

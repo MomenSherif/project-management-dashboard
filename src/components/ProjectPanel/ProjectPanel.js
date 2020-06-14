@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import ProjectItem from './ProjectItem';
 import Pagination from '@material-ui/lab/Pagination';
 import useStyles from './ProjectPanelStyle';
+import cx from 'clsx';
 
-const ProjectPanel = ({ projects }) => {
+const ProjectPanel = ({ Projects, pageSize }) => {
   const classes = useStyles();
+  const [page, setPage] = useState(1);
+  const [projects, setProjects] = useState();
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, []);
+
+  useEffect(() => {
+    setProjects(
+      Projects.slice(pageSize * (page - 1), pageSize * (page - 1) + pageSize)
+    );
+  }, [page]);
   return (
     <Paper elevation={2} className={classes.root}>
-      <TextField
-        id='standard-search'
-        label='Search field'
-        type='search'
-        className={classes.mb}
-      />
-      <Typography variant='h4' className={classes.mb}>
+      <Typography variant='h4' className={classes.titleMargin}>
         Team's Project
       </Typography>
-      <div className={classes.mb}>
+      <div className={cx(classes.mb, classes.projects)}>
         {projects ? (
           projects.map(p => <ProjectItem key={p.id} project={p}></ProjectItem>)
         ) : (
@@ -27,9 +38,23 @@ const ProjectPanel = ({ projects }) => {
         )}
       </div>
 
-      <Pagination count={3} color='primary' className={classes.paging} />
+      {Projects.length > pageSize ? (
+        <Pagination
+          count={Math.ceil(Projects.length / pageSize)}
+          page={page}
+          onChange={handlePageChange}
+          color='primary'
+          className={classes.paging}
+        />
+      ) : (
+        ''
+      )}
     </Paper>
   );
+};
+
+ProjectPanel.defaultProps = {
+  pageSize: 4
 };
 
 export default ProjectPanel;
