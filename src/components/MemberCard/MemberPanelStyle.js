@@ -5,7 +5,10 @@ const useStyles = makeStyles(theme => ({
     minWidth: 700,
     minHeight: 320,
     padding: theme.spacing(4),
-    marginBottom: '10px'
+    marginBottom: '10px',
+    [theme.breakpoints.down('xs')]: {
+      minWidth: 340
+    }
   },
   mb: {
     marginBottom: '20px'
@@ -21,7 +24,10 @@ const useStyles = makeStyles(theme => ({
   },
   paging: {
     position: 'relative',
-    left: 220
+    left: 220,
+    [theme.breakpoints.down('xs')]: {
+      left: 75
+    }
   }
 }));
 

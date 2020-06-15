@@ -25,11 +25,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: ' #F3F7FA',
     padding: '4px 16px',
     border: 1,
-    marginBottom: '8px'
-    // '&:hover': {
-    //   backgroundColor: theme.palette.primary.main,
-    //   color: 'white'
-    // }
+    marginBottom: '8px',
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%'
+    }
   },
   createdAt: {
     color: theme.palette.text.secondary,

@@ -27,7 +27,7 @@ const ProjectPanel = ({ Projects, pageSize }) => {
   }, [page]);
   return (
     <Paper elevation={2} className={classes.root}>
-      <Typography variant='h4' className={classes.titleMargin}>
+      <Typography variant='h4' className={classes.titleMargin} align='center'>
         Team's Project
       </Typography>
       <div className={cx(classes.mb, classes.projects)}>
