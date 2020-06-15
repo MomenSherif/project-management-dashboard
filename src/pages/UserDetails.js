@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Switch from '@material-ui/core/Switch';
 
 import GroupIcon from '@material-ui/icons/Group';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
@@ -16,18 +17,48 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
 import { fetchUserInfo } from '../actions/user';
 
 const UserDetails = ({ match }) => {
   const [userData, setUserData] = useState({});
+
+  const tasks = [
+    { id: 1, title: 'Task 1', state: 'done' },
+    { id: 2, title: 'Task 2', state: 'in-progress' },
+    { id: 3, title: 'Task 3', state: 'done' },
+    { id: 4, title: 'Task 4', state: 'done' },
+  ];
+
+  const switchBtnsState = tasks.reduce((acc, task) => {
+    acc[`taskCheck-${task.id}`] = task.state === 'done' ? true : false;
+    return acc;
+  }, {});
+
+  const [switchState, setSwitchState] = useState(switchBtnsState);
+
   useEffect(() => {
     // (async () => {
     //   const user = await fetchUserInfo(match.params.id);
     //   setUserData(user);
     // })();
   }, []);
+
+  const handleChange = (event) => {
+    setSwitchState({
+      ...switchState,
+      [event.target.name]: event.target.checked,
+    });
+    //toggleTeam(+event.target.value, +match.params.id);
+    if (event.target.checked) {
+      toast.success('Task marked as completed successfuly');
+    } else {
+      toast.warn('Task marked as in progress !');
+    }
+  };
+
   return (
     <Container>
       <Typography variant='h2' gutterBottom>
@@ -90,7 +121,25 @@ const UserDetails = ({ match }) => {
           </ProjectDetailsCard>
         </Grid>
         <Grid item xs={12}>
-          <ProjectDetailsCard title='Assigned Tasks' description={'Task1'}>
+          <ProjectDetailsCard
+            title='Assigned Tasks'
+            description={tasks.map((task) => (
+              <Grid container alignItems='center' key={task.id} spacing={3}>
+                <Grid item>
+                  <Typography variant='h4'>{task.title}</Typography>
+                </Grid>
+                <Grid item>
+                  <Switch
+                    checked={switchState[`taskCheck-${task.id}`]}
+                    onChange={handleChange}
+                    name={`taskCheck-${task.id}`}
+                    value={task.id}
+                    inputProps={{ 'task-id': task.id }}
+                  />
+                </Grid>
+              </Grid>
+            ))}
+          >
             <AssignmentIcon color='secondary' fontSize='large' />
           </ProjectDetailsCard>
         </Grid>

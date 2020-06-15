@@ -55,11 +55,13 @@ const ProjectDetails = ({
       toast.warn('Team removed!');
     }
   };
+
   const handleDeleteProject = () => {
     deleteProject();
     history.replace('/projects');
     toast.success(`Project ${project.title} deleted succ`);
   };
+
   const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: theme.palette.primary.main,
