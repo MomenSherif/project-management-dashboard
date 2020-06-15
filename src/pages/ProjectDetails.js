@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import Avatar from '@material-ui/core/Avatar';
+import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 
 import CreateIcon from '@material-ui/icons/Create';
@@ -15,16 +16,24 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import GroupIcon from '@material-ui/icons/Group';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
 import ProjectFormDialog from '../components/ProjectFormDialog/ProjectFormDialog';
 import TeamCard from '../components/TeamCard/TeamCard';
-import { toggleTeam } from '../actions/projects';
+import { toggleTeam, deleteProject } from '../actions/projects';
 
 import moment from 'moment';
 import { toast } from 'react-toastify';
 
-const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
+const ProjectDetails = ({
+  project,
+  teams,
+  toggleTeam,
+  match,
+  deleteProject,
+  history,
+}) => {
   const switchBtnsState = teams.reduce((acc, team) => {
     acc[`teamCheck-${team.id}`] = project.teams.includes(team.id)
       ? true
@@ -46,9 +55,19 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
       toast.warn('Team removed!');
     }
   };
+  const handleDeleteProject = () => {
+    deleteProject();
+    history.replace('/projects');
+    toast.success(`Project ${project.title} deleted succ`);
+  };
   const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: theme.palette.primary.main,
+    },
+    deleteBtn: {
+      right: '40px',
+      bottom: '112px',
+      position: 'fixed',
     },
   }));
   const classes = useStyles();
@@ -134,6 +153,14 @@ const ProjectDetails = ({ project, teams, toggleTeam, match }) => {
         </Grid>
       </Grid>
       <ProjectFormDialog isEdit={true} editingProject={project} />
+      <Fab
+        color='secondary'
+        aria-label='delete'
+        className={classes.deleteBtn}
+        onClick={handleDeleteProject}
+      >
+        <DeleteIcon />
+      </Fab>
     </Container>
   );
 };
@@ -148,7 +175,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleTeam: (teamId, projectId) => dispatch(toggleTeam(teamId, projectId)),
+  deleteProject: () => dispatch(deleteProject(+ownProps.match.params.id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails);
