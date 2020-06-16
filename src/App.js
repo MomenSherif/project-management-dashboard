@@ -12,15 +12,17 @@ import Project from './pages/Project';
 import TeamDetails from './pages/TeamDetails';
 import UserDetails from './pages/UserDetails';
 import AnonymousHomepage from './pages/AnonymousHomepage';
+import NavBar from './components/NavBar/NavBar';
 
 function App() {
   return (
     <Fragment>
+      <NavBar />
       <Switch>
         <Route
           path="/projects"
           exact
-          render={props => <Project {...props} pageSize={3} />}
+          render={(props) => <Project {...props} pageSize={3} />}
         />
         <Route path="/project-details/:id" exact component={ProjectDetails} />
         <Route path="/sign-up" exact component={SignUp} />
