@@ -3,7 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     minWidth: 360,
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    [theme.breakpoints.down('xs')]: {
+      minWidth: 340
+    }
   },
   flexCol: {
     display: 'flex',
@@ -23,8 +26,8 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     backgroundColor: theme.palette.primary.dark,
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+    // width: theme.spacing(8),
+    // height: theme.spacing(8),
     alignSelf: 'center'
   },
   box: {

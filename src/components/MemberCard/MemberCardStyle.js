@@ -20,10 +20,11 @@ const useStyles = makeStyles(theme => ({
   cardmargin: {
     marginBottom: '25px'
   },
-  large: {
-    width: theme.spacing(14),
-    height: theme.spacing(14),
-    alignSelf: 'center'
+  avatar: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+    alignSelf: 'center',
+    backgroundColor: theme.palette.primary.dark
   },
   icon: {
     // marginTop: '7px',

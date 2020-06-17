@@ -73,7 +73,9 @@ const TeamInfo = ({ deleteTeam, team }) => {
         <Typography variant='body1'>{team.description}</Typography>
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
-            <Avatar alt='leader' src='/avatar.png' />
+            <Avatar alt='leader' className={classes.avatar}>
+              {team.leader?.firstName.charAt(0).toUpperCase()}
+            </Avatar>
           </Grid>
           <Typography variant='body1' color='textSecondary'>
             {team.leader?.firstName + ' ' + team.leader?.lastName}

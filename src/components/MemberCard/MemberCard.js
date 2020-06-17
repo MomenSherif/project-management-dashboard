@@ -21,7 +21,14 @@ const MemberCard = ({ member }) => {
       >
         <CardHeader
           avatar={
-            <Avatar alt='Wes Bos' src='/avatar.png' className={classes.large} />
+            <Avatar
+              alt='team member'
+              variant='square'
+              className={classes.avatar}
+            >
+              {member.firstName.charAt(0).toUpperCase() +
+                member.lastName.charAt(0).toUpperCase()}
+            </Avatar>
           }
         />
         <CardContent>

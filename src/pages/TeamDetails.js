@@ -3,16 +3,29 @@ import { connect } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import MembersPanel from '../components/MemberCard/MembersPanel';
 import TeamInfo from '../components/TeamInfo/TeamInfo';
 import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
 
-const TeamDetails = (props) => {
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
+  }
+}));
+
+const TeamDetails = props => {
+  const classes = useStyles();
+
   return (
-    <Container>
-      <Grid container justify="space-between">
-        <Grid item md={3} sm={3} xs={6}>
+    <Container className={classes.container}>
+      <Grid container>
+        <Grid item xs={4}>
           <TeamInfo team={props.team}></TeamInfo>
         </Grid>
         <Grid item md={7} xs={12}>
@@ -34,6 +47,6 @@ const TeamDetails = (props) => {
   );
 };
 const mapStateToProps = (state, ownProps) => ({
-  team: state.teams.filter((team) => team.id === +ownProps.match.params.id)[0],
+  team: state.teams.filter(team => team.id === +ownProps.match.params.id)[0]
 });
 export default connect(mapStateToProps)(TeamDetails);
