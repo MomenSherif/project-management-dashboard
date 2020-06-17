@@ -69,7 +69,7 @@ const NavBar = ({ token, userId }) => {
             open={open}
             onClose={handleClose}
           >
-            {token && (
+            {!token && (
               <div>
                 <MenuItem to={`/profile/${userId}`} component={Link}>
                   <AccountCircle color="primary" className={classes.icon} />
@@ -90,7 +90,7 @@ const NavBar = ({ token, userId }) => {
                 </MenuItem>
               </div>
             )}
-            {!token && (
+            {token && (
               <div>
                 <MenuItem component={Link} to="/sign-up">
                   <Typography> SignUp </Typography>
@@ -102,7 +102,7 @@ const NavBar = ({ token, userId }) => {
             )}
           </Menu>
 
-          {!matches && !token && (
+          {!matches && token && (
             <div>
               <Button component={Link} to="/sign-up" color="inherit">
                 SIGNUP
@@ -112,7 +112,7 @@ const NavBar = ({ token, userId }) => {
               </Button>
             </div>
           )}
-          {!matches && token && (
+          {!matches && !token && (
             <div>
               <Button
                 component={Link}

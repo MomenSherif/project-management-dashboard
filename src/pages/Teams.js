@@ -15,7 +15,7 @@ const Teams = ({ teams }) => {
       item
       xs={11}
       md={5}
-      className='pattern-dots-md gray-light'
+      className="pattern-dots-md gray-light"
       style={{ marginBottom: '32px' }}
     >
       <div style={{ transform: 'translate(15px, -15px)' }}>
@@ -26,10 +26,10 @@ const Teams = ({ teams }) => {
 
   return (
     <Container>
-      <Typography variant='h2' gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Teams
       </Typography>
-      <Grid container justify='space-between' alignItems='flex-start'>
+      <Grid container justify="space-between" alignItems="flex-start">
         {teamList}
       </Grid>
       <TeamFormDialog />

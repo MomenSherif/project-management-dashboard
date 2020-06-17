@@ -15,12 +15,12 @@ const ProjectItem = ({ project }) => {
       borderRadius={8}
     >
       <div className={classes.flexCol}>
-        <Typography className={classes.mr} varient='body1'>
+        <Typography className={classes.mr} varient="body1">
           {project.title}
         </Typography>
         <Typography
-          varient='body2'
-          color='textSecondary'
+          varient="body2"
+          color="textSecondary"
           className={classes.mr}
         >
           {project.organizationId}
@@ -28,22 +28,22 @@ const ProjectItem = ({ project }) => {
       </div>
       <div className={classes.flexCol}>
         <Typography
-          varient='subtitle2'
-          color='secondary'
+          varient="subtitle2"
+          color="secondary"
           className={classes.mr}
         >
           {project.state}
         </Typography>
-        <Link to={`/project-details/${project.id}`} className={classes.Link}>
-          <Button
-            variant='contained'
-            size='small'
-            color='primary'
-            className={classes.margin}
-          >
-            View
-          </Button>
-        </Link>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          className={classes.margin}
+          component={Link}
+          to={`/project-details/${project.id}`}
+        >
+          View
+        </Button>
       </div>
     </Box>
   );
