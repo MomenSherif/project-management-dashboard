@@ -29,7 +29,7 @@ const schema = object().shape({
   leader: string()
     .lowercase()
     .email('Invalid email address')
-    .required('Team leader email is required!')
+    .required('Team leader email is required!'),
 });
 
 const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
@@ -38,10 +38,10 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
-    mode: 'onBlur'
+    mode: 'onBlur',
   });
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     const isValid = await isEmailExists(data.leader);
     if (!isValid) return toast.error('Email not exist!');
 
@@ -115,18 +115,20 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
               inputRef={register}
             />
 
-            <TextField
-              id='email'
-              name='leader'
-              label='Leader Email'
-              type='email'
-              fullWidth
-              margin='normal'
-              defaultValue={editMode ? editedTeam.leader.email : ''}
-              error={!!errors.leader}
-              helperText={errors.leader?.message}
-              inputRef={register}
-            />
+            {editMode && (
+              <TextField
+                id='email'
+                name='email'
+                label='Leader Email'
+                type='email'
+                fullWidth
+                margin='normal'
+                defaultValue={editMode ? editedTeam.leader.email : ''}
+                error={!!errors.leader}
+                helperText={errors.leader?.message}
+                inputRef={register}
+              />
+            )}
             <Button type='submit' color='primary' className={classes.submitBtn}>
               {editMode ? 'Edit' : 'Add'}
             </Button>
@@ -137,9 +139,9 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  addTeam: team => dispatch(addTeam(team)),
-  updateTeam: (id, team) => dispatch(updateTeam(id, team))
+const mapDispatchToProps = (dispatch) => ({
+  addTeam: (team) => dispatch(addTeam(team)),
+  updateTeam: (id, team) => dispatch(updateTeam(id, team)),
 });
 
 export default connect(null, mapDispatchToProps)(TeamFormDialog);
