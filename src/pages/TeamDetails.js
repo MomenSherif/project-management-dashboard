@@ -28,18 +28,19 @@ const TeamDetails = props => {
         <Grid item xs={4}>
           <TeamInfo team={props.team}></TeamInfo>
         </Grid>
-      </Grid>
+        <Grid item md={7} xs={12}>
+          <Grid container style={{ display: 'flex', flexDirection: 'column' }}>
+            <Grid item xs={4}>
+              <ProjectPanel Projects={props.team.projects}></ProjectPanel>
+            </Grid>
 
-      <Grid container style={{ display: 'flex', flexDirection: 'column' }}>
-        <Grid item xs={4}>
-          <ProjectPanel Projects={props.team.projects}></ProjectPanel>
-        </Grid>
-
-        <Grid item style={{ marginTop: '25px' }} xs={4}>
-          <MembersPanel
-            teamId={props.team.id}
-            Members={props.team.employees}
-          ></MembersPanel>
+            <Grid item style={{ marginTop: '25px' }} xs={4}>
+              <MembersPanel
+                teamId={props.team.id}
+                Members={props.team.employees}
+              ></MembersPanel>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Container>

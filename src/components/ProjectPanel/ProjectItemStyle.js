@@ -35,9 +35,6 @@ const useStyles = makeStyles(theme => ({
   createdAt: {
     color: theme.palette.text.secondary,
     marginTop: theme.spacing(2)
-  },
-  link: {
-    textDecoration: 'none'
   }
 }));
 
