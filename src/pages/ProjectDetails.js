@@ -71,45 +71,68 @@ const ProjectDetails = ({
       bottom: '112px',
       position: 'fixed',
     },
+    icon: {
+      marginRight: theme.spacing(1),
+    },
   }));
   const classes = useStyles();
   return (
     <Container>
-      <Typography variant='h2' gutterBottom>
+      <Typography variant="h2" gutterBottom align="center">
         Project Overview
       </Typography>
-      <Grid container justify='space-evenly' spacing={6}>
+      <Grid container justify="space-evenly" spacing={6}>
         <Grid item xs={12} md={6}>
-          <ProjectDetailsCard title='Project Name' description={project.title}>
-            <CreateIcon color='secondary' fontSize='large'></CreateIcon>
+          <ProjectDetailsCard title="Project Name" description={project.title}>
+            <CreateIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            ></CreateIcon>
           </ProjectDetailsCard>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ProjectDetailsCard title='Organization/Company' description='ITI'>
-            <BusinessIcon color='secondary' fontSize='large' />
+          <ProjectDetailsCard title="Organization/Company" description="ITI">
+            <BusinessIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            />
           </ProjectDetailsCard>
         </Grid>
         <Grid item xs={12}>
           <ProjectDetailsCard
-            title='Description'
+            title="Description"
             description={project.description}
           >
-            <AssignmentIcon color='secondary' fontSize='large' />
+            <AssignmentIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            />
           </ProjectDetailsCard>
         </Grid>
-        <Grid item xs={3}>
-          <ProjectDetailsCard title='Budget' description={project.budget}>
-            <MonetizationOnIcon color='secondary' fontSize='large' />
+        <Grid item xs={12} md={3} sm={6}>
+          <ProjectDetailsCard title="Budget" description={project.budget}>
+            <MonetizationOnIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            />
           </ProjectDetailsCard>
         </Grid>
-        <Grid item xs={3}>
-          <ProjectDetailsCard title='State' description={project.state}>
-            <TimelineIcon color='secondary' fontSize='large' />
+        <Grid item xs={12} sm={6} md={3}>
+          <ProjectDetailsCard title="State" description={project.state}>
+            <TimelineIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            />
           </ProjectDetailsCard>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={3}>
           <ProjectDetailsCard
-            title='Deadline'
+            title="Deadline"
             description={
               <time
                 date={moment(new Date(project.deadline)).format('YYYY-MM-DD')}
@@ -118,25 +141,29 @@ const ProjectDetails = ({
               </time>
             }
           >
-            <ScheduleIcon color='secondary' fontSize='large' />
+            <ScheduleIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            />
           </ProjectDetailsCard>
         </Grid>
         <Grid item xs={12}>
           <ProjectDetailsCard
-            title='Teams'
+            title="Teams"
             description={teams.map((team) => (
-              <Grid container alignItems='center' key={team.id} spacing={3}>
+              <Grid container alignItems="center" key={team.id} spacing={3}>
                 <Grid item>
                   <Avatar
                     title={team.name}
-                    variant='rounded'
+                    variant="rounded"
                     className={classes.avatar}
                   >
                     {team.name.charAt(0)}
                   </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography variant='h4'>{team.name}</Typography>
+                  <Typography variant="subtitle1">{team.name}</Typography>
                 </Grid>
                 <Grid item>
                   <Switch
@@ -150,14 +177,18 @@ const ProjectDetails = ({
               </Grid>
             ))}
           >
-            <GroupIcon color='secondary' fontSize='large' />
+            <GroupIcon
+              color="secondary"
+              fontSize="large"
+              className={classes.icon}
+            />
           </ProjectDetailsCard>
         </Grid>
       </Grid>
       <ProjectFormDialog isEdit={true} editingProject={project} />
       <Fab
-        color='secondary'
-        aria-label='delete'
+        color="primary"
+        aria-label="delete"
         className={classes.deleteBtn}
         onClick={handleDeleteProject}
       >

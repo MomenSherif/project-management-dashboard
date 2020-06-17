@@ -8,31 +8,32 @@ import MembersPanel from '../components/MemberCard/MembersPanel';
 import TeamInfo from '../components/TeamInfo/TeamInfo';
 import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
 
-const TeamDetails = props => {
+const TeamDetails = (props) => {
   return (
-    <Container style={{ display: 'flex' }}>
-      <Grid container>
-        <Grid item xs={4}>
+    <Container>
+      <Grid container justify="space-between">
+        <Grid item md={3} sm={3} xs={6}>
           <TeamInfo team={props.team}></TeamInfo>
         </Grid>
-      </Grid>
+        <Grid item md={7} xs={12}>
+          <Grid container style={{ display: 'flex', flexDirection: 'column' }}>
+            <Grid item xs={4}>
+              <ProjectPanel Projects={props.team.projects}></ProjectPanel>
+            </Grid>
 
-      <Grid container style={{ display: 'flex', flexDirection: 'column' }}>
-        <Grid item xs={4}>
-          <ProjectPanel Projects={props.team.projects}></ProjectPanel>
-        </Grid>
-
-        <Grid item style={{ marginTop: '25px' }} xs={4}>
-          <MembersPanel
-            teamId={props.team.id}
-            Members={props.team.employees}
-          ></MembersPanel>
+            <Grid item style={{ marginTop: '25px' }} xs={4}>
+              <MembersPanel
+                teamId={props.team.id}
+                Members={props.team.employees}
+              ></MembersPanel>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
   );
 };
 const mapStateToProps = (state, ownProps) => ({
-  team: state.teams.filter(team => team.id === +ownProps.match.params.id)[0]
+  team: state.teams.filter((team) => team.id === +ownProps.match.params.id)[0],
 });
 export default connect(mapStateToProps)(TeamDetails);

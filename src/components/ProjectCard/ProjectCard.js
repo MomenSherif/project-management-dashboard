@@ -29,14 +29,9 @@ const ProjectCard = ({ project }) => {
         subheader={new Date().toDateString()}
       />
       <CardContent className={classes.cardContent}>
-        <Grid container spacing={1} justify='space-between'>
+        <Grid container spacing={1} justify="space-between">
           <Grid item xs={12}>
-            <Typography
-              variant='subtitle1'
-              color='textSecondary'
-              component='p'
-              gutterBottom
-            >
+            <Typography variant="subtitle1" component="p" gutterBottom>
               {description}
             </Typography>
           </Grid>
@@ -45,8 +40,8 @@ const ProjectCard = ({ project }) => {
           </Grid>
           <Grid item>
             <Link to={`/project-details/${project.id}`}>
-              <Tooltip title='More Details' aria-label='More Details'>
-                <IconButton aria-label='share'>
+              <Tooltip title="More Details" aria-label="More Details">
+                <IconButton aria-label="share">
                   <ArrowForwardOutlinedIcon />
                 </IconButton>
               </Tooltip>

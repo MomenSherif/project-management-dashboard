@@ -75,7 +75,7 @@ const Project = ({ projects, pages, pageSize }) => {
     ));
   return (
     <Container>
-      <Typography variant="h3" gutterBottom align="center" color="primary">
+      <Typography variant="h2" gutterBottom align="center">
         Projects
       </Typography>
       <Paper square className={classes.root}>
