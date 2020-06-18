@@ -29,26 +29,21 @@ const UserDetails = ({ match }) => {
 
   const [isLoading, setLoading] = useState(true);
 
-  const tasks = [
-    { id: 1, title: 'Task 1', state: 'done' },
-    { id: 2, title: 'Task 2', state: 'in-progress' },
-    { id: 3, title: 'Task 3', state: 'done' },
-    { id: 4, title: 'Task 4', state: 'done' },
-  ];
-
-  const switchBtnsState = tasks.reduce((acc, task) => {
-    acc[`taskCheck-${task.id}`] = task.state === 'done' ? true : false;
-    return acc;
-  }, {});
-
-  const [switchState, setSwitchState] = useState(switchBtnsState);
+  const [switchState, setSwitchState] = useState(false);
 
   useEffect(() => {
-    console.log(userData);
     (async () => {
       const user = await fetchUserInfo(match.params.id);
-      console.log(user);
+
       setUserData(user);
+
+      const switchBtnsState = user?.tasks?.reduce((acc, task) => {
+        acc[`taskCheck-${task._id}`] = task.state === 'done' ? true : false;
+        return acc;
+      }, {});
+
+      setSwitchState(switchBtnsState);
+
       setLoading(false);
     })();
   }, []);
@@ -58,12 +53,16 @@ const UserDetails = ({ match }) => {
       ...switchState,
       [event.target.name]: event.target.checked,
     });
-    //toggleTeam(+event.target.value, +match.params.id);
     if (event.target.checked) {
       toast.success('Task marked as completed successfuly');
     } else {
       toast.warn('Task marked as in progress !');
     }
+    toggleTaskState(event.target.value)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => toast.error('Something went wrong try again later!'));
   };
 
   const useStyles = makeStyles((theme) => ({
@@ -167,20 +166,27 @@ const UserDetails = ({ match }) => {
             <Grid item xs={12}>
               <ProjectDetailsCard
                 title='Assigned Tasks'
-                description={tasks.map((task) => (
-                  <Grid container alignItems='center' key={task.id} spacing={3}>
+                description={userData?.tasks?.map((task) => (
+                  <Grid
+                    container
+                    alignItems='center'
+                    key={task._id}
+                    spacing={3}
+                  >
                     <Grid item>
                       <Typography variant='h4'>{task.title}</Typography>
                     </Grid>
-                    <Grid item>
-                      <Switch
-                        checked={switchState[`taskCheck-${task.id}`]}
-                        onChange={handleChange}
-                        name={`taskCheck-${task.id}`}
-                        value={task.id}
-                        inputProps={{ 'task-id': task.id }}
-                      />
-                    </Grid>
+                    {switchState != false && (
+                      <Grid item>
+                        <Switch
+                          checked={switchState[`taskCheck-${task?._id}`]}
+                          onChange={handleChange}
+                          name={`taskCheck-${task?._id}`}
+                          value={task?._id}
+                          inputProps={{ 'task-id': task._id }}
+                        />
+                      </Grid>
+                    )}
                   </Grid>
                 ))}
               >
