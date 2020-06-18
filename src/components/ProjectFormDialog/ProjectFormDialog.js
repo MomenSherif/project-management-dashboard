@@ -43,9 +43,6 @@ const ProjectFormDialog = ({
     if (!isEdit) {
       addProjectSuccess({
         ...data,
-        id: Math.random(),
-        state: 'in-progress',
-        createdAt: Date.now(),
       });
       toast.success(`Project ${data.title} created successfully!`);
     } else {
