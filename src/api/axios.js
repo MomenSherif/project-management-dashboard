@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '../redux/store';
+import store from '../store';
 
 // Add a request interceptor
 axios.interceptors.request.use(
