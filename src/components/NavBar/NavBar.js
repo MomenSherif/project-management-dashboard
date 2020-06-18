@@ -42,7 +42,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
         <Toolbar>
           <div className={classes.toolBar}>
             <Button component={Link} to="/" color="inherit">
-              DashBoard
+              —Board
             </Button>
           </div>
           {matches && (
