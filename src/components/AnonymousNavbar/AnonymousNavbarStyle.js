@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     textDecoration: 'none',
     fontWeight: 'bold',
-    fontSize: '25px',
-    // textTransform: 'uppercase',
+    fontSize: '20px',
+    textTransform: 'uppercase',
     '&:focus': {
       border: 0,
       outline: 0,
