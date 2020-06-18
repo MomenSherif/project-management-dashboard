@@ -54,12 +54,11 @@ const deleteProjectSuccess = (id) => (dispatch) => {
   );
 };
 
-const updateProjectSuccess = (project, id) => (dispatch) => {
-  return axios
-    .patch(`${process.env.REACT_APP_BACKEND_BASE_URL}/projects/${id}`, project)
-    .then((response) => {
-      dispatch(updateProject(id, project));
-    });
+const updateProjectSuccess = (id, project) => (dispatch) => {
+  return axios.patch(
+    `${process.env.REACT_APP_BACKEND_BASE_URL}/projects/${id}`,
+    project
+  );
 };
 
 export {

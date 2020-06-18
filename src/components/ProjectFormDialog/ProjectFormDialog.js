@@ -12,7 +12,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { addProjectSuccess, updateProject } from '../../actions/projects';
+import {
+  addProjectSuccess,
+  updateProjectSuccess,
+} from '../../actions/projects';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -30,7 +33,8 @@ const ProjectFormDialog = ({
   addProjectSuccess,
   isEdit,
   editingProject,
-  updateProject,
+  updateProjectSuccess,
+  handleProjectUpdate,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -47,8 +51,11 @@ const ProjectFormDialog = ({
       toast.success(`Project ${data.title} created successfully!`);
     } else {
       console.log(data);
-      updateProject(editingProject.id, { ...data });
-      toast.success(`Project ${data.title} Updated successfully!`);
+      updateProjectSuccess(editingProject._id, { ...data }).then((res) => {
+        console.log(res.data);
+        handleProjectUpdate(res.data);
+        toast.success(`Project ${data.title} Updated successfully!`);
+      });
     }
     handleClose();
   };
@@ -74,59 +81,59 @@ const ProjectFormDialog = ({
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby='form-dialog-title'
+        aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id='form-dialog-title'>
+        <DialogTitle id="form-dialog-title">
           {isEdit ? 'Edit Project' : 'Add New Project'}
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <TextField
-              id='title'
-              name='title'
-              label='Project Title'
-              type='text'
+              id="title"
+              name="title"
+              label="Project Title"
+              type="text"
               defaultValue={isEdit ? editingProject.title : ''}
               fullWidth
-              margin='normal'
+              margin="normal"
               error={!!errors.title}
               helperText={errors.title?.message}
               inputRef={register}
             />
             <TextField
-              id='description'
-              name='description'
-              label='Project description'
+              id="description"
+              name="description"
+              label="Project description"
               defaultValue={isEdit ? editingProject.description : ''}
               multiline
-              rows='4'
+              rows="4"
               fullWidth
-              margin='normal'
+              margin="normal"
               error={!!errors.description}
               helperText={errors.description?.message}
               inputRef={register}
             />
             <TextField
-              id='budget'
-              name='budget'
-              label='Project budget'
+              id="budget"
+              name="budget"
+              label="Project budget"
               defaultValue={isEdit ? editingProject.budget : ''}
-              type='number'
+              type="number"
               fullWidth
-              margin='normal'
+              margin="normal"
               error={!!errors.budget}
               helperText={errors.budget?.message}
               inputRef={register}
             />
             {isEdit ? (
               <TextField
-                id='state'
-                name='state'
-                label='Project State'
-                type='text'
+                id="state"
+                name="state"
+                label="Project State"
+                type="text"
                 defaultValue={isEdit ? editingProject.state : ''}
                 fullWidth
-                margin='normal'
+                margin="normal"
                 error={!!errors.title}
                 helperText={errors.title?.message}
                 inputRef={register}
@@ -135,10 +142,10 @@ const ProjectFormDialog = ({
               ''
             )}
             <TextField
-              id='deadLine'
-              name='deadLine'
-              label='DeadLine'
-              type='date'
+              id="deadLine"
+              name="deadLine"
+              label="DeadLine"
+              type="date"
               defaultValue={
                 isEdit
                   ? moment(new Date(editingProject.deadLine)).format(
@@ -151,14 +158,14 @@ const ProjectFormDialog = ({
                 shrink: true,
               }}
               fullWidth
-              margin='normal'
+              margin="normal"
               error={!!errors.deadLine}
               helperText={errors.deadLine?.message}
               inputRef={register}
             />
 
             <Button
-              type='submit'
+              type="submit"
               color={isEdit ? 'secondary' : 'primary'}
               className={classes.submitBtn}
             >
@@ -173,7 +180,8 @@ const ProjectFormDialog = ({
 
 const mapDispatchToProps = (dispatch) => ({
   addProjectSuccess: (project) => dispatch(addProjectSuccess(project)),
-  updateProject: (id, project) => dispatch(updateProject(id, project)),
+  updateProjectSuccess: (id, project) =>
+    dispatch(updateProjectSuccess(id, project)),
 });
 
 export default connect(null, mapDispatchToProps)(ProjectFormDialog);
