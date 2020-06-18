@@ -166,10 +166,8 @@ const ProjectDetails = ({
             <ProjectDetailsCard
               title="Deadline"
               description={
-                <time
-                  date={moment(new Date(project.deadline)).format('YYYY-MM-DD')}
-                >
-                  {moment(new Date(project.deadline)).format('D MMMM YYYY')}
+                <time date={moment(project.deadline).format('YYYY-MM-DD')}>
+                  {moment(project.deadline).format('D MMMM YYYY')}
                 </time>
               }
             >
