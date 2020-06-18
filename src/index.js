@@ -7,8 +7,11 @@ import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+import { autoLogin } from './actions/authentication';
 import { Provider } from 'react-redux';
 import store from './store';
+
+store.dispatch(autoLogin());
 
 ReactDOM.render(
   <BrowserRouter>
