@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
 import { Link, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import ProjectDetails from './pages/ProjectDetails';
@@ -14,10 +15,10 @@ import UserDetails from './pages/UserDetails';
 import AnonymousHomepage from './pages/AnonymousHomepage';
 import NavBar from './components/NavBar/NavBar';
 
-function App() {
+function App({ token }) {
   return (
     <Fragment>
-      <NavBar />
+      {token && <NavBar />}
       <Switch>
         <Route
           path="/projects"
@@ -38,4 +39,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+});
+
+export default connect(mapStateToProps)(App);

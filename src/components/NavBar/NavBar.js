@@ -86,7 +86,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
                   <GroupIcon color="primary" className={classes.icon} />
                   <Typography> Teams</Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/sign-in" onClick={onLogOut}>
+                <MenuItem component={Link} to="/anonymous" onClick={onLogOut}>
                   <ExitToAppIcon color="primary" className={classes.icon} />
                   <Typography> Logout</Typography>
                 </MenuItem>
