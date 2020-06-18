@@ -1,20 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
-import { useForm } from 'react-hook-form';
 import { string, object, date } from 'yup';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
 import { makeStyles } from '@material-ui/core/styles';
+
+import { signUp } from '../actions/authentication';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = object().shape({
-  organizationName: string()
+  name: string()
     .min(3, 'Organization name needs to be at least 3 characters!')
     .required('Organization name is required!'),
   firstName: string().required('First Name is required!'),
@@ -67,7 +70,7 @@ const schema = object().shape({
     .required('Password is required!'),
 });
 
-const SignUp = ({ history }) => {
+const SignUp = ({ history, onSignUp }) => {
   const classes = useStyles();
 
   const { register, handleSubmit, errors, formState } = useForm({
@@ -76,8 +79,14 @@ const SignUp = ({ history }) => {
   });
 
   const onSubmit = async (data) => {
-    toast.success(`Signed up Successfully & You're logged in now`);
-    history.replace('/');
+    onSignUp(data)
+      .then(() => {
+        toast.success(`Signed up Successfully & You're logged in now`);
+        history.replace('/');
+      })
+      .catch((err) => {
+        err.response.data.forEach(({ message }) => toast.error(message));
+      });
   };
 
   return (
@@ -97,13 +106,13 @@ const SignUp = ({ history }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                name='organizationName'
+                name='name'
                 variant='standard'
                 fullWidth
                 id='organizationName'
                 label='Organization Name'
-                error={!!errors.organizationName}
-                helperText={errors.organizationName?.message}
+                error={!!errors.name}
+                helperText={errors.name?.message}
                 inputRef={register}
               />
             </Grid>
@@ -211,4 +220,8 @@ const SignUp = ({ history }) => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+  onSignUp: (data) => dispatch(signUp(data)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
