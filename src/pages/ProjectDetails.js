@@ -65,12 +65,7 @@ const ProjectDetails = ({
 
   const classes = useStyles();
   useEffect(() => {
-    console.log(teams);
-
     getProjectById().then((res) => {
-      debugger;
-      console.log(res.data);
-
       setProject(res.data);
       const switchBtnsState = teams.length
         ? teams.reduce((acc, team) => {
