@@ -30,6 +30,7 @@ const getProjects = () => (dispatch) => {
         type: 'GET_PROJECTS',
         projects: response.data,
       });
+      return response.data;
     });
 };
 

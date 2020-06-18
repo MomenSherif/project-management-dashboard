@@ -32,14 +32,14 @@ const ProjectCard = ({ project }) => {
         <Grid container spacing={1} justify="space-between">
           <Grid item xs={12}>
             <Typography variant="subtitle1" component="p" gutterBottom>
-              {description}
+              {description.slice(0, 200)}
             </Typography>
           </Grid>
           <Grid item>
             <ChipProjectStatus statusType={state} />
           </Grid>
           <Grid item>
-            <Link to={`/project-details/${project.id}`}>
+            <Link to={`/project-details/${project._id}`}>
               <Tooltip title="More Details" aria-label="More Details">
                 <IconButton aria-label="share">
                   <ArrowForwardOutlinedIcon />

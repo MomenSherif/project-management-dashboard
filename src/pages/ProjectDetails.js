@@ -34,12 +34,14 @@ const ProjectDetails = ({
   deleteProject,
   history,
 }) => {
-  const switchBtnsState = teams.reduce((acc, team) => {
-    acc[`teamCheck-${team.id}`] = project.teams.includes(team.id)
-      ? true
-      : false;
-    return acc;
-  }, {});
+  const switchBtnsState = teams.length
+    ? teams.reduce((acc, team) => {
+        acc[`teamCheck-${team.id}`] = project.teams?.includes(team.id)
+          ? true
+          : false;
+        return acc;
+      }, {})
+    : false;
 
   const [switchState, setSwitchState] = React.useState(switchBtnsState);
 
