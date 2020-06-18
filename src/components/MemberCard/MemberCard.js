@@ -36,7 +36,7 @@ const MemberCard = ({ member }) => {
             {member.firstName + ' ' + member.lastName}
           </Typography>
           <Typography className={classes.mb} color='textSecondary'>
-            {member.jobTitle}
+            {member.role}
           </Typography>
           <Typography variant='body2' component='p'>
             {member.phoneNumber}

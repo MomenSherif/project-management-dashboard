@@ -1,15 +1,15 @@
-/* Will be used to set teams to redux store,
-when be fetched by async action fetchTeams*/
+import axios from '../api/axios';
+
 const setTeams = teams => ({
   type: 'SET_TEAMS',
   teams
 });
 
-const fetchTeams = () => {
-  return async dispatch => {
-    // get teams from DB
-    // dispatch(setTeams(teams))
-  };
+const fetchTeams = () => async dispatch => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_BACKEND_BASE_URL}/teams`
+  );
+  dispatch(setTeams(data));
 };
 
 const addTeam = team => ({

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import axios from '../../api/axios';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -17,11 +19,14 @@ import { deleteTeam } from '../../actions/teams';
 
 import useStyles from './TeamInfoStyle';
 
-const TeamInfo = ({ deleteTeam, team }) => {
+const TeamInfo = ({ deleteTeam, team, role }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const onDeleteTeam = () => {
+    axios.delete(`${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${team.id}`);
     deleteTeam(team.id);
+    history.replace('/');
   };
 
   return (
@@ -74,31 +79,35 @@ const TeamInfo = ({ deleteTeam, team }) => {
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
             <Avatar alt='leader' className={classes.avatar}>
-              {team.leader?.firstName.charAt(0).toUpperCase()}
+              {team.leaderId?.firstName.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>
           <Typography variant='body1' color='textSecondary'>
-            {team.leader?.firstName + ' ' + team.leader?.lastName}
+            {team.leaderId?.firstName + ' ' + team.leaderId?.lastName}
           </Typography>
         </Grid>
       </Paper>
+      {role === 'team-leader' && (
+        <div className={classes.mt}>
+          <TeamFormDialog editMode={true} editedTeam={team} />
 
-      <div className={classes.mt}>
-        <TeamFormDialog editMode={true} editedTeam={team} />
-
-        <ConfirmDialog
-          title='Delete Team'
-          content='Are you sure you want to delete this team?'
-          onConfirm={onDeleteTeam}
-          btnStyle={classes.edtBtn}
-        >
-          <DeleteIcon />
-        </ConfirmDialog>
-      </div>
+          <ConfirmDialog
+            title='Delete Team'
+            content='Are you sure you want to delete this team?'
+            onConfirm={onDeleteTeam}
+            btnStyle={classes.edtBtn}
+          >
+            <DeleteIcon />
+          </ConfirmDialog>
+        </div>
+      )}
     </Paper>
   );
 };
+const MapStateToProps = state => ({
+  role: state.auth.role
+});
 const mapDispatchToProps = dispatch => ({
   deleteTeam: teamId => dispatch(deleteTeam(teamId))
 });
-export default connect(null, mapDispatchToProps)(TeamInfo);
+export default connect(MapStateToProps, mapDispatchToProps)(TeamInfo);

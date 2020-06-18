@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
+import axios from '../../api/axios';
 
 import { useForm, Controller } from 'react-hook-form';
 import { string, object, date } from 'yup';
@@ -28,7 +29,11 @@ const schema = object().shape({
     20,
     'Description needs to be at least 20 characters!'
   ),
-  deadLine: date().typeError('Task deadline is required')
+  deadLine: date()
+    .required('Task deadline is required')
+    .min(new Date()),
+  projectId: string().required('Project is required'),
+  employeeId: string().required('Employee is required')
 });
 
 const TaskForm = ({ team, assignTask }) => {
@@ -38,15 +43,15 @@ const TaskForm = ({ team, assignTask }) => {
     validationSchema: schema,
     mode: 'onBlur'
   });
-  const onSubmit = async data => {
-    assignTask({
-      id: Math.random(),
-      ...data,
-      state: 'in-progress',
-      createdAt: Date.now()
-    });
-
+  const onSubmit = async submitedData => {
     setOpen(false);
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/tasks`,
+      submitedData
+    );
+    assignTask({
+      ...data
+    });
   };
   const handleClick = () => {
     setOpen(!open);
@@ -83,7 +88,6 @@ const TaskForm = ({ team, assignTask }) => {
               helperText={errors.description?.message}
               inputRef={register}
             />
-
             <FormControl className={classes.formControl} fullWidth>
               <InputLabel id='demo-simple-select-label'>
                 Choose a member
@@ -92,7 +96,7 @@ const TaskForm = ({ team, assignTask }) => {
                 as={
                   <Select>
                     {team.employees.map(emp => (
-                      <MenuItem key={emp.id} value={emp.id}>
+                      <MenuItem key={emp._id} value={emp._id}>
                         {emp.firstName + ' ' + emp.lastName}
                       </MenuItem>
                     ))}
@@ -105,14 +109,12 @@ const TaskForm = ({ team, assignTask }) => {
             </FormControl>
 
             <FormControl className={classes.formControl} fullWidth>
-              <InputLabel id='demo-simple-select-label'>
-                Choose a project
-              </InputLabel>
+              <InputLabel>Choose a project</InputLabel>
               <Controller
                 as={
                   <Select>
                     {team.projects.map(project => (
-                      <MenuItem key={project.id} value={project.id}>
+                      <MenuItem key={project._id} value={project._id}>
                         {project.title}
                       </MenuItem>
                     ))}
@@ -124,8 +126,8 @@ const TaskForm = ({ team, assignTask }) => {
               />
             </FormControl>
             <TextField
-              id='deadline'
-              name='deadline'
+              id='deadLine'
+              name='deadLine'
               label='Task Deadline'
               type='date'
               className={classes.textField}
@@ -149,11 +151,11 @@ const TaskForm = ({ team, assignTask }) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  team: state.teams.filter(team => team.id === ownProps.teamId)[0]
-});
+// const mapStateToProps = state => ({
+//   team: state.teams.filter(team => team.id === ownProps.teamId)[0]
+// });
 const mapDispatchToProps = dispatch => ({
   assignTask: task => dispatch(assignTask(task))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
+export default connect(null, mapDispatchToProps)(TaskForm);

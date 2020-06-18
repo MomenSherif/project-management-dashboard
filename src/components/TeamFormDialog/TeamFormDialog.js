@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
+import axios from '../../api/axios';
 
 import { useForm } from 'react-hook-form';
 import { string, object } from 'yup';
@@ -25,33 +26,44 @@ const schema = object().shape({
   description: string().min(
     10,
     'Description needs to be at least 10 characters!'
-  ),
-  leader: string()
-    .lowercase()
-    .email('Invalid email address')
-    .required('Team leader email is required!'),
+  )
+  // leader: string()
+  //   .lowercase()
+  //   .email('Invalid email address')
+  //   .required('Team leader email is required!')
 });
 
 const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
-  // console.log('EDIT => ', editedTeam, 'editMode => ', editMode);
-
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
-    mode: 'onBlur',
+    mode: 'onBlur'
   });
 
-  const onSubmit = async (data) => {
-    const isValid = await isEmailExists(data.leader);
+  const onSubmit = async submitedData => {
+    const isValid = await isEmailExists(submitedData.leader);
     if (!isValid) return toast.error('Email not exist!');
 
     if (!editMode) {
-      // TODO: Don't forget to update when using async actions
-      addTeam({ id: Math.random(), ...data, createdAt: Date.now() });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/teams`,
+        {
+          ...submitedData
+        }
+      );
+      if (data) addTeam(data);
       toast.success(`Team ${data.name} created successfully!`);
     } else {
-      updateTeam(editedTeam.id, { ...data });
-      toast.success(`Team ${data.name} updated successfully!`);
+      console.log('from form', submitedData);
+
+      const { data } = await axios.patch(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${editedTeam.id}`,
+        {
+          ...submitedData
+        }
+      );
+      if (data) updateTeam(editedTeam.id, { ...submitedData });
+      toast.success(`Team ${submitedData.name} updated successfully!`);
     }
     setOpen(false);
   };
@@ -123,7 +135,7 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
                 type='email'
                 fullWidth
                 margin='normal'
-                defaultValue={editMode ? editedTeam.leader.email : ''}
+                defaultValue={editMode ? editedTeam.leaderId.email : ''}
                 error={!!errors.leader}
                 helperText={errors.leader?.message}
                 inputRef={register}
@@ -139,9 +151,9 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addTeam: (team) => dispatch(addTeam(team)),
-  updateTeam: (id, team) => dispatch(updateTeam(id, team)),
+const mapDispatchToProps = dispatch => ({
+  addTeam: team => dispatch(addTeam(team)),
+  updateTeam: (id, team) => dispatch(updateTeam(id, team))
 });
 
 export default connect(null, mapDispatchToProps)(TeamFormDialog);

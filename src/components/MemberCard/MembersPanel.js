@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import axios from '../../api/axios';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -13,24 +14,30 @@ import EmailDialog from '../Dialogs/EmailDialog/EmailDialog';
 import { addTeamMember } from '../../actions/teams';
 import TaskForm from '../TaskFormDialog/Taskform';
 
-const MembersPanel = ({ team, addTeamMember, teamId, Members, pageSize }) => {
+const MembersPanel = ({
+  team,
+  addTeamMember,
+  teamId,
+  Members,
+  pageSize,
+  role
+}) => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const [members, setMembers] = useState();
 
-  const onAddMember = email => {
-    //get user by email
-    const member = {
-      id: 5,
-      firstName: `cady`,
-      lastName: 'emad',
-      phoneNumber: ' 01222',
-      email: `cady@gmail.com`,
-      jobTitle: 'frontend developer'
-    };
-
-    addTeamMember(teamId, member);
-    setPage(1);
+  const onAddMember = async email => {
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/employees/assign-to-team`,
+      {
+        email,
+        teamId
+      }
+    );
+    if (data) {
+      addTeamMember(teamId, data);
+      setPage(1);
+    }
   };
 
   const handlePageChange = (event, value) => {
@@ -54,7 +61,7 @@ const MembersPanel = ({ team, addTeamMember, teamId, Members, pageSize }) => {
       </Typography>
       <Grid container className={classes.flex}>
         {members?.length ? (
-          members.map(member => <MemberCard key={member.id} member={member} />)
+          members.map(member => <MemberCard key={member._id} member={member} />)
         ) : (
           <Typography>No members yet!</Typography>
         )}
@@ -70,21 +77,24 @@ const MembersPanel = ({ team, addTeamMember, teamId, Members, pageSize }) => {
       ) : (
         ''
       )}
-      <EmailDialog
-        title='Add Member To Team'
-        content='Enter Member Email'
-        onConfirm={onAddMember}
-        btnStyle={classes.addBtn}
-      >
-        <AccountCircleIcon />
-      </EmailDialog>
-      <TaskForm teamId={teamId} />
+      {role === 'team-leader' && (
+        <EmailDialog
+          title='Add Member To Team'
+          content='Enter Member Email'
+          onConfirm={onAddMember}
+          btnStyle={classes.addBtn}
+        >
+          <AccountCircleIcon />
+        </EmailDialog>
+      )}
+      {role === 'business-owner' && <TaskForm teamId={teamId} team={team} />}
     </Paper>
   );
 };
 
 const MapStateToProps = state => ({
-  team: state.teams
+  // team: state.teams
+  role: state.auth.role
 });
 const MapDispatchToProps = dispatch => ({
   addTeamMember: (teamId, member) => dispatch(addTeamMember(teamId, member))
