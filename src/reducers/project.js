@@ -156,6 +156,7 @@
 //     teams: [],
 //   },
 // ];
+
 const projectsReducerDefaultState = [];
 const projectsReducer = (state = projectsReducerDefaultState, action) => {
   switch (action.type) {
