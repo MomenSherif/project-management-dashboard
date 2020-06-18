@@ -37,4 +37,8 @@ const autoLogin = () => async (dispatch) => {
   if (!user) return;
   dispatch(loginSuccess(JSON.parse(user)));
 };
-export { login, signUp, autoLogin };
+
+const logOut = () => ({
+  type: 'LOG_OUT',
+});
+export { login, logOut, signUp, autoLogin };
