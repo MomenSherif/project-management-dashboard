@@ -62,8 +62,11 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
     // .catch((error) => history.push('/error'));
   }, []);
   useEffect(() => {
-    if (value === 0)
-      return setNumOfPages(Math.ceil(projects.length / pageSize));
+    if (value === 0) {
+      setNumOfPages(Math.ceil(projects.length / pageSize));
+      setFilteredProjects(projects);
+      return;
+    }
 
     setNumOfPages(Math.ceil(filteredProjects.length / pageSize));
   }, [filteredProjects]);
@@ -95,19 +98,19 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
 
   let pageLoading = (
     <div className={classes.progress}>
-      <CircularProgress color="primary" thickness={4} size={100} />
+      <CircularProgress color='primary' thickness={4} size={100} />
     </div>
   );
   if (!load) {
     console.log(projects);
     pageLoading = (
-      <Grid container spacing={1} direction="row" justify="center">
+      <Grid container spacing={1} direction='row' justify='center'>
         {projectList}
         <Grid item className={classes.paging}>
           <Pagination
             count={numOfPages}
             onChange={handelPagination}
-            color="primary"
+            color='primary'
             page={page}
           />
         </Grid>
@@ -117,22 +120,22 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
 
   return (
     <Container className={classes.paper}>
-      <Typography variant="h2" gutterBottom align="center">
+      <Typography variant='h2' gutterBottom align='center'>
         Projects
       </Typography>
       <Paper square className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
-          variant="fullWidth"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="icon label tabs example"
+          variant='fullWidth'
+          indicatorColor='primary'
+          textColor='primary'
+          aria-label='icon label tabs example'
         >
-          <Tab icon={<GitHubIcon />} label="ALL" />
-          <Tab icon={<AutoRenewIcon />} label="IN PROGRESS" />
-          <Tab icon={<RateReviewIcon />} label="IN REVIEW" />
-          <Tab icon={<DoneIcon />} label="DONE" />
+          <Tab icon={<GitHubIcon />} label='ALL' />
+          <Tab icon={<AutoRenewIcon />} label='IN PROGRESS' />
+          <Tab icon={<RateReviewIcon />} label='IN REVIEW' />
+          <Tab icon={<DoneIcon />} label='DONE' />
         </Tabs>
       </Paper>
       {pageLoading}
@@ -140,10 +143,12 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
     </Container>
   );
 };
+
 const mapStateToProps = (state, ownPops) => ({
   projects: state.projects,
   pages: state.projects.length / ownPops.pageSize,
 });
+
 const mapDispatchToProps = (dispatch) => ({
   getProjects: () => dispatch(getProjects()),
 });

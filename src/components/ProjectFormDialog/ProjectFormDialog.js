@@ -170,6 +170,7 @@ const ProjectFormDialog = ({
     </Box>
   );
 };
+
 const mapDispatchToProps = (dispatch) => ({
   addProjectSuccess: (project) => dispatch(addProjectSuccess(project)),
   updateProject: (id, project) => dispatch(updateProject(id, project)),

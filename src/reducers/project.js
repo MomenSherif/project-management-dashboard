@@ -156,13 +156,13 @@
 //     teams: [],
 //   },
 // ];
+
 const projectsReducerDefaultState = [];
 const projectsReducer = (state = projectsReducerDefaultState, action) => {
   switch (action.type) {
     case 'GET_PROJECTS':
       return action.projects;
     case 'ADD_PROJECT':
-      console.log(action.project);
       return state.concat(action.project);
     case 'DELETE_PROJECT':
       return state.filter((project) => project.id !== action.id);
