@@ -16,10 +16,10 @@ const TeamCard = ({
   id,
   name,
   description,
-  leader,
+  leaderId,
   projects,
   employees,
-  createdAt,
+  createdAt
 }) => {
   const classes = useStyles();
 
@@ -30,58 +30,61 @@ const TeamCard = ({
       to={`/team-details/${id}`}
     >
       <Paper className={classes.card} elevation={2}>
-        <Grid container alignItems="center" spacing={2}>
+        <Grid container alignItems='center' spacing={2}>
           <Grid item>
-            <Avatar title={name} variant="rounded" className={classes.avatar}>
+            <Avatar title={name} variant='rounded' className={classes.avatar}>
               {name.charAt(0)}
             </Avatar>
           </Grid>
           <Grid item>
-            <Typography variant="h4">{name}</Typography>
+            <Typography variant='h4'>{name}</Typography>
           </Grid>
         </Grid>
-        <Typography variant="subtitle1" className={classes.mt}>
+        <Typography variant='subtitle1' className={classes.mt}>
           {description}
         </Typography>
         <Grid
           container
-          alignItems="center"
-          justify="flex-start"
+          alignItems='center'
+          justify='flex-start'
           spacing={3}
           className={classes.mt}
         >
           <Grid item className={classes.flex}>
-            <AssignmentIcon color="secondary" fontSize="large" />
-            <Typography variant="overline">
+            <AssignmentIcon color='secondary' fontSize='large' />
+            <Typography variant='overline'>
               {projects?.length
                 ? `${projects?.length} Projects`
                 : 'No Projects Assigned!'}
             </Typography>
           </Grid>
           <Grid item className={classes.flex}>
-            <GroupIcon color="secondary" />
-            <Typography variant="overline">
+            <GroupIcon color='secondary' />
+            <Typography variant='overline'>
               {employees?.length
                 ? `${employees?.length} Members`
                 : 'No Members Assigned!'}
             </Typography>
           </Grid>
         </Grid>
-        <Grid container alignItems="center" spacing={2} className={classes.mt}>
+        <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
-            <Avatar
-              alt={leader.name}
-              src="https://storage.googleapis.com/indie-hackers.appspot.com/podcast-thumbnails/028-wes-bos.jpg"
-            />
+            <Avatar alt={leaderId?.firstName} className={classes.avatar}>
+              {leaderId?.firstName.charAt(0).toUpperCase()}
+            </Avatar>
           </Grid>
-          <Typography variant="body1" color="textSecondary">
-            {leader.firstName + ' ' + leader.lastName}
-          </Typography>
+          {leaderId ? (
+            <Typography variant='body1' color='textSecondary'>
+              {leaderId.firstName + ' ' + leaderId.lastName}
+            </Typography>
+          ) : (
+            'No team leader yet'
+          )}
         </Grid>
         <Grid
           container
-          justify="center"
-          alignItems="center"
+          justify='center'
+          alignItems='center'
           className={classes.createdAt}
         >
           <EventAvailableIcon style={{ marginRight: '3px' }} />

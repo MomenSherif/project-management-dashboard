@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
   assignBtn: {
     position: 'fixed',
-    bottom: '280px',
+    bottom: '40px',
     right: '40px'
   },
   submitBtn: {

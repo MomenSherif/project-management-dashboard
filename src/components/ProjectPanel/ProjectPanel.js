@@ -31,10 +31,10 @@ const ProjectPanel = ({ Projects, pageSize }) => {
         Team's Project
       </Typography>
       <div className={cx(classes.mb, classes.projects)}>
-        {projects ? (
-          projects.map(p => <ProjectItem key={p.id} project={p}></ProjectItem>)
+        {projects?.length ? (
+          projects.map(p => <ProjectItem key={p._id} project={p}></ProjectItem>)
         ) : (
-          <Typography>No projects yet!</Typography>
+          <Typography align='center'>No projects yet!</Typography>
         )}
       </div>
 
