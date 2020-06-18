@@ -19,9 +19,14 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import GroupIcon from '@material-ui/icons/Group';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import ConfirmDialog from '../components/Dialogs/ConfirmDialog/ConfirmDialog';
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
 import ProjectFormDialog from '../components/ProjectFormDialog/ProjectFormDialog';
-import { toggleTeam, deleteProject, getProjectById } from '../actions/projects';
+import {
+  toggleTeam,
+  deleteProjectSuccess,
+  getProjectById,
+} from '../actions/projects';
 
 import moment from 'moment';
 import { toast } from 'react-toastify';
@@ -50,7 +55,7 @@ const ProjectDetails = ({
   teams,
   toggleTeam,
   match,
-  deleteProject,
+  deleteProjectSuccess,
   history,
   getProjectById,
 }) => {
@@ -80,6 +85,10 @@ const ProjectDetails = ({
     });
   }, []);
 
+  const handleProjectUpdate = (project) => {
+    setProject(project);
+  };
+
   const handleChange = (event) => {
     setSwitchState({
       ...switchState,
@@ -93,10 +102,11 @@ const ProjectDetails = ({
     }
   };
 
-  const handleDeleteProject = () => {
-    deleteProject();
-    history.replace('/projects');
-    toast.success(`Project ${project?.title} deleted succ`);
+  const handelDelete = () => {
+    deleteProjectSuccess().then((res) => {
+      toast.success(res.data.message);
+      history.replace('/projects');
+    });
   };
 
   let pageLoading = (
@@ -217,14 +227,19 @@ const ProjectDetails = ({
             </ProjectDetailsCard>
           </Grid>
         </Grid>
-        <ProjectFormDialog isEdit={true} editingProject={project} />
-        <Fab
-          color="primary"
-          aria-label="delete"
-          className={classes.deleteBtn}
-          onClick={handleDeleteProject}
-        >
-          <DeleteIcon />
+        <ProjectFormDialog
+          isEdit={true}
+          editingProject={project}
+          handleProjectUpdate={handleProjectUpdate}
+        />
+        <Fab color="primary" aria-label="delete" className={classes.deleteBtn}>
+          <ConfirmDialog
+            title="Delete Project"
+            content="Are you sure you want to delete this Project?"
+            onConfirm={handelDelete}
+          >
+            <DeleteIcon />
+          </ConfirmDialog>
         </Fab>
       </Fragment>
     );
@@ -233,19 +248,14 @@ const ProjectDetails = ({
   return <Container>{pageLoading}</Container>;
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const index = state.projects.findIndex(
-    (proj) => proj._id === +ownProps.match.params.id
-  );
-  return {
-    // project: state.projects[index],
-    teams: state.teams,
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  teams: state.teams,
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleTeam: (teamId, projectId) => dispatch(toggleTeam(teamId, projectId)),
-  deleteProject: () => dispatch(deleteProject(ownProps.match.params.id)),
+  deleteProjectSuccess: () =>
+    dispatch(deleteProjectSuccess(ownProps.match.params.id)),
   getProjectById: () => dispatch(getProjectById(ownProps.match.params.id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails);

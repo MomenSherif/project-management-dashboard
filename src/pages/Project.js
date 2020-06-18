@@ -47,15 +47,16 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
   const [value, setValue] = useState(0);
   const [page, setPage] = useState(1);
   const [numOfPages, setNumOfPages] = useState(pages);
-  const [filteredProjects, setFilteredProjects] = useState(
-    projects.slice(0, pageSize)
-  );
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [load, setLoad] = useState(true);
   const firstCardInPage = pageSize * (page - 1);
   const projectStatusArr = ['in-progress', 'in-review', 'done'];
 
   useEffect(() => {
+    debugger;
     getProjects().then((res) => {
+      debugger;
+      console.log(res);
       setFilteredProjects(res.slice(0, pageSize));
       setLoad(false);
     });
@@ -86,6 +87,11 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
 
   const handelPagination = (event, page) => {
     setPage(page);
+    window.scrollTo({
+      top: 500,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
   const projectList = filteredProjects
@@ -98,19 +104,19 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
 
   let pageLoading = (
     <div className={classes.progress}>
-      <CircularProgress color='primary' thickness={4} size={100} />
+      <CircularProgress color="primary" thickness={4} size={100} />
     </div>
   );
   if (!load) {
     console.log(projects);
     pageLoading = (
-      <Grid container spacing={1} direction='row' justify='center'>
+      <Grid container spacing={1} direction="row" justify="center">
         {projectList}
         <Grid item className={classes.paging}>
           <Pagination
             count={numOfPages}
             onChange={handelPagination}
-            color='primary'
+            color="primary"
             page={page}
           />
         </Grid>
@@ -120,22 +126,22 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
 
   return (
     <Container className={classes.paper}>
-      <Typography variant='h2' gutterBottom align='center'>
+      <Typography variant="h2" gutterBottom align="center">
         Projects
       </Typography>
       <Paper square className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
-          variant='fullWidth'
-          indicatorColor='primary'
-          textColor='primary'
-          aria-label='icon label tabs example'
+          variant="fullWidth"
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="icon label tabs example"
         >
-          <Tab icon={<GitHubIcon />} label='ALL' />
-          <Tab icon={<AutoRenewIcon />} label='IN PROGRESS' />
-          <Tab icon={<RateReviewIcon />} label='IN REVIEW' />
-          <Tab icon={<DoneIcon />} label='DONE' />
+          <Tab icon={<GitHubIcon />} label="ALL" />
+          <Tab icon={<AutoRenewIcon />} label="IN PROGRESS" />
+          <Tab icon={<RateReviewIcon />} label="IN REVIEW" />
+          <Tab icon={<DoneIcon />} label="DONE" />
         </Tabs>
       </Paper>
       {pageLoading}
