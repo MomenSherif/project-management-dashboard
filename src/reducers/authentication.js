@@ -9,6 +9,9 @@ const authenticationReducer = (
       return {
         ...action.user,
       };
+    case 'LOG_OUT':
+      localStorage.clear();
+      return {};
     default:
       return state;
   }
