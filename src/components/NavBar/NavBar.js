@@ -42,7 +42,7 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
   return (
     <AppBar
       position='static'
-      color={theme === 'light' && token ? 'primary' : 'default'}
+      color={theme === 'light' ? 'primary' : 'default'}
       className={classes.navBar}
     >
       <Container>
@@ -58,7 +58,7 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
               onClick={toggleTheme}
               color='inherit'
             >
-              {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+              {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
           </Tooltip>
           {matches && (
@@ -162,7 +162,7 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
               </Button>
               <Button
                 component={Link}
-                to='/sign-in'
+                to='/anonymous'
                 color='inherit'
                 className={classes.menuItem}
                 onClick={onLogOut}
