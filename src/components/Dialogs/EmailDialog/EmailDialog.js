@@ -32,10 +32,9 @@ const EmailDialog = ({ children, title, content, onConfirm, btnStyle }) => {
   };
 
   const onSubmit = async data => {
-    const isValid = await isEmailExists(data.email);
-    if (!isValid) return toast.error('Email not exist!');
-    toast.success(`Member is added successfully!`);
-
+    // const isValid = await isEmailExists(data.email);
+    // if (!isValid) return toast.error('Email not exist!');
+    // toast.success(`Member is added successfully!`);
     handleClick();
     onConfirm(data.email);
   };

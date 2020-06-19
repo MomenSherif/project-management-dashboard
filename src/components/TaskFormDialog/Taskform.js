@@ -50,9 +50,9 @@ const TaskForm = ({ team, assignTask }) => {
       `${process.env.REACT_APP_BACKEND_BASE_URL}/tasks`,
       submitedData
     );
-    assignTask({
-      ...data
-    });
+    if (!data) return toast.error('Cannot assign task!');
+    toast.success(`Task is assigned successfully!`);
+    assignTask(data);
   };
   const handleClick = () => {
     setOpen(!open);
