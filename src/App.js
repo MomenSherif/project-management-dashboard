@@ -49,7 +49,8 @@ function App({ token }) {
     <MuiThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Paper
         style={{
-          backgroundColor: theme === 'dark' ? '#212121' : 'transparent',
+          backgroundColor:
+            theme === 'dark' && token ? '#212121' : 'transparent',
           minHeight: '100vh',
         }}
       >
