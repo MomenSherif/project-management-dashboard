@@ -12,6 +12,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import {
   addProjectSuccess,
   updateProjectSuccess,
@@ -38,7 +43,10 @@ const ProjectFormDialog = ({
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [state, setState] = useState(editingProject?.state);
 
+  const states = ['in-progress', 'in-review', 'done'];
+  const newStates = states.filter((state) => state !== editingProject?.state);
   const { handleSubmit, register, errors } = useForm({
     validationSchema: ProjectSchema,
     mode: 'onBlur',
@@ -51,11 +59,12 @@ const ProjectFormDialog = ({
       toast.success(`Project ${data.title} created successfully!`);
     } else {
       console.log(data);
-      updateProjectSuccess(editingProject._id, { ...data }).then((res) => {
-        console.log(res.data);
-        handleProjectUpdate(res.data);
-        toast.success(`Project ${data.title} Updated successfully!`);
-      });
+      updateProjectSuccess(editingProject._id, { ...data, state }).then(
+        (res) => {
+          handleProjectUpdate({ ...res.data, state });
+          toast.success(`Project ${data.title} Updated successfully!`);
+        }
+      );
     }
     handleClose();
   };
@@ -67,7 +76,9 @@ const ProjectFormDialog = ({
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleChange = (event) => {
+    setState(event.target.value);
+  };
   return (
     <Box m={2} p={2}>
       <Fab
@@ -126,18 +137,27 @@ const ProjectFormDialog = ({
               inputRef={register}
             />
             {isEdit ? (
-              <TextField
-                id="state"
-                name="state"
-                label="Project State"
-                type="text"
-                defaultValue={isEdit ? editingProject.state : ''}
-                fullWidth
-                margin="normal"
-                error={!!errors.title}
-                helperText={errors.title?.message}
-                inputRef={register}
-              />
+              <>
+                <InputLabel shrink htmlFor="state-project">
+                  State
+                </InputLabel>
+                <FormControl className={classes.formControl}>
+                  <NativeSelect
+                    value={state}
+                    onChange={handleChange}
+                    inputProps={{
+                      id: 'state-project',
+                    }}
+                  >
+                    <option value={editingProject?.state}>
+                      {editingProject?.state}
+                    </option>
+                    {newStates.map((stateName) => (
+                      <option value={stateName}>{stateName}</option>
+                    ))}
+                  </NativeSelect>
+                </FormControl>
+              </>
             ) : (
               ''
             )}
