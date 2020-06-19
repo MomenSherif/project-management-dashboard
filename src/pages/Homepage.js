@@ -16,14 +16,18 @@ import TeamsChart from '../components/TeamsChart/TeamsChart';
 import { connect } from 'react-redux';
 
 import { getProjects } from '../actions/projects';
+import { fetchTeams } from '../actions/teams';
 
 const useStyles = makeStyles((theme) => ({
   pt: {
     paddingTop: theme.spacing(2),
   },
+  mb: {
+    marginBottom: theme.spacing(3),
+  },
 }));
 
-const Homepage = ({ projects, teams, getProjects }) => {
+const Homepage = ({ projects, teams, getProjects, fetchTeams }) => {
   const classes = useStyles();
   const [filteredProjects, setFilteredProjects] = useState(projects);
 
@@ -33,11 +37,15 @@ const Homepage = ({ projects, teams, getProjects }) => {
         res.filter((project) => project.state === 'in-progress')
       );
     });
+
+    fetchTeams();
   }, []);
+
+  // console.log(projects);
 
   return (
     <Container className={classes.pt}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3} className={classes.mb}>
         <Grid item xs={12} sm={6} md={3}>
           <ProjectCount count={filteredProjects.length}></ProjectCount>
         </Grid>
@@ -53,11 +61,11 @@ const Homepage = ({ projects, teams, getProjects }) => {
       </Grid>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <ProjectsOverview></ProjectsOverview>
+        <Grid item xs={12} className={classes.mb}>
+          <ProjectsOverview projects={projects}></ProjectsOverview>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <RevenueYearChart></RevenueYearChart>
+        <Grid item xs={12} className={classes.mb}>
+          <TopEmployees></TopEmployees>
         </Grid>
       </Grid>
 
@@ -66,7 +74,7 @@ const Homepage = ({ projects, teams, getProjects }) => {
           <TeamsChart teams={teams}></TeamsChart>
         </Grid>
         <Grid item xs={12} md={6}>
-          <TopEmployees></TopEmployees>
+          <RevenueYearChart></RevenueYearChart>
         </Grid>
       </Grid>
     </Container>
@@ -82,6 +90,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getProjects: () => dispatch(getProjects()),
+  fetchTeams: () => dispatch(fetchTeams()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
