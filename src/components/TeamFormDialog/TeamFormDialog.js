@@ -40,31 +40,26 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
     mode: 'onBlur'
   });
 
-  const onSubmit = async submitedData => {
-    const isValid = await isEmailExists(submitedData.leader);
-    if (!isValid) return toast.error('Email not exist!');
-
+  const onSubmit = submitedData => {
     if (!editMode) {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/teams`,
-        {
-          ...submitedData
-        }
-      );
-      if (!data) return toast.error('Team failed to be created!');
-      addTeam(data);
-      toast.success(`Team ${data.name} created successfully!`);
+      axios
+        .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/teams`, submitedData)
+        .then(({ data }) => {
+          addTeam(data);
+          toast.success(`Team ${submitedData.name} created successfully!`);
+        })
+        .catch(err => toast.error(err.response.data.message));
     } else {
-      const { data } = await axios.patch(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${editedTeam.id}`,
-        {
-          ...submitedData
-        }
-      );
-
-      if (!data) return toast.error('Team failed to be edited!');
-      updateTeam(editedTeam.id, { ...submitedData });
-      toast.success(`Team ${submitedData.name} updated successfully!`);
+      axios
+        .patch(
+          `${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${editedTeam.id}`,
+          submitedData
+        )
+        .then(({ data }) => {
+          updateTeam(editedTeam.id, data);
+          toast.success(`Team ${submitedData.name} updated successfully!`);
+        })
+        .catch(err => toast.error(err.response.data.message));
     }
     setOpen(false);
   };
@@ -136,7 +131,7 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
                 type='email'
                 fullWidth
                 margin='normal'
-                defaultValue={editMode ? editedTeam.leaderId.email : ''}
+                defaultValue={editMode ? editedTeam.leaderId?.email : ''}
                 error={!!errors.leader}
                 helperText={errors.leader?.message}
                 inputRef={register}

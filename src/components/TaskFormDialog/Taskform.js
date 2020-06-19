@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../api/axios';
 
@@ -46,19 +46,19 @@ const TaskForm = ({ team, assignTask }) => {
   });
   const onSubmit = async submitedData => {
     setOpen(false);
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_BACKEND_BASE_URL}/tasks`,
-      submitedData
-    );
-    if (!data) return toast.error('Cannot assign task!');
-    toast.success(`Task is assigned successfully!`);
-    assignTask(data);
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/tasks`, submitedData)
+      .then(({ data }) => {
+        assignTask(data);
+        toast.success(`Task is assigned successfully!`);
+      })
+      .catch(err => toast.error(err.response.data.message));
   };
   const handleClick = () => {
     setOpen(!open);
   };
   return (
-    <Fragment>
+    <>
       <Tooltip title='Assign Task to member' placement='left'>
         <Fab
           color='primary'
@@ -102,7 +102,7 @@ const TaskForm = ({ team, assignTask }) => {
               <Controller
                 as={
                   <Select>
-                    {team.employees.map(emp => (
+                    {team.employees?.map(emp => (
                       <MenuItem key={emp._id} value={emp._id}>
                         {emp.firstName + ' ' + emp.lastName}
                       </MenuItem>
@@ -120,7 +120,7 @@ const TaskForm = ({ team, assignTask }) => {
               <Controller
                 as={
                   <Select>
-                    {team.projects.map(project => (
+                    {team.projects?.map(project => (
                       <MenuItem key={project._id} value={project._id}>
                         {project.title}
                       </MenuItem>
@@ -154,7 +154,7 @@ const TaskForm = ({ team, assignTask }) => {
           </form>
         </DialogContent>
       </Dialog>
-    </Fragment>
+    </>
   );
 };
 

@@ -81,13 +81,15 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
             </Avatar>
           </Grid>
           <Typography variant='body1' color='textSecondary'>
-            {team.leaderId?.firstName + ' ' + team.leaderId?.lastName}
+            {team.leaderId
+              ? team.leaderId?.firstName + ' ' + team.leaderId?.lastName
+              : 'No team leader yet!'}
           </Typography>
         </Grid>
       </Paper>
       {role === 'business-owner' && (
         <div className={classes.mt}>
-          <TeamFormDialog editMode={true} editedTeam={team} />)
+          <TeamFormDialog editMode={true} editedTeam={team} />
           <ConfirmDialog
             title='Delete Team'
             content='Are you sure you want to delete this team?'
@@ -96,7 +98,6 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           >
             <DeleteIcon />
           </ConfirmDialog>
-          )
         </div>
       )}
     </Paper>
