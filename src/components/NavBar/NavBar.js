@@ -58,7 +58,7 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
               onClick={toggleTheme}
               color='inherit'
             >
-              {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+              {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
           </Tooltip>
           {matches && (
