@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -15,20 +15,31 @@ import RevenueYearChart from '../components/RevenueYearChart/RevenueYearChart';
 import TeamsChart from '../components/TeamsChart/TeamsChart';
 import { connect } from 'react-redux';
 
+import { getProjects } from '../actions/projects';
+
 const useStyles = makeStyles((theme) => ({
   pt: {
     paddingTop: theme.spacing(2),
   },
 }));
 
-const Homepage = ({ projects, teams }) => {
+const Homepage = ({ projects, teams, getProjects }) => {
   const classes = useStyles();
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+
+  useEffect(() => {
+    getProjects().then((res) => {
+      setFilteredProjects(
+        res.filter((project) => project.state === 'in-progress')
+      );
+    });
+  }, []);
 
   return (
     <Container className={classes.pt}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={3}>
-          <ProjectCount count={projects.length}></ProjectCount>
+          <ProjectCount count={filteredProjects.length}></ProjectCount>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <RevenueMonth></RevenueMonth>
@@ -69,4 +80,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Homepage);
+const mapDispatchToProps = (dispatch) => ({
+  getProjects: () => dispatch(getProjects()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
