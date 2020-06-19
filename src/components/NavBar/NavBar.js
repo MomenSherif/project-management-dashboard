@@ -42,7 +42,7 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
   return (
     <AppBar
       position='static'
-      color={theme === 'light' ? 'primary' : 'default'}
+      color={theme === 'light' && token ? 'primary' : 'default'}
       className={classes.navBar}
     >
       <Container>

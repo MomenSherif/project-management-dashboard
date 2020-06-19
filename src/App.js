@@ -19,10 +19,14 @@ import SignUp from './pages/SignUp';
 import Teams from './pages/Teams';
 
 function App({ token }) {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(
+    (localStorage.getItem('theme') && token) || 'light'
+  );
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) =>
+      prevTheme === 'light' && token ? 'dark' : 'light'
+    );
   };
 
   useEffect(() => {
