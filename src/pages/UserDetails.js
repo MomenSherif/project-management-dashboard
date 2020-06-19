@@ -5,7 +5,13 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -20,30 +26,30 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
-import { fetchUserInfo } from '../actions/user';
+import { fetchUserInfo, toggleTaskState } from '../api/userHelpers';
 
 const UserDetails = ({ match }) => {
   const [userData, setUserData] = useState({});
 
-  const tasks = [
-    { id: 1, title: 'Task 1', state: 'done' },
-    { id: 2, title: 'Task 2', state: 'in-progress' },
-    { id: 3, title: 'Task 3', state: 'done' },
-    { id: 4, title: 'Task 4', state: 'done' },
-  ];
+  const [isLoading, setLoading] = useState(true);
 
-  const switchBtnsState = tasks.reduce((acc, task) => {
-    acc[`taskCheck-${task.id}`] = task.state === 'done' ? true : false;
-    return acc;
-  }, {});
-
-  const [switchState, setSwitchState] = useState(switchBtnsState);
+  const [switchState, setSwitchState] = useState(false);
 
   useEffect(() => {
-    // (async () => {
-    //   const user = await fetchUserInfo(match.params.id);
-    //   setUserData(user);
-    // })();
+    (async () => {
+      const user = await fetchUserInfo(match.params.id);
+
+      setUserData(user);
+
+      const switchBtnsState = user?.tasks?.reduce((acc, task) => {
+        acc[`taskCheck-${task._id}`] = task.state === 'done' ? true : false;
+        return acc;
+      }, {});
+
+      setSwitchState(switchBtnsState);
+
+      setLoading(false);
+    })();
   }, []);
 
   const handleChange = (event) => {
@@ -51,103 +57,174 @@ const UserDetails = ({ match }) => {
       ...switchState,
       [event.target.name]: event.target.checked,
     });
-    //toggleTeam(+event.target.value, +match.params.id);
     if (event.target.checked) {
       toast.success('Task marked as completed successfuly');
     } else {
       toast.warn('Task marked as in progress !');
     }
+    toggleTaskState(event.target.value)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => toast.error('Something went wrong try again later!'));
   };
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: theme.spacing(4),
+      marginTop: theme.spacing(4),
+      padding: theme.spacing(4),
+    },
+  }));
+
+  const classes = useStyles();
 
   return (
     <Container>
       <Typography variant='h2' gutterBottom>
         User Info
       </Typography>
-      <Grid container justify='space-evenly' spacing={6}>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='First Name' description={'Menna'}>
-            <GroupIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
+      {isLoading && (
+        <Container className={classes.root}>
+          <CircularProgress color='secondary' />
+        </Container>
+      )}
+
+      {!isLoading && (
+        <Grid container justify='space-evenly' spacing={6}>
+          <Grid item xs={4}>
+            <ProjectDetailsCard
+              title='First Name'
+              description={userData.firstName}
+            >
+              <GroupIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          <Grid item xs={4}>
+            <ProjectDetailsCard
+              title='Last Name'
+              description={userData.lastName}
+            >
+              <GroupIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          <Grid item xs={4}>
+            <ProjectDetailsCard
+              title='Date of birth'
+              description={
+                <time date={moment(userData.dateOfBirth).format('YYYY-MM-DD')}>
+                  {moment(userData.dateOfBirth).format('D MMMM YYYY')}
+                </time>
+              }
+            >
+              <ScheduleIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          {userData.role !== 'business-owner' && (
+            <Grid item xs={4}>
+              <ProjectDetailsCard title='Salary' description={userData.salary}>
+                <MonetizationOnIcon color='secondary' fontSize='large' />
+              </ProjectDetailsCard>
+            </Grid>
+          )}
+          <Grid item xs={4}>
+            <ProjectDetailsCard title='Email' description={userData.email}>
+              <EmailIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          <Grid item xs={4}>
+            <ProjectDetailsCard
+              title='Phone'
+              description={userData.phoneNumber}
+            >
+              <PhoneIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          <Grid item xs={4}>
+            <ProjectDetailsCard
+              title='Organization'
+              description={userData.organizationId?.name}
+            >
+              <BusinessIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          {userData.role !== 'business-owner' && (
+            <Grid item xs={4}>
+              <ProjectDetailsCard
+                title='Team'
+                description={userData.teamId?.name}
+              >
+                <GroupIcon color='secondary' fontSize='large' />
+              </ProjectDetailsCard>
+            </Grid>
+          )}
+          <Grid item xs={4}>
+            <ProjectDetailsCard title='Role' description={userData.role}>
+              <AssignmentIndIcon color='secondary' fontSize='large' />
+            </ProjectDetailsCard>
+          </Grid>
+          {userData.role !== 'business-owner' && (
+            <Grid item xs={12}>
+              <ProjectDetailsCard
+                title='Assigned Tasks'
+                description={userData?.tasks?.map((task) => (
+                  <Grid
+                    container
+                    alignItems='center'
+                    key={task._id}
+                    spacing={3}
+                  >
+                    <Grid item>
+                      <ExpansionPanel>
+                        <ExpansionPanelSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls='panel1a-content'
+                          id='panel1a-header'
+                        >
+                          <Typography variant='h4'>{task.title}</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                          <Typography variant='body1' gutterBottom>
+                            {task.description}
+                          </Typography>
+                        </ExpansionPanelDetails>
+                        <ExpansionPanelDetails>
+                          <Typography variant='subtitle2' gutterBottom>
+                            DeadLine:{' '}
+                            <time
+                              date={moment(task.deadLine).format('YYYY-MM-DD')}
+                            >
+                              {moment(task.deadLine).format('D MMMM YYYY')}
+                            </time>
+                          </Typography>
+                        </ExpansionPanelDetails>
+                      </ExpansionPanel>
+                    </Grid>
+                    {switchState != false && (
+                      <Grid item>
+                        <Switch
+                          checked={switchState[`taskCheck-${task?._id}`]}
+                          onChange={handleChange}
+                          name={`taskCheck-${task?._id}`}
+                          value={task?._id}
+                          inputProps={{ 'task-id': task._id }}
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
+                ))}
+              >
+                <AssignmentIcon color='secondary' fontSize='large' />
+              </ProjectDetailsCard>
+            </Grid>
+          )}
         </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='Last Name' description={'Elnoqally'}>
-            <GroupIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard
-            title='Date of birth'
-            description={
-              <time date={moment(new Date()).format('YYYY-MM-DD')}>
-                {moment(new Date()).format('D MMMM YYYY')}
-              </time>
-            }
-          >
-            <ScheduleIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='Salary' description={'15000'}>
-            <MonetizationOnIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='Email' description={'menna@gmail.com'}>
-            <EmailIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='Phone' description={'01120187236'}>
-            <PhoneIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard
-            title='Organization'
-            description={'Vodafone International Services'}
-          >
-            <BusinessIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='Team' description={'Frontend Angular'}>
-            <GroupIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={4}>
-          <ProjectDetailsCard title='Role' description={'Employee'}>
-            <AssignmentIndIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-        <Grid item xs={12}>
-          <ProjectDetailsCard
-            title='Assigned Tasks'
-            description={tasks.map((task) => (
-              <Grid container alignItems='center' key={task.id} spacing={3}>
-                <Grid item>
-                  <Typography variant='h4'>{task.title}</Typography>
-                </Grid>
-                <Grid item>
-                  <Switch
-                    checked={switchState[`taskCheck-${task.id}`]}
-                    onChange={handleChange}
-                    name={`taskCheck-${task.id}`}
-                    value={task.id}
-                    inputProps={{ 'task-id': task.id }}
-                  />
-                </Grid>
-              </Grid>
-            ))}
-          >
-            <AssignmentIcon color='secondary' fontSize='large' />
-          </ProjectDetailsCard>
-        </Grid>
-      </Grid>
+      )}
     </Container>
   );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({});
-
-export default connect(null, mapDispatchToProps)(UserDetails);
+export default connect()(UserDetails);

@@ -13,9 +13,11 @@ import DoneIcon from '@material-ui/icons/Done';
 import AutoRenewIcon from '@material-ui/icons/Autorenew';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import ProjectCard from '../components/ProjectCard/ProjectCard';
 import ProjectFormDialog from '../components/ProjectFormDialog/ProjectFormDialog';
+import { getProjects } from '../actions/projects';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,27 +26,48 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
     margin: 'auto',
   },
+  paper: {
+    position: 'relative',
+  },
   paging: {
     '& > *': {
       marginTop: theme.spacing(2),
     },
   },
+  progress: {
+    left: '50%',
+    top: '300px',
+    marginLeft: '-4em',
+    position: 'absolute',
+  },
 }));
 
-const Project = ({ projects, pages, pageSize }) => {
+const Project = ({ projects, pages, pageSize, getProjects }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [page, setPage] = useState(1);
   const [numOfPages, setNumOfPages] = useState(pages);
-  const [filteredProjects, setFilteredProjects] = useState(
-    projects.slice(0, pageSize)
-  );
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [load, setLoad] = useState(true);
   const firstCardInPage = pageSize * (page - 1);
   const projectStatusArr = ['in-progress', 'in-review', 'done'];
 
   useEffect(() => {
-    if (value === 0)
-      return setNumOfPages(Math.ceil(projects.length / pageSize));
+    debugger;
+    getProjects().then((res) => {
+      debugger;
+      console.log(res);
+      setFilteredProjects(res.slice(0, pageSize));
+      setLoad(false);
+    });
+    // .catch((error) => history.push('/error'));
+  }, []);
+  useEffect(() => {
+    if (value === 0) {
+      setNumOfPages(Math.ceil(projects.length / pageSize));
+      setFilteredProjects(projects);
+      return;
+    }
 
     setNumOfPages(Math.ceil(filteredProjects.length / pageSize));
   }, [filteredProjects]);
@@ -64,17 +87,45 @@ const Project = ({ projects, pages, pageSize }) => {
 
   const handelPagination = (event, page) => {
     setPage(page);
+    window.scrollTo({
+      top: 500,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
   const projectList = filteredProjects
     .slice(firstCardInPage, firstCardInPage + pageSize)
     .map((project) => (
-      <Grid item key={project.id} xs={12}>
+      <Grid item key={project._id} xs={12}>
         <ProjectCard project={project} />
       </Grid>
     ));
+
+  let pageLoading = (
+    <div className={classes.progress}>
+      <CircularProgress color="primary" thickness={4} size={100} />
+    </div>
+  );
+  if (!load) {
+    console.log(projects);
+    pageLoading = (
+      <Grid container spacing={1} direction="row" justify="center">
+        {projectList}
+        <Grid item className={classes.paging}>
+          <Pagination
+            count={numOfPages}
+            onChange={handelPagination}
+            color="primary"
+            page={page}
+          />
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
-    <Container>
+    <Container className={classes.paper}>
       <Typography variant="h2" gutterBottom align="center">
         Projects
       </Typography>
@@ -93,24 +144,19 @@ const Project = ({ projects, pages, pageSize }) => {
           <Tab icon={<DoneIcon />} label="DONE" />
         </Tabs>
       </Paper>
-      <Grid container spacing={1} direction="row" justify="center">
-        {projectList}
-        <Grid item className={classes.paging}>
-          <Pagination
-            count={numOfPages}
-            onChange={handelPagination}
-            color="primary"
-            page={page}
-          />
-        </Grid>
-      </Grid>
+      {pageLoading}
       <ProjectFormDialog />
     </Container>
   );
 };
+
 const mapStateToProps = (state, ownPops) => ({
   projects: state.projects,
   pages: state.projects.length / ownPops.pageSize,
 });
 
-export default connect(mapStateToProps)(Project);
+const mapDispatchToProps = (dispatch) => ({
+  getProjects: () => dispatch(getProjects()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

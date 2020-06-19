@@ -13,14 +13,15 @@ const ProjectItem = ({ project }) => {
     <Box
       className={cx(classes.flexCol, classes.mr, classes.box)}
       borderRadius={8}
+      boxShadow={2}
     >
       <div className={classes.flexCol}>
-        <Typography className={classes.mr} varient="body1">
+        <Typography className={classes.mr} varient='body1'>
           {project.title}
         </Typography>
         <Typography
-          varient="body2"
-          color="textSecondary"
+          varient='body2'
+          color='textSecondary'
           className={classes.mr}
         >
           {project.organizationId}
@@ -28,16 +29,16 @@ const ProjectItem = ({ project }) => {
       </div>
       <div className={classes.flexCol}>
         <Typography
-          varient="subtitle2"
-          color="secondary"
+          varient='subtitle2'
+          color='secondary'
           className={classes.mr}
         >
           {project.state}
         </Typography>
         <Button
-          variant="contained"
-          size="small"
-          color="primary"
+          variant='contained'
+          size='small'
+          color='primary'
           className={classes.margin}
           component={Link}
           to={`/project-details/${project.id}`}

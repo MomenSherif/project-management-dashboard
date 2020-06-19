@@ -10,6 +10,7 @@ const fetchTeams = () => async dispatch => {
     `${process.env.REACT_APP_BACKEND_BASE_URL}/teams`
   );
   dispatch(setTeams(data));
+  return data;
 };
 
 const addTeam = team => ({

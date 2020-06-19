@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,6 +14,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import MenuItem from '@material-ui/core/MenuItem';
 import GroupIcon from '@material-ui/icons/Group';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
@@ -21,7 +24,7 @@ import useStyles from './NavBarStyle';
 
 import { logOut } from '../../actions/authentication';
 
-const NavBar = ({ token, userId, onLogOut }) => {
+const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
   const matches = useMediaQuery('(max-width:700px)');
   const classes = useStyles();
 
@@ -37,14 +40,27 @@ const NavBar = ({ token, userId, onLogOut }) => {
   };
 
   return (
-    <AppBar position='static' className={classes.navBar}>
+    <AppBar
+      position='static'
+      color={theme === 'light' ? 'primary' : 'default'}
+      className={classes.navBar}
+    >
       <Container>
         <Toolbar>
           <div className={classes.toolBar}>
             <Button component={Link} to='/' color='inherit'>
-              DashBoard
+              —Board
             </Button>
           </div>
+          <Tooltip title='toggle light/dark theme'>
+            <IconButton
+              aria-label='toggle theme'
+              onClick={toggleTheme}
+              color='inherit'
+            >
+              {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Tooltip>
           {matches && (
             <IconButton
               color='inherit'
@@ -71,7 +87,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
             open={open}
             onClose={handleClose}
           >
-            {!token && (
+            {token && (
               <div>
                 <MenuItem to={`/profile/${userId}`} component={Link}>
                   <AccountCircle color='primary' className={classes.icon} />
@@ -86,13 +102,13 @@ const NavBar = ({ token, userId, onLogOut }) => {
                   <GroupIcon color='primary' className={classes.icon} />
                   <Typography> Teams</Typography>
                 </MenuItem>
-                <MenuItem component={Link} to='/sign-in' onClick={onLogOut}>
+                <MenuItem component={Link} to='/anonymous' onClick={onLogOut}>
                   <ExitToAppIcon color='primary' className={classes.icon} />
                   <Typography> Logout</Typography>
                 </MenuItem>
               </div>
             )}
-            {token && (
+            {!token && (
               <div>
                 <MenuItem component={Link} to='/sign-up'>
                   <Typography> SignUp </Typography>
@@ -104,7 +120,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
             )}
           </Menu>
 
-          {!matches && token && (
+          {!matches && !token && (
             <div>
               <Button component={Link} to='/sign-up' color='inherit'>
                 SIGNUP
@@ -114,7 +130,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
               </Button>
             </div>
           )}
-          {!matches && !token && (
+          {!matches && token && (
             <div>
               <Button
                 component={Link}
@@ -146,7 +162,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
               </Button>
               <Button
                 component={Link}
-                to='/sign-in'
+                to='/anonymous'
                 color='inherit'
                 className={classes.menuItem}
                 onClick={onLogOut}
@@ -164,7 +180,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
 
 const mapStateToProps = (state) => ({
   token: state.auth.token,
-  userId: state.auth.userId,
+  userId: state.auth._id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

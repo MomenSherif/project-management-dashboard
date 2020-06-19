@@ -74,7 +74,7 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
         </Box>
       </Grid>
 
-      <Paper className={classes.paper} elevation={0}>
+      <Paper className={classes.paper} elevation={1}>
         <Typography variant='body1'>{team.description}</Typography>
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
@@ -104,10 +104,10 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
     </Paper>
   );
 };
-const MapStateToProps = state => ({
+const mapStateToProps = state => ({
   role: state.auth.role
 });
 const mapDispatchToProps = dispatch => ({
   deleteTeam: teamId => dispatch(deleteTeam(teamId))
 });
-export default connect(MapStateToProps, mapDispatchToProps)(TeamInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(TeamInfo);
