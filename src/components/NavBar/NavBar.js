@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,6 +14,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import MenuItem from '@material-ui/core/MenuItem';
 import GroupIcon from '@material-ui/icons/Group';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
@@ -21,7 +24,7 @@ import useStyles from './NavBarStyle';
 
 import { logOut } from '../../actions/authentication';
 
-const NavBar = ({ token, userId, onLogOut }) => {
+const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
   const matches = useMediaQuery('(max-width:700px)');
   const classes = useStyles();
 
@@ -37,7 +40,11 @@ const NavBar = ({ token, userId, onLogOut }) => {
   };
 
   return (
-    <AppBar position='static' className={classes.navBar}>
+    <AppBar
+      position='static'
+      color={theme === 'light' ? 'primary' : 'default'}
+      className={classes.navBar}
+    >
       <Container>
         <Toolbar>
           <div className={classes.toolBar}>
@@ -45,6 +52,15 @@ const NavBar = ({ token, userId, onLogOut }) => {
               —Board
             </Button>
           </div>
+          <Tooltip title='toggle light/dark theme'>
+            <IconButton
+              aria-label='toggle theme'
+              onClick={toggleTheme}
+              color='inherit'
+            >
+              {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Tooltip>
           {matches && (
             <IconButton
               color='inherit'
