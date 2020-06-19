@@ -37,27 +37,27 @@ const NavBar = ({ token, userId, onLogOut }) => {
   };
 
   return (
-    <AppBar position="static" className={classes.navBar}>
+    <AppBar position='static' className={classes.navBar}>
       <Container>
         <Toolbar>
           <div className={classes.toolBar}>
-            <Button component={Link} to="/" color="inherit">
+            <Button component={Link} to='/' color='inherit'>
               —Board
             </Button>
           </div>
           {matches && (
             <IconButton
-              color="inherit"
-              aria-label="menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              color='inherit'
+              aria-label='menu'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleMenu}
             >
               <MenuIcon />
             </IconButton>
           )}
           <Menu
-            id="menu-appbar"
+            id='menu-appbar'
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
@@ -74,30 +74,30 @@ const NavBar = ({ token, userId, onLogOut }) => {
             {token && (
               <div>
                 <MenuItem to={`/profile/${userId}`} component={Link}>
-                  <AccountCircle color="primary" className={classes.icon} />
+                  <AccountCircle color='primary' className={classes.icon} />
 
                   <Typography> Profile</Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/projects">
-                  <GitHubIcon color="primary" className={classes.icon} />
+                <MenuItem component={Link} to='/projects'>
+                  <GitHubIcon color='primary' className={classes.icon} />
                   <Typography> Projects</Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/teams">
-                  <GroupIcon color="primary" className={classes.icon} />
+                <MenuItem component={Link} to='/teams'>
+                  <GroupIcon color='primary' className={classes.icon} />
                   <Typography> Teams</Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/anonymous" onClick={onLogOut}>
-                  <ExitToAppIcon color="primary" className={classes.icon} />
+                <MenuItem component={Link} to='/anonymous' onClick={onLogOut}>
+                  <ExitToAppIcon color='primary' className={classes.icon} />
                   <Typography> Logout</Typography>
                 </MenuItem>
               </div>
             )}
             {!token && (
               <div>
-                <MenuItem component={Link} to="/sign-up">
+                <MenuItem component={Link} to='/sign-up'>
                   <Typography> SignUp </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/sign-in">
+                <MenuItem component={Link} to='/sign-in'>
                   <Typography> LogIn </Typography>
                 </MenuItem>
               </div>
@@ -106,10 +106,10 @@ const NavBar = ({ token, userId, onLogOut }) => {
 
           {!matches && !token && (
             <div>
-              <Button component={Link} to="/sign-up" color="inherit">
+              <Button component={Link} to='/sign-up' color='inherit'>
                 SIGNUP
               </Button>
-              <Button component={Link} to="/sign-in" color="inherit">
+              <Button component={Link} to='/sign-in' color='inherit'>
                 LOGIN
               </Button>
             </div>
@@ -119,7 +119,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
               <Button
                 component={Link}
                 to={`/profile/${userId}`}
-                color="inherit"
+                color='inherit'
                 className={classes.menuItem}
               >
                 <AccountCircle className={classes.icon} />
@@ -128,8 +128,8 @@ const NavBar = ({ token, userId, onLogOut }) => {
 
               <Button
                 component={Link}
-                to="/projects"
-                color="inherit"
+                to='/projects'
+                color='inherit'
                 className={classes.menuItem}
               >
                 <GitHubIcon className={classes.icon} />
@@ -137,8 +137,8 @@ const NavBar = ({ token, userId, onLogOut }) => {
               </Button>
               <Button
                 component={Link}
-                to="/teams"
-                color="inherit"
+                to='/teams'
+                color='inherit'
                 className={classes.menuItem}
               >
                 <GroupIcon className={classes.icon} />
@@ -146,8 +146,8 @@ const NavBar = ({ token, userId, onLogOut }) => {
               </Button>
               <Button
                 component={Link}
-                to="/sign-in"
-                color="inherit"
+                to='/sign-in'
+                color='inherit'
                 className={classes.menuItem}
                 onClick={onLogOut}
               >
@@ -164,7 +164,7 @@ const NavBar = ({ token, userId, onLogOut }) => {
 
 const mapStateToProps = (state) => ({
   token: state.auth.token,
-  userId: state.auth.userId,
+  userId: state.auth._id,
 });
 
 const mapDispatchToProps = (dispatch) => ({
