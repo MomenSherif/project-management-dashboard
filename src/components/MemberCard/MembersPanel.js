@@ -37,8 +37,7 @@ const MembersPanel = ({
         }
       )
       .then(({ data }) => {
-        // addTeamMember(teamId, data);
-        addTeamMember(team.name, data);
+        addTeamMember(teamId, data);
         setPage(1);
         toast.success(`Member is added successfully!`);
       })
