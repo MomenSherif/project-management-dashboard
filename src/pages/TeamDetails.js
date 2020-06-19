@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from '../api/axios';
 
 import Container from '@material-ui/core/Container';
@@ -47,7 +47,7 @@ const TeamDetails = ({ match }) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {loading ? (
         <LinearProgress
           variant='query'
@@ -77,7 +77,7 @@ const TeamDetails = ({ match }) => {
           </Grid>
         </Container>
       )}
-    </Fragment>
+    </>
   );
 };
 

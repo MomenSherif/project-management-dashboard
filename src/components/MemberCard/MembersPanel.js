@@ -28,17 +28,21 @@ const MembersPanel = ({
   const [members, setMembers] = useState();
 
   const onAddMember = async email => {
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_BACKEND_BASE_URL}/employees/assign-to-team`,
-      {
-        email,
-        teamId
-      }
-    );
-    if (!data) return toast.error('Email not exist!');
-    toast.success(`Member is added successfully!`);
-    addTeamMember(teamId, data);
-    setPage(1);
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/employees/assign-to-team`,
+        {
+          email,
+          teamId
+        }
+      )
+      .then(({ data }) => {
+        // addTeamMember(teamId, data);
+        addTeamMember(team.name, data);
+        setPage(1);
+        toast.success(`Member is added successfully!`);
+      })
+      .catch(err => toast.error(`Failed to add member to team!`));
   };
 
   const handlePageChange = (event, value) => {
@@ -67,7 +71,7 @@ const MembersPanel = ({
           <Typography>No members yet!</Typography>
         )}
       </Grid>
-      {Members.length > pageSize ? (
+      {Members?.length > pageSize ? (
         <Pagination
           count={Math.ceil(Members.length / pageSize)}
           page={page}
@@ -78,7 +82,7 @@ const MembersPanel = ({
       ) : (
         ''
       )}
-      {auth.role === 'team-leader' && team.leaderId.id === auth._id && (
+      {auth.role === 'team-leader' && team.leaderId?.id === auth._id && (
         <>
           <EmailDialog
             title='Add Member To Team'
@@ -101,7 +105,7 @@ const MapStateToProps = state => ({
   auth: state.auth
 });
 const MapDispatchToProps = dispatch => ({
-  addTeamMember: (teamId, member) => dispatch(addTeamMember(teamId, member))
+  addTeamMember: (teamName, member) => dispatch(addTeamMember(teamName, member))
 });
 
 MembersPanel.defaultProps = {
