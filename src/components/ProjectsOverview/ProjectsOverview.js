@@ -1,4 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import moment from 'moment';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
@@ -10,8 +12,34 @@ import TableBody from '@material-ui/core/TableBody';
 import useStyles from './ProjectsOverviewStyle';
 import ChipProjectStatus from '../ChipProjectStatus/ChipProjectStatus';
 
-const ProjectsOverview = (props) => {
+const ProjectsOverview = ({ projects }) => {
   const classes = useStyles();
+
+  // is this the right place?
+  const projectList = projects.map((project) => {
+    return (
+      <TableRow key={project._id}>
+        <TableCell>
+          <Typography variant="subtitle1">{project.title}</Typography>
+          <Typography variant="subtitle2" color="textSecondary">
+            {project.description.substring(0, 30) + '...'}
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="subtitle1">
+            {moment(project.deadLine).format('MMM DD, YYYY')}
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <ChipProjectStatus statusType={project.state} />
+        </TableCell>
+        <TableCell>
+          <Typography variant="subtitle1">{project.budget}</Typography>
+        </TableCell>
+      </TableRow>
+    );
+  });
+
   return (
     <Fragment>
       <Paper className={classes.paper}>
@@ -21,12 +49,15 @@ const ProjectsOverview = (props) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Project Name | Client</TableCell>
+              <TableCell>Project</TableCell>
+              <TableCell>Deadline | End date</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>Budget</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
+            {projectList}
+            {/* <TableRow>
               <TableCell>
                 <Typography variant="subtitle1">
                   Front-end project for one company
@@ -64,7 +95,7 @@ const ProjectsOverview = (props) => {
               <TableCell>
                 <ChipProjectStatus statusType="in-review" />
               </TableCell>
-            </TableRow>
+            </TableRow> */}
           </TableBody>
         </Table>
       </Paper>
