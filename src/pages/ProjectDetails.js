@@ -234,7 +234,7 @@ const ProjectDetails = ({
                     <ExpansionPanelDetails>
                       <Typography variant='subtitle2' gutterBottom>
                         Leader:{' '}
-                        {`${team.leaderId.firstName} ${team.leaderId.lastName}`}
+                        {`${team?.leaderId?.firstName} ${team?.leaderId?.lastName}`}
                       </Typography>
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
