@@ -171,7 +171,7 @@ const projectsReducer = (state = projectsReducerDefaultState, action) => {
         project.id !== action.id ? project : { ...project, ...action.updates }
       );
     case 'TOGGLE_TEAM':
-      const project = state.find((project) => project.id === action.projectId);
+      const project = state.find((project) => project._id === action.projectId);
       if (!project.teams.includes(action.teamId)) {
         project.teams.push(action.teamId);
       } else {
