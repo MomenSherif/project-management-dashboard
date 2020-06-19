@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   addBtn: {
     position: 'fixed',
-    bottom: '200px',
+    bottom: '120px',
     right: '40px'
   },
   paging: {

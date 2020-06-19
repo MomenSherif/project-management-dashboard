@@ -78,16 +78,19 @@ const MembersPanel = ({
         ''
       )}
       {role === 'team-leader' && (
-        <EmailDialog
-          title='Add Member To Team'
-          content='Enter Member Email'
-          onConfirm={onAddMember}
-          btnStyle={classes.addBtn}
-        >
-          <AccountCircleIcon />
-        </EmailDialog>
+        <>
+          <EmailDialog
+            title='Add Member To Team'
+            content='Enter Member Email'
+            onConfirm={onAddMember}
+            btnStyle={classes.addBtn}
+          >
+            <AccountCircleIcon />
+          </EmailDialog>
+
+          <TaskForm teamId={teamId} team={team} />
+        </>
       )}
-      {role === 'business-owner' && <TaskForm teamId={teamId} team={team} />}
     </Paper>
   );
 };

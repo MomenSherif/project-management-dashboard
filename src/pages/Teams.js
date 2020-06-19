@@ -11,7 +11,7 @@ import TeamCard from '../components/TeamCard/TeamCard';
 import TeamFormDialog from '../components/TeamFormDialog/TeamFormDialog';
 import { fetchTeams } from '../actions/teams';
 
-const Teams = ({ teams, fetchTeams }) => {
+const Teams = ({ teams, fetchTeams, role }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Teams = ({ teams, fetchTeams }) => {
           <Grid container justify='space-between' alignItems='flex-start'>
             {teamList}
           </Grid>
-          <TeamFormDialog />
+          {role === 'business-owner' && <TeamFormDialog />}
         </Fragment>
       )}
     </Container>
@@ -61,7 +61,8 @@ const Teams = ({ teams, fetchTeams }) => {
 };
 
 const mapStateToProps = state => ({
-  teams: state.teams
+  teams: state.teams,
+  role: state.auth.role
 });
 const mapDispatchToProps = dispatch => ({
   fetchTeams: () => dispatch(fetchTeams())
