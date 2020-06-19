@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../api/axios';
+import { toast } from 'react-toastify';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +21,7 @@ const MembersPanel = ({
   teamId,
   Members,
   pageSize,
-  role
+  auth
 }) => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
@@ -34,10 +35,10 @@ const MembersPanel = ({
         teamId
       }
     );
-    if (data) {
-      addTeamMember(teamId, data);
-      setPage(1);
-    }
+    if (!data) return toast.error('Email not exist!');
+    toast.success(`Member is added successfully!`);
+    addTeamMember(teamId, data);
+    setPage(1);
   };
 
   const handlePageChange = (event, value) => {
@@ -77,24 +78,27 @@ const MembersPanel = ({
       ) : (
         ''
       )}
-      {role === 'team-leader' && (
-        <EmailDialog
-          title='Add Member To Team'
-          content='Enter Member Email'
-          onConfirm={onAddMember}
-          btnStyle={classes.addBtn}
-        >
-          <AccountCircleIcon />
-        </EmailDialog>
+      {auth.role === 'team-leader' && team.leaderId.id === auth._id && (
+        <>
+          <EmailDialog
+            title='Add Member To Team'
+            content='Enter Member Email'
+            onConfirm={onAddMember}
+            btnStyle={classes.addBtn}
+          >
+            <AccountCircleIcon />
+          </EmailDialog>
+
+          <TaskForm teamId={teamId} team={team} />
+        </>
       )}
-      {role === 'business-owner' && <TaskForm teamId={teamId} team={team} />}
     </Paper>
   );
 };
 
 const MapStateToProps = state => ({
   // team: state.teams
-  role: state.auth.role
+  auth: state.auth
 });
 const MapDispatchToProps = dispatch => ({
   addTeamMember: (teamId, member) => dispatch(addTeamMember(teamId, member))

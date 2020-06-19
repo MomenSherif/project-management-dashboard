@@ -12,6 +12,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
+import Tooltip from '@material-ui/core/Tooltip';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 
 import InputLabel from '@material-ui/core/InputLabel';
@@ -49,18 +50,24 @@ const TaskForm = ({ team, assignTask }) => {
       `${process.env.REACT_APP_BACKEND_BASE_URL}/tasks`,
       submitedData
     );
-    assignTask({
-      ...data
-    });
+    if (!data) return toast.error('Cannot assign task!');
+    toast.success(`Task is assigned successfully!`);
+    assignTask(data);
   };
   const handleClick = () => {
     setOpen(!open);
   };
   return (
     <Fragment>
-      <Fab color='primary' onClick={handleClick} className={classes.assignBtn}>
-        <PostAddIcon />
-      </Fab>
+      <Tooltip title='Assign Task to member' placement='left'>
+        <Fab
+          color='primary'
+          onClick={handleClick}
+          className={classes.assignBtn}
+        >
+          <PostAddIcon />
+        </Fab>
+      </Tooltip>
       <Dialog open={open} onClose={handleClick} fullWidth maxWidth='sm'>
         <DialogTitle id='form-dialog-title'>Assign Task To Member</DialogTitle>
         <DialogContent>

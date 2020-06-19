@@ -51,18 +51,19 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
           ...submitedData
         }
       );
-      if (data) addTeam(data);
+      if (!data) return toast.error('Team failed to be created!');
+      addTeam(data);
       toast.success(`Team ${data.name} created successfully!`);
     } else {
-      console.log('from form', submitedData);
-
       const { data } = await axios.patch(
         `${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${editedTeam.id}`,
         {
           ...submitedData
         }
       );
-      if (data) updateTeam(editedTeam.id, { ...submitedData });
+
+      if (!data) return toast.error('Team failed to be edited!');
+      updateTeam(editedTeam.id, { ...submitedData });
       toast.success(`Team ${submitedData.name} updated successfully!`);
     }
     setOpen(false);

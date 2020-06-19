@@ -48,7 +48,6 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           </Typography> */}
         </Grid>
       </Grid>
-
       <Grid container className={classes.m}>
         <Box
           className={cx(classes.flexCol, classes.mr, classes.box)}
@@ -73,7 +72,6 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           </Typography>
         </Box>
       </Grid>
-
       <Paper className={classes.paper} elevation={1}>
         <Typography variant='body1'>{team.description}</Typography>
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
@@ -87,10 +85,9 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           </Typography>
         </Grid>
       </Paper>
-      {role === 'team-leader' && (
+      {role === 'business-owner' && (
         <div className={classes.mt}>
-          <TeamFormDialog editMode={true} editedTeam={team} />
-
+          <TeamFormDialog editMode={true} editedTeam={team} />)
           <ConfirmDialog
             title='Delete Team'
             content='Are you sure you want to delete this team?'
@@ -99,15 +96,16 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           >
             <DeleteIcon />
           </ConfirmDialog>
+          )
         </div>
       )}
     </Paper>
   );
 };
-const MapStateToProps = (state) => ({
-  role: state.auth.role,
+const mapStateToProps = state => ({
+  role: state.auth.role
 });
-const mapDispatchToProps = (dispatch) => ({
-  deleteTeam: (teamId) => dispatch(deleteTeam(teamId)),
+const mapDispatchToProps = dispatch => ({
+  deleteTeam: teamId => dispatch(deleteTeam(teamId))
 });
-export default connect(MapStateToProps, mapDispatchToProps)(TeamInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(TeamInfo);
