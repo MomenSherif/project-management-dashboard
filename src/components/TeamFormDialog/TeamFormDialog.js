@@ -33,7 +33,13 @@ const schema = object().shape({
   //   .required('Team leader email is required!')
 });
 
-const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
+const TeamFormDialog = ({
+  addTeam,
+  editMode,
+  editedTeam,
+  updateTeam,
+  onEdit
+}) => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
@@ -56,6 +62,7 @@ const TeamFormDialog = ({ addTeam, editMode, editedTeam, updateTeam }) => {
           submitedData
         )
         .then(({ data }) => {
+          onEdit();
           updateTeam(editedTeam.id, data);
           toast.success(`Team ${submitedData.name} updated successfully!`);
         })
