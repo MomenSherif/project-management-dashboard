@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { string, object, date, number } from 'yup';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import axios from 'axios';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +19,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import useStyles from './EmployeeFormDialogStyle';
+import { addTeamMemberByName } from '../../actions/teams';
 
 const schema = object().shape({
   firstName: string()
@@ -39,7 +41,6 @@ const schema = object().shape({
     .email('Invalid email address!')
     .required('Email is required!'),
   salary: number().moreThan(2000, 'Minimum salary is 2000'),
-  role: string().required('Role is required!'),
   team: string().required('Team is required!'),
 });
 
@@ -49,7 +50,7 @@ function sleep(delay = 0) {
   });
 }
 
-const EmployeeFormDialog = ({ addTeam, teams }) => {
+const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -77,8 +78,17 @@ const EmployeeFormDialog = ({ addTeam, teams }) => {
     mode: 'onBlur',
   });
 
-  const onSubmit = async (data) => {
-    toast.success(`Please, assume an employee is added!`);
+  const onSubmit = async (data, e) => {
+    data.password = '123456';
+    data.teamId = data.team;
+
+    const res = await axios.post(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/employees`,
+      data
+    );
+    if (!res.data) toast.error('Email does not exist!');
+    addTeamMemberByName(data.team, res.data);
+    toast.success(`${data.firstName} ${data.lastName} is added!`);
     setOpen(false);
   };
 
@@ -236,18 +246,6 @@ const EmployeeFormDialog = ({ addTeam, teams }) => {
                   )}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="standard"
-                  fullWidth
-                  id="role"
-                  label="Role"
-                  name="role"
-                  error={!!errors.role}
-                  helperText={errors.role?.message}
-                  inputRef={register}
-                />
-              </Grid>
             </Grid>
 
             <Button type="submit" color="primary" className={classes.submitBtn}>
@@ -262,6 +260,8 @@ const EmployeeFormDialog = ({ addTeam, teams }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   // addTeam: (team) => dispatch(addTeam(team)),
+  addTeamMemberByName: (teamName, member) =>
+    dispatch(addTeamMemberByName(teamName, member)),
 });
 
 const mapStateToProps = (state) => ({
