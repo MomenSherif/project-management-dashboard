@@ -53,9 +53,9 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
   const projectStatusArr = ['in-progress', 'in-review', 'done'];
 
   useEffect(() => {
-    debugger;
+    // debugger;
     getProjects().then((res) => {
-      debugger;
+      // debugger;
       console.log(res);
       setFilteredProjects(res.slice(0, pageSize));
       setLoad(false);

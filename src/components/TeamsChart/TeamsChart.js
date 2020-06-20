@@ -8,7 +8,7 @@ import useStyles from './TeamsChartStyle';
 const TeamsChart = ({ teams }) => {
   const classes = useStyles();
 
-  console.log(teams);
+  // console.log(teams);
 
   const teamsNames = teams.map((team) => team.name);
   const teamsCount = teams.map((team) => team.employees.length);
