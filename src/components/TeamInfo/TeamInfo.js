@@ -1,7 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import axios from '../../api/axios';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -10,24 +7,12 @@ import Avatar from '@material-ui/core/Avatar';
 import GroupIcon from '@material-ui/icons/Group';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Box from '@material-ui/core/Box';
-import DeleteIcon from '@material-ui/icons/Delete';
 import cx from 'clsx';
-
-import TeamFormDialog from '../TeamFormDialog/TeamFormDialog';
-import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
-import { deleteTeam } from '../../actions/teams';
 
 import useStyles from './TeamInfoStyle';
 
 const TeamInfo = ({ deleteTeam, team, role }) => {
   const classes = useStyles();
-  const history = useHistory();
-
-  const onDeleteTeam = () => {
-    axios.delete(`${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${team.id}`);
-    deleteTeam(team.id);
-    history.replace('/');
-  };
 
   return (
     <Paper className={classes.root} elevation={2}>
@@ -43,9 +28,6 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
         </Grid>
         <Grid item>
           <Typography variant='h4'> {team.name}</Typography>
-          {/* <Typography variant='body2' color='textSecondary' align='center'>
-            org Name
-          </Typography> */}
         </Grid>
       </Grid>
       <Grid container className={classes.m}>
@@ -87,26 +69,8 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           </Typography>
         </Grid>
       </Paper>
-      {role === 'business-owner' && (
-        <div className={classes.mt}>
-          <TeamFormDialog editMode={true} editedTeam={team} />
-          <ConfirmDialog
-            title='Delete Team'
-            content='Are you sure you want to delete this team?'
-            onConfirm={onDeleteTeam}
-            btnStyle={classes.edtBtn}
-          >
-            <DeleteIcon />
-          </ConfirmDialog>
-        </div>
-      )}
     </Paper>
   );
 };
-const mapStateToProps = state => ({
-  role: state.auth.role
-});
-const mapDispatchToProps = dispatch => ({
-  deleteTeam: teamId => dispatch(deleteTeam(teamId))
-});
-export default connect(mapStateToProps, mapDispatchToProps)(TeamInfo);
+
+export default TeamInfo;

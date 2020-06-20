@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import axios from '../api/axios';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import DeleteIcon from '@material-ui/icons/Delete';
 
+import TeamFormDialog from '../components/TeamFormDialog/TeamFormDialog';
+import ConfirmDialog from '../components/Dialogs/ConfirmDialog/ConfirmDialog';
+import { deleteTeam } from '../actions/teams';
 import MembersPanel from '../components/MemberCard/MembersPanel';
 import TeamInfo from '../components/TeamInfo/TeamInfo';
 import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
@@ -24,26 +29,43 @@ const useStyles = makeStyles(theme => ({
   grid: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  edtBtn: {
+    position: 'fixed',
+    bottom: '120px',
+    right: '40px'
   }
 }));
 
-const TeamDetails = ({ match }) => {
+const TeamDetails = ({ match, role, history }) => {
   const classes = useStyles();
   const [team, setTeam] = useState();
   const [loading, setLoading] = useState(true);
 
   const { id } = match.params;
 
+  const getTeam = async () => {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${id}`
+    );
+    if (data) {
+      setTeam(data);
+      setLoading(false);
+    }
+  };
+
+  const onUpdateTeam = () => {
+    getTeam();
+  };
+
+  const onDeleteTeam = () => {
+    axios.delete(`${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${team.id}`);
+    deleteTeam(team.id);
+    history.replace('/');
+  };
+
   useEffect(() => {
-    (async function() {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${id}`
-      );
-      if (data) {
-        setTeam(data);
-        setLoading(false);
-      }
-    })();
+    getTeam();
   }, []);
 
   return (
@@ -75,10 +97,34 @@ const TeamDetails = ({ match }) => {
               ></MembersPanel>
             </Grid>
           </Grid>
+
+          {role === 'business-owner' && (
+            <div className={classes.mt}>
+              <TeamFormDialog
+                editMode={true}
+                editedTeam={team}
+                onEdit={onUpdateTeam}
+              />
+              <ConfirmDialog
+                title='Delete Team'
+                content='Are you sure you want to delete this team?'
+                onConfirm={onDeleteTeam}
+                btnStyle={classes.edtBtn}
+              >
+                <DeleteIcon />
+              </ConfirmDialog>
+            </div>
+          )}
         </Container>
       )}
     </>
   );
 };
+const mapStateToProps = state => ({
+  role: state.auth.role
+});
+const mapDispatchToProps = dispatch => ({
+  deleteTeam: teamId => dispatch(deleteTeam(teamId))
+});
 
-export default TeamDetails;
+export default connect(mapStateToProps, mapDispatchToProps)(TeamDetails);
