@@ -28,6 +28,9 @@ const schema = object().shape({
   lastName: string()
     .required('Employee last name is required!')
     .min(3, 'Last name needs to be at least 3 characters!'),
+  password: string()
+    .required('Employee password is required!')
+    .min(6, 'Password needs to be at least 6 characters!'),
   phoneNumber: string().matches(
     /^(01)(0|2|1|5)[0-9]{8}$/,
     'Inavalid phone number!'
@@ -79,7 +82,6 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
   });
 
   const onSubmit = async (data, e) => {
-    data.password = '123456';
     data.teamId = data.team;
 
     const res = await axios.post(
@@ -105,8 +107,8 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
   return (
     <Fragment>
       <Fab
-        color="primary"
-        aria-label="add"
+        color='primary'
+        aria-label='add'
         onClick={handleClickOpen}
         className={classes.addBtn}
       >
@@ -116,23 +118,23 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="Add new employee"
+        aria-labelledby='Add new employee'
         fullWidth
-        maxWidth="sm"
+        maxWidth='sm'
       >
-        <DialogTitle id="form-dialog-title">Add New Employee</DialogTitle>
+        <DialogTitle id='form-dialog-title'>Add New Employee</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoFocus
-                  id="firstName"
-                  name="firstName"
-                  label="First Name"
-                  type="text"
+                  id='firstName'
+                  name='firstName'
+                  label='First Name'
+                  type='text'
                   fullWidth
-                  margin="normal"
+                  margin='normal'
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message}
                   inputRef={register}
@@ -140,12 +142,12 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="lastName"
-                  name="lastName"
-                  label="Last Name"
-                  type="text"
+                  id='lastName'
+                  name='lastName'
+                  label='Last Name'
+                  type='text'
                   fullWidth
-                  margin="normal"
+                  margin='normal'
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message}
                   inputRef={register}
@@ -153,11 +155,11 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name="phoneNumber"
-                  variant="standard"
+                  name='phoneNumber'
+                  variant='standard'
                   fullWidth
-                  id="phoneNumber"
-                  label="Phone Number"
+                  id='phoneNumber'
+                  label='Phone Number'
                   error={!!errors.phoneNumber}
                   helperText={errors.phoneNumber?.message}
                   inputRef={register}
@@ -166,12 +168,12 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   defaultValue={moment().subtract(10, 'y').format('YYYY-MM-DD')}
-                  name="dateOfBirth"
-                  variant="standard"
+                  name='dateOfBirth'
+                  variant='standard'
                   fullWidth
-                  id="dateOfBirth"
-                  label="Birthday"
-                  type="date"
+                  id='dateOfBirth'
+                  label='Birthday'
+                  type='date'
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -182,11 +184,11 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="standard"
+                  variant='standard'
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
+                  id='email'
+                  label='Email Address'
+                  name='email'
                   error={!!errors.email}
                   helperText={errors.email?.message}
                   inputRef={register}
@@ -194,12 +196,24 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="standard"
-                  type="number"
+                  variant='standard'
                   fullWidth
-                  id="salary"
-                  label="Salary"
-                  name="salary"
+                  id='password'
+                  label='Password'
+                  name='password'
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                  inputRef={register}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant='standard'
+                  type='number'
+                  fullWidth
+                  id='salary'
+                  label='Salary'
+                  name='salary'
                   error={!!errors.salary}
                   helperText={errors.salary?.message}
                   inputRef={register}
@@ -224,19 +238,19 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      id="team"
-                      name="team"
-                      label="Team"
+                      id='team'
+                      name='team'
+                      label='Team'
                       error={!!errors.team}
                       helperText={errors.team?.message}
                       inputRef={register}
-                      variant="outlined"
+                      variant='outlined'
                       InputProps={{
                         ...params.InputProps,
                         endAdornment: (
                           <React.Fragment>
                             {loading ? (
-                              <CircularProgress color="inherit" size={20} />
+                              <CircularProgress color='inherit' size={20} />
                             ) : null}
                             {params.InputProps.endAdornment}
                           </React.Fragment>
@@ -248,7 +262,7 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
               </Grid>
             </Grid>
 
-            <Button type="submit" color="primary" className={classes.submitBtn}>
+            <Button type='submit' color='primary' className={classes.submitBtn}>
               Add
             </Button>
           </form>

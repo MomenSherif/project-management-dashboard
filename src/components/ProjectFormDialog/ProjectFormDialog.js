@@ -13,10 +13,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import {
   addProjectSuccess,
   updateProjectSuccess,
@@ -141,23 +142,24 @@ const ProjectFormDialog = ({
                 <InputLabel shrink htmlFor='state-project'>
                   State
                 </InputLabel>
-                <FormControl className={classes.formControl}>
-                  <NativeSelect
+                <FormControl className={classes.formControl} fullWidth>
+                  <Select
                     value={state}
                     onChange={handleChange}
                     inputProps={{
                       id: 'state-project',
                     }}
+                    fullWidth
                   >
-                    <option value={editingProject?.state}>
+                    <MenuItem value={editingProject?.state}>
                       {editingProject?.state}
-                    </option>
+                    </MenuItem>
                     {newStates.map((stateName) => (
-                      <option value={stateName} key={stateName}>
+                      <MenuItem value={stateName} key={stateName}>
                         {stateName}
-                      </option>
+                      </MenuItem>
                     ))}
-                  </NativeSelect>
+                  </Select>
                 </FormControl>
               </>
             ) : (

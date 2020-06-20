@@ -263,7 +263,8 @@ const ProjectDetails = ({
           editingProject={project}
           handleProjectUpdate={handleProjectUpdate}
         />
-        <Fab color='primary' aria-label='delete' className={classes.deleteBtn}>
+
+        <div className={classes.deleteBtn}>
           <ConfirmDialog
             title='Delete Project'
             content='Are you sure you want to delete this Project?'
@@ -271,7 +272,7 @@ const ProjectDetails = ({
           >
             <DeleteIcon />
           </ConfirmDialog>
-        </Fab>
+        </div>
       </Fragment>
     );
   }

@@ -30,11 +30,9 @@ const schema = object().shape({
     20,
     'Description needs to be at least 20 characters!'
   ),
-  deadLine: date()
-    .required('Task deadline is required')
-    .min(new Date()),
+  deadLine: date().required('Task deadline is required').min(new Date()),
   projectId: string().required('Project is required'),
-  employeeId: string().required('Employee is required')
+  employeeId: string().required('Employee is required'),
 });
 
 const TaskForm = ({ team, assignTask }) => {
@@ -42,9 +40,9 @@ const TaskForm = ({ team, assignTask }) => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors, control } = useForm({
     validationSchema: schema,
-    mode: 'onBlur'
+    mode: 'onBlur',
   });
-  const onSubmit = async submitedData => {
+  const onSubmit = async (submitedData) => {
     setOpen(false);
     axios
       .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/tasks`, submitedData)
@@ -52,7 +50,7 @@ const TaskForm = ({ team, assignTask }) => {
         assignTask(data);
         toast.success(`Task is assigned successfully!`);
       })
-      .catch(err => toast.error(err.response.data.message));
+      .catch((err) => toast.error(err.response.data.message));
   };
   const handleClick = () => {
     setOpen(!open);
@@ -89,7 +87,7 @@ const TaskForm = ({ team, assignTask }) => {
               name='description'
               label='Task Description'
               multiline
-              rows='2'
+              rows='4'
               fullWidth
               error={!!errors.description}
               helperText={errors.description?.message}
@@ -102,7 +100,7 @@ const TaskForm = ({ team, assignTask }) => {
               <Controller
                 as={
                   <Select>
-                    {team.employees?.map(emp => (
+                    {team.employees?.map((emp) => (
                       <MenuItem key={emp._id} value={emp._id}>
                         {emp.firstName + ' ' + emp.lastName}
                       </MenuItem>
@@ -120,7 +118,7 @@ const TaskForm = ({ team, assignTask }) => {
               <Controller
                 as={
                   <Select>
-                    {team.projects?.map(project => (
+                    {team.projects?.map((project) => (
                       <MenuItem key={project._id} value={project._id}>
                         {project.title}
                       </MenuItem>
@@ -139,7 +137,7 @@ const TaskForm = ({ team, assignTask }) => {
               type='date'
               className={classes.textField}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               fullWidth
               margin='normal'
@@ -161,8 +159,8 @@ const TaskForm = ({ team, assignTask }) => {
 // const mapStateToProps = state => ({
 //   team: state.teams.filter(team => team.id === ownProps.teamId)[0]
 // });
-const mapDispatchToProps = dispatch => ({
-  assignTask: task => dispatch(assignTask(task))
+const mapDispatchToProps = (dispatch) => ({
+  assignTask: (task) => dispatch(assignTask(task)),
 });
 
 export default connect(null, mapDispatchToProps)(TaskForm);

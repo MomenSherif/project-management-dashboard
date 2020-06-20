@@ -11,7 +11,7 @@ const TeamsChart = ({ teams }) => {
   // console.log(teams);
 
   const teamsNames = teams.map((team) => team.name);
-  const teamsCount = teams.map((team) => team.employees.length);
+  const teamsCount = teams.map((team) => team.employees?.length);
 
   const data = {
     labels: teamsNames,
@@ -32,7 +32,7 @@ const TeamsChart = ({ teams }) => {
   return (
     <Fragment>
       <Paper className={classes.paper}>
-        <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+        <Typography variant='subtitle2' color='textSecondary' gutterBottom>
           Employees per team
         </Typography>
         <Pie data={data} width={100} height={50} />

@@ -41,7 +41,7 @@ const ProjectItem = ({ project }) => {
           color='primary'
           className={classes.margin}
           component={Link}
-          to={`/project-details/${project.id}`}
+          to={`/project-details/${project._id}`}
         >
           View
         </Button>
