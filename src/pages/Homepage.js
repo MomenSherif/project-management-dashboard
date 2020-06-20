@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -27,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Homepage = ({ projects, teams, getProjects, fetchTeams }) => {
+const Homepage = ({ projects, teams, auth, getProjects, fetchTeams }) => {
   const classes = useStyles();
   const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     getProjects().then((res) => {
@@ -39,9 +42,13 @@ const Homepage = ({ projects, teams, getProjects, fetchTeams }) => {
     });
 
     fetchTeams();
-  }, []);
 
-  // console.log(projects);
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_BASE_URL}/employees`)
+      .then((res) => {
+        setEmployees(res.data);
+      });
+  }, []);
 
   return (
     <Container className={classes.pt}>
@@ -50,31 +57,34 @@ const Homepage = ({ projects, teams, getProjects, fetchTeams }) => {
           <ProjectCount count={filteredProjects.length}></ProjectCount>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <RevenueMonth></RevenueMonth>
+          <RevenueMonth projects={projects}></RevenueMonth>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <TeamCount count={teams.length}></TeamCount>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <RevenueYear></RevenueYear>
+          <RevenueYear projects={projects}></RevenueYear>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Grid item xs={12} className={classes.mb}>
-          <ProjectsOverview projects={projects}></ProjectsOverview>
+          <ProjectsOverview projects={projects.slice(0, 5)}></ProjectsOverview>
         </Grid>
         <Grid item xs={12} className={classes.mb}>
-          <TopEmployees></TopEmployees>
+          <TopEmployees
+            employees={employees.slice(0, 5)}
+            role={auth.role}
+          ></TopEmployees>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6} className={classes.mb}>
           <TeamsChart teams={teams}></TeamsChart>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <RevenueYearChart></RevenueYearChart>
+        <Grid item xs={12} md={6} className={classes.mb}>
+          <RevenueYearChart projects={projects}></RevenueYearChart>
         </Grid>
       </Grid>
     </Container>
@@ -85,6 +95,7 @@ const mapStateToProps = (state) => {
   return {
     projects: state.projects,
     teams: state.teams,
+    auth: state.auth,
   };
 };
 

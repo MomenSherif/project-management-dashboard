@@ -44,7 +44,7 @@ const ProjectsOverview = ({ projects }) => {
     <Fragment>
       <Paper className={classes.paper}>
         <Typography variant="subtitle2" color="textSecondary">
-          My Projects
+          Recent Projects
         </Typography>
         <Table>
           <TableHead>
@@ -57,45 +57,7 @@ const ProjectsOverview = ({ projects }) => {
           </TableHead>
           <TableBody>
             {projectList}
-            {/* <TableRow>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  Front-end project for one company
-                </Typography>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Client Name
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <ChipProjectStatus statusType="done" />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  Back-end project for another company
-                </Typography>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Client Name
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <ChipProjectStatus statusType="done" />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography variant="subtitle1">
-                  Front-end project for one company
-                </Typography>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Client Name
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <ChipProjectStatus statusType="in-review" />
-              </TableCell>
-            </TableRow> */}
+            
           </TableBody>
         </Table>
       </Paper>

@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import moment from 'moment';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
@@ -14,72 +16,54 @@ import ChipProjectStatus from '../ChipProjectStatus/ChipProjectStatus';
 import TeamFormDialog from '../TeamFormDialog/TeamFormDialog';
 import EmployeeFormDialog from '../EmployeeFormDialog.js/EmployeeFormDialog';
 
-const TopEmployees = (props) => {
+const TopEmployees = ({ employees, role }) => {
   const classes = useStyles();
+
+  const employeeList = employees.map((e) => {
+    return (
+      <TableRow key={e._id}>
+        {/* <TableCell>
+          <Avatar alt="Wes Bos" src="/avatar.png" />
+        </TableCell> */}
+        <TableCell>
+          <Typography variant="subtitle1">
+            {e.firstName} {e.lastName}
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="subtitle1">{e.teamId?.name}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="subtitle1">{e.role}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="subtitle1">
+            {moment(e.createdAt).format('MMM DD, YYYY')}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    );
+  });
+
   return (
     <Fragment>
       <Paper className={classes.paper}>
         <Typography variant="subtitle2" color="textSecondary">
-          Top Employees
+          Recent Employees
         </Typography>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
+              {/* <TableCell></TableCell> */}
               <TableCell>Employee</TableCell>
-              <TableCell>Tasks accomplished</TableCell>
+              <TableCell>Team</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Joining Date</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <Avatar alt="Wes Bos" src="/avatar.png" />
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1">Christina Adel</Typography>
-              </TableCell>
-              <TableCell>
-                <LinearProgress
-                  variant="determinate"
-                  value={90}
-                  className={classes.barLarge}
-                  color="primary"
-                ></LinearProgress>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Avatar alt="Wes Bos" src="/avatar.png" />
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1">Mennatullah Sayed</Typography>
-              </TableCell>
-              <TableCell>
-                <LinearProgress
-                  variant="determinate"
-                  value={80}
-                  className={classes.barLarge}
-                ></LinearProgress>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Avatar alt="Wes Bos" src="/avatar.png" />
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1">Cady Emad</Typography>
-              </TableCell>
-              <TableCell>
-                <LinearProgress
-                  variant="determinate"
-                  value={70}
-                  className={classes.barLarge}
-                ></LinearProgress>
-              </TableCell>
-            </TableRow>
-          </TableBody>
+          <TableBody>{employeeList}</TableBody>
         </Table>
-        <EmployeeFormDialog></EmployeeFormDialog>
+        {role === 'business-owner' && <EmployeeFormDialog></EmployeeFormDialog>}
       </Paper>
     </Fragment>
   );

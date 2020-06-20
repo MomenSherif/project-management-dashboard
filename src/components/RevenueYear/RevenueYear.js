@@ -5,8 +5,17 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from './RevenueYearStyle';
 
-const RevenueYear = (props) => {
+const RevenueYear = ({ projects }) => {
   const classes = useStyles();
+
+  const totalDoneSum = projects
+    .filter((project) => project.state === 'done')
+    .map((project) => project.budget)
+    .reduce((sum, num) => sum + num, 0);
+
+  const totalSum = projects
+    .map((project) => project.budget)
+    .reduce((sum, num) => sum + num, 0);
 
   return (
     <Fragment>
@@ -18,8 +27,8 @@ const RevenueYear = (props) => {
           Total/Planned
         </Typography>
         <Typography variant="h6" className={classes.center}>
-          <CountUp end={421300} duration={1} separator=","></CountUp>/
-          <CountUp end={1000000} duration={1} separator=","></CountUp>
+          <CountUp end={totalDoneSum} duration={1} separator=","></CountUp>/
+          <CountUp end={totalSum} duration={1} separator=","></CountUp>
         </Typography>
       </Paper>
     </Fragment>
