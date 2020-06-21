@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 import TeamFormDialog from '../components/TeamFormDialog/TeamFormDialog';
 import ConfirmDialog from '../components/Dialogs/ConfirmDialog/ConfirmDialog';
@@ -78,47 +79,52 @@ const TeamDetails = ({ match, role, history }) => {
     <>
       {loading ? (
         <div className={classes.progress}>
-          <CircularProgress color='primary' thickness={4} size={100} />
+          <CircularProgress color="primary" thickness={4} size={100} />
         </div>
       ) : (
-        <Container className={classes.container}>
-          <Grid container>
-            <Grid item xs={4}>
-              <TeamInfo team={team}></TeamInfo>
+        <Container>
+          <Typography variant="h2" gutterBottom align="center">
+            Team Overview
+          </Typography>
+          <div className={classes.container}>
+            <Grid container>
+              <Grid item xs={4}>
+                <TeamInfo team={team}></TeamInfo>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid container className={classes.grid}>
-            <Grid item xs={4}>
-              <ProjectPanel Projects={team.projects}></ProjectPanel>
+            <Grid container className={classes.grid}>
+              <Grid item xs={4}>
+                <ProjectPanel Projects={team.projects}></ProjectPanel>
+              </Grid>
+
+              <Grid item className={classes.mt} xs={4}>
+                <MembersPanel
+                  teamId={team.id}
+                  team={team}
+                  Members={team.employees}
+                ></MembersPanel>
+              </Grid>
             </Grid>
 
-            <Grid item className={classes.mt} xs={4}>
-              <MembersPanel
-                teamId={team.id}
-                team={team}
-                Members={team.employees}
-              ></MembersPanel>
-            </Grid>
-          </Grid>
-
-          {role === 'business-owner' && (
-            <div className={classes.mt}>
-              <TeamFormDialog
-                editMode={true}
-                editedTeam={team}
-                onEdit={onUpdateTeam}
-              />
-              <ConfirmDialog
-                title='Delete Team'
-                content='Are you sure you want to delete this team?'
-                onConfirm={onDeleteTeam}
-                btnStyle={classes.edtBtn}
-              >
-                <DeleteIcon />
-              </ConfirmDialog>
-            </div>
-          )}
+            {role === 'business-owner' && (
+              <div className={classes.mt}>
+                <TeamFormDialog
+                  editMode={true}
+                  editedTeam={team}
+                  onEdit={onUpdateTeam}
+                />
+                <ConfirmDialog
+                  title="Delete Team"
+                  content="Are you sure you want to delete this team?"
+                  onConfirm={onDeleteTeam}
+                  btnStyle={classes.edtBtn}
+                >
+                  <DeleteIcon />
+                </ConfirmDialog>
+              </div>
+            )}
+          </div>
         </Container>
       )}
     </>
