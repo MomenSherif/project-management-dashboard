@@ -18,20 +18,20 @@ const schema = object().shape({
   email: string()
     .lowercase()
     .email('Invalid email address')
-    .required('Team member email is required!')
+    .required('Team member email is required!'),
 });
 
 const EmailDialog = ({ children, title, content, onConfirm, btnStyle }) => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
-    mode: 'onBlur'
+    mode: 'onBlur',
   });
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     handleClick();
     onConfirm(data.email);
   };

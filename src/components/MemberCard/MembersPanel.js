@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../api/axios';
 import { toast } from 'react-toastify';
@@ -83,7 +83,8 @@ const MembersPanel = ({
       ) : (
         ''
       )}
-      {auth.role === 'business-owner' && team.leaderId?.id === auth._id && (
+
+      {auth.role === 'business-owner' && (
         <EmailDialog
           title='Add Member To Team'
           content='Enter Member Email'
@@ -93,8 +94,11 @@ const MembersPanel = ({
           <AccountCircleIcon />
         </EmailDialog>
       )}
+
       {auth.role === 'team-leader' && team.leaderId?.id === auth._id && (
-        <TaskForm teamId={teamId} team={team} />
+        <Fragment>
+          <TaskForm teamId={teamId} team={team} />
+        </Fragment>
       )}
     </Paper>
   );

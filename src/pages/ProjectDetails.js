@@ -36,6 +36,7 @@ import { assignTeamToProject } from '../api/projectHelpers';
 
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import formatter from '../helper/currencyFormater';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -168,7 +169,10 @@ const ProjectDetails = ({
             </ProjectDetailsCard>
           </Grid>
           <Grid item xs={12} md={3} sm={6}>
-            <ProjectDetailsCard title='Budget' description={project.budget}>
+            <ProjectDetailsCard
+              title='Budget'
+              description={formatter.format(project.budget)}
+            >
               <MonetizationOnIcon
                 color='secondary'
                 fontSize='large'
