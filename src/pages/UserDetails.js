@@ -28,7 +28,7 @@ import { toast } from 'react-toastify';
 import ProjectDetailsCard from '../components/ProjectDetailsCard/ProjectDetailsCard';
 import { fetchUserInfo, toggleTaskState } from '../api/userHelpers';
 
-const UserDetails = ({ match }) => {
+const UserDetails = ({ match, userId }) => {
   const [userData, setUserData] = useState({});
 
   const [isLoading, setLoading] = useState(true);
@@ -203,7 +203,7 @@ const UserDetails = ({ match }) => {
                         </ExpansionPanelDetails>
                       </ExpansionPanel>
                     </Grid>
-                    {switchState != false && (
+                    {switchState != false && userId === match.params.id && (
                       <Grid item>
                         <Switch
                           checked={switchState[`taskCheck-${task?._id}`]}
@@ -227,4 +227,8 @@ const UserDetails = ({ match }) => {
   );
 };
 
-export default connect()(UserDetails);
+const mapStateToProps = (state, ownProps) => ({
+  userId: state.auth._id,
+});
+
+export default connect(mapStateToProps)(UserDetails);
