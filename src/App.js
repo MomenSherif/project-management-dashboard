@@ -18,6 +18,9 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Teams from './pages/Teams';
 
+import PrivateRoute from './helper/privateRoute';
+import PublicRoute from './helper/publicRoute';
+
 function App({ token, theme }) {
   const darkTheme = createMuiTheme({
     palette: {
@@ -45,20 +48,34 @@ function App({ token, theme }) {
       >
         {token && <NavBar />}
         <Switch>
-          <Route path='/' exact component={AnonymousHomepage} />
+          <PublicRoute path='/' exact component={AnonymousHomepage} />
+          <PublicRoute path='/sign-up' exact component={SignUp} />
+          <PublicRoute path='/sign-in' exact component={SignIn} />
+
           <Route
             path='/projects'
             exact
             render={(props) => <Project {...props} pageSize={3} />}
           />
-          <Route path='/project-details/:id' exact component={ProjectDetails} />
-          <Route path='/sign-up' exact component={SignUp} />
-          <Route path='/sign-in' exact component={SignIn} />
-          <Route path='/team-details/:id' exact component={TeamDetails} />
-          <Route path='/teams' exact component={Teams} />
-          <Route path='/user-details/:id' exact component={UserDetails} />
-          <Route path='/profile/:id' exact component={UserDetails} />
-          <Route path='/dashboard' exact component={Homepage} />
+          <PrivateRoute
+            path='/project-details/:id'
+            exact
+            component={ProjectDetails}
+          />
+
+          <PrivateRoute
+            path='/team-details/:id'
+            exact
+            component={TeamDetails}
+          />
+          <PrivateRoute path='/teams' exact component={Teams} />
+          <PrivateRoute
+            path='/user-details/:id'
+            exact
+            component={UserDetails}
+          />
+          <PrivateRoute path='/profile/:id' exact component={UserDetails} />
+          <PrivateRoute path='/dashboard' exact component={Homepage} />
           <Redirect to='/dashboard' />
         </Switch>
         <ToastContainer />
