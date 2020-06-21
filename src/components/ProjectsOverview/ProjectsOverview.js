@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
+import formatter from '../../helper/currencyFormater';
 import useStyles from './ProjectsOverviewStyle';
 import ChipProjectStatus from '../ChipProjectStatus/ChipProjectStatus';
 
@@ -20,13 +21,13 @@ const ProjectsOverview = ({ projects }) => {
     return (
       <TableRow key={project._id}>
         <TableCell>
-          <Typography variant="subtitle1">{project.title}</Typography>
-          <Typography variant="subtitle2" color="textSecondary">
+          <Typography variant='subtitle1'>{project.title}</Typography>
+          <Typography variant='subtitle2' color='textSecondary'>
             {project.description.substring(0, 30) + '...'}
           </Typography>
         </TableCell>
         <TableCell>
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             {moment(project.deadLine).format('MMM DD, YYYY')}
           </Typography>
         </TableCell>
@@ -34,7 +35,9 @@ const ProjectsOverview = ({ projects }) => {
           <ChipProjectStatus statusType={project.state} />
         </TableCell>
         <TableCell>
-          <Typography variant="subtitle1">{project.budget}</Typography>
+          <Typography variant='subtitle1'>
+            {formatter.format(project.budget)}
+          </Typography>
         </TableCell>
       </TableRow>
     );
@@ -43,7 +46,7 @@ const ProjectsOverview = ({ projects }) => {
   return (
     <Fragment>
       <Paper className={classes.paper}>
-        <Typography variant="subtitle2" color="textSecondary">
+        <Typography variant='subtitle2' color='textSecondary'>
           Recent Projects
         </Typography>
         <Table>
@@ -55,10 +58,7 @@ const ProjectsOverview = ({ projects }) => {
               <TableCell>Budget</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {projectList}
-            
-          </TableBody>
+          <TableBody>{projectList}</TableBody>
         </Table>
       </Paper>
     </Fragment>
