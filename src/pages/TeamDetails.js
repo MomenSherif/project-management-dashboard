@@ -5,8 +5,8 @@ import axios from '../api/axios';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TeamFormDialog from '../components/TeamFormDialog/TeamFormDialog';
 import ConfirmDialog from '../components/Dialogs/ConfirmDialog/ConfirmDialog';
@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: '120px',
     right: '40px',
+  },
+  progress: {
+    left: '50%',
+    top: '300px',
+    marginLeft: '-4em',
+    position: 'absolute',
   },
 }));
 
@@ -71,11 +77,9 @@ const TeamDetails = ({ match, role, history }) => {
   return (
     <>
       {loading ? (
-        <LinearProgress
-          variant='query'
-          color='primary'
-          className={classes.loading}
-        />
+        <div className={classes.progress}>
+          <CircularProgress color="primary" thickness={4} size={100} />
+        </div>
       ) : (
         <Container className={classes.container}>
           <Grid container>
@@ -106,8 +110,8 @@ const TeamDetails = ({ match, role, history }) => {
                 onEdit={onUpdateTeam}
               />
               <ConfirmDialog
-                title='Delete Team'
-                content='Are you sure you want to delete this team?'
+                title="Delete Team"
+                content="Are you sure you want to delete this team?"
                 onConfirm={onDeleteTeam}
                 btnStyle={classes.edtBtn}
               >

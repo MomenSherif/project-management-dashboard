@@ -84,96 +84,96 @@ const UserDetails = ({ match, userId }) => {
 
   return (
     <Container>
-      <Typography variant='h2' align='center' gutterBottom>
+      <Typography variant="h2" align="center" gutterBottom>
         User Info
       </Typography>
       {isLoading && (
         <Container className={classes.root}>
-          <CircularProgress color='secondary' />
+          <CircularProgress color="primary" thickness={4} size={100} />
         </Container>
       )}
 
       {!isLoading && (
-        <Grid container justify='space-evenly' spacing={6}>
+        <Grid container justify="space-evenly" spacing={6}>
           <Grid item xs={4}>
             <ProjectDetailsCard
-              title='First Name'
+              title="First Name"
               description={userData.firstName}
             >
-              <GroupIcon color='secondary' fontSize='large' />
+              <GroupIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           <Grid item xs={4}>
             <ProjectDetailsCard
-              title='Last Name'
+              title="Last Name"
               description={userData.lastName}
             >
-              <GroupIcon color='secondary' fontSize='large' />
+              <GroupIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           <Grid item xs={4}>
             <ProjectDetailsCard
-              title='Date of birth'
+              title="Date of birth"
               description={
                 <time date={moment(userData.dateOfBirth).format('YYYY-MM-DD')}>
                   {moment(userData.dateOfBirth).format('D MMMM YYYY')}
                 </time>
               }
             >
-              <ScheduleIcon color='secondary' fontSize='large' />
+              <ScheduleIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           {userData.role !== 'business-owner' && (
             <Grid item xs={4}>
-              <ProjectDetailsCard title='Salary' description={userData.salary}>
-                <MonetizationOnIcon color='secondary' fontSize='large' />
+              <ProjectDetailsCard title="Salary" description={userData.salary}>
+                <MonetizationOnIcon color="secondary" fontSize="large" />
               </ProjectDetailsCard>
             </Grid>
           )}
           <Grid item xs={4}>
-            <ProjectDetailsCard title='Email' description={userData.email}>
-              <EmailIcon color='secondary' fontSize='large' />
+            <ProjectDetailsCard title="Email" description={userData.email}>
+              <EmailIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           <Grid item xs={4}>
             <ProjectDetailsCard
-              title='Phone'
+              title="Phone"
               description={userData.phoneNumber}
             >
-              <PhoneIcon color='secondary' fontSize='large' />
+              <PhoneIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           <Grid item xs={4}>
             <ProjectDetailsCard
-              title='Organization'
+              title="Organization"
               description={userData.organizationId?.name}
             >
-              <BusinessIcon color='secondary' fontSize='large' />
+              <BusinessIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           {userData.role !== 'business-owner' && (
             <Grid item xs={4}>
               <ProjectDetailsCard
-                title='Team'
+                title="Team"
                 description={userData.teamId?.name}
               >
-                <GroupIcon color='secondary' fontSize='large' />
+                <GroupIcon color="secondary" fontSize="large" />
               </ProjectDetailsCard>
             </Grid>
           )}
           <Grid item xs={4}>
-            <ProjectDetailsCard title='Role' description={userData.role}>
-              <AssignmentIndIcon color='secondary' fontSize='large' />
+            <ProjectDetailsCard title="Role" description={userData.role}>
+              <AssignmentIndIcon color="secondary" fontSize="large" />
             </ProjectDetailsCard>
           </Grid>
           {userData.role !== 'business-owner' && (
             <Grid item xs={12}>
               <ProjectDetailsCard
-                title='Assigned Tasks'
+                title="Assigned Tasks"
                 description={userData?.tasks?.map((task) => (
                   <Grid
                     container
-                    alignItems='center'
+                    alignItems="center"
                     key={task._id}
                     spacing={3}
                   >
@@ -181,18 +181,18 @@ const UserDetails = ({ match, userId }) => {
                       <ExpansionPanel>
                         <ExpansionPanelSummary
                           expandIcon={<ExpandMoreIcon />}
-                          aria-controls='panel1a-content'
-                          id='panel1a-header'
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
                         >
-                          <Typography variant='h4'>{task.title}</Typography>
+                          <Typography variant="h4">{task.title}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                          <Typography variant='body1' gutterBottom>
+                          <Typography variant="body1" gutterBottom>
                             {task.description}
                           </Typography>
                         </ExpansionPanelDetails>
                         <ExpansionPanelDetails>
-                          <Typography variant='subtitle2' gutterBottom>
+                          <Typography variant="subtitle2" gutterBottom>
                             DeadLine:{' '}
                             <time
                               date={moment(task.deadLine).format('YYYY-MM-DD')}
@@ -218,7 +218,7 @@ const UserDetails = ({ match, userId }) => {
                   </Grid>
                 ))}
               >
-                <AssignmentIcon color='secondary' fontSize='large' />
+                <AssignmentIcon color="secondary" fontSize="large" />
               </ProjectDetailsCard>
             </Grid>
           )}
