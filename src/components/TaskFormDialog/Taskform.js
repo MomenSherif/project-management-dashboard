@@ -156,9 +156,10 @@ const TaskForm = ({ team, assignTask }) => {
   );
 };
 
-// const mapStateToProps = state => ({
-//   team: state.teams.filter(team => team.id === ownProps.teamId)[0]
+// const mapStateToProps = (state, ownProps) => ({
+//   team: state.teams.find((team) => team.id === ownProps.teamId),
 // });
+
 const mapDispatchToProps = (dispatch) => ({
   assignTask: (task) => dispatch(assignTask(task)),
 });

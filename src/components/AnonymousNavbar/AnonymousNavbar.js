@@ -20,7 +20,7 @@ const AnonymousNavbar = () => {
           {/* <Link to="/sign-up" className={classes.navItem}>
             Sign Up
           </Link> */}
-          <Link to="/sign-in" className={classes.navItem}>
+          <Link to='/sign-in' className={classes.navItem}>
             Log in
           </Link>
         </div>

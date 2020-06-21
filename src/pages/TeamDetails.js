@@ -78,7 +78,7 @@ const TeamDetails = ({ match, role, history }) => {
     <>
       {loading ? (
         <div className={classes.progress}>
-          <CircularProgress color="primary" thickness={4} size={100} />
+          <CircularProgress color='primary' thickness={4} size={100} />
         </div>
       ) : (
         <Container className={classes.container}>
@@ -110,8 +110,8 @@ const TeamDetails = ({ match, role, history }) => {
                 onEdit={onUpdateTeam}
               />
               <ConfirmDialog
-                title="Delete Team"
-                content="Are you sure you want to delete this team?"
+                title='Delete Team'
+                content='Are you sure you want to delete this team?'
                 onConfirm={onDeleteTeam}
                 btnStyle={classes.edtBtn}
               >

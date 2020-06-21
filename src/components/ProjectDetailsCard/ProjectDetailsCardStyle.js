@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
   },
   mainCard: {
-    borderRadius: '20px',
+    borderRadius: '10px',
     position: 'inherit',
-    top: '20px',
+    top: '10px',
     transition: 'transform 0.2s ease-in-out',
     '&:hover': {
       transform: 'translateY(-4px)',
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainSec: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: '20px',
+    borderRadius: '10px',
     position: 'relative',
   },
 }));

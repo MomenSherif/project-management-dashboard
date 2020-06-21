@@ -3,6 +3,7 @@ import CountUp from 'react-countup';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import formatter from '../../helper/currencyFormater';
 import useStyles from './RevenueYearStyle';
 
 const RevenueYear = ({ projects }) => {
@@ -20,15 +21,15 @@ const RevenueYear = ({ projects }) => {
   return (
     <Fragment>
       <Paper className={classes.paper}>
-        <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+        <Typography variant='subtitle2' color='textSecondary' gutterBottom>
           Revenue this year
         </Typography>
-        <Typography variant="h6" className={classes.center}>
+        <Typography variant='h6' className={classes.center}>
           Total/Planned
         </Typography>
-        <Typography variant="h6" className={classes.center}>
-          <CountUp end={totalDoneSum} duration={1} separator=","></CountUp>/
-          <CountUp end={totalSum} duration={1} separator=","></CountUp>
+        <Typography variant='h6' className={classes.center}>
+          <CountUp end={totalDoneSum} duration={1} separator=','></CountUp>/
+          <CountUp end={totalSum} duration={1} separator=','></CountUp>
         </Typography>
       </Paper>
     </Fragment>
