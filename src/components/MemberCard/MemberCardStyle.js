@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: 'black',
+    color: 'inherit',
     '&:hover': {
       color: theme.palette.secondary.light,
       textDecoration: 'underline',
