@@ -10,7 +10,9 @@ const RevenueYearChart = ({ projects }) => {
   const months = moment.monthsShort();
   const revenues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-  for (let i = 0; i < projects.length; i++) {
+  const projectsDone = projects.filter(({ state }) => state === 'done');
+
+  for (let i = 0; i < projectsDone.length; i++) {
     const month = moment(projects[i].deadLine).month();
     revenues[month] += projects[i].budget;
   }
