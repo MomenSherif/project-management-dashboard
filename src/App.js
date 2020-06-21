@@ -18,17 +18,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Teams from './pages/Teams';
 
-function App({ token }) {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
+function App({ token, theme }) {
   const darkTheme = createMuiTheme({
     palette: {
       type: 'dark',
@@ -49,12 +39,11 @@ function App({ token }) {
     <MuiThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Paper
         style={{
-          backgroundColor:
-            theme === 'dark' && token ? '#212121' : 'transparent',
+          backgroundColor: theme === 'dark' ? '#212121' : 'transparent',
           minHeight: '100vh',
         }}
       >
-        {token && <NavBar theme={theme} toggleTheme={toggleTheme} />}
+        {token && <NavBar />}
         <Switch>
           <Route
             path='/projects'
@@ -79,6 +68,7 @@ function App({ token }) {
 
 const mapStateToProps = (state) => ({
   token: state.auth.token,
+  theme: state.theme,
 });
 
 export default connect(mapStateToProps)(App);

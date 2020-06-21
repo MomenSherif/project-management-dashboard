@@ -2,20 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import { useForm } from 'react-hook-form';
-import { string, object } from 'yup';
 import { toast } from 'react-toastify';
+import { string, object } from 'yup';
 
 import { login } from '../actions/authentication';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,14 +64,13 @@ const SignIn = ({ history, onLogin }) => {
   });
 
   const onSubmit = async (data) => {
-    onLogin(data)
-      .then(() => {
-        toast.success(`Welcome`);
-        history.replace('/');
-      })
-      .catch(() => {
-        toast.error('Invalid Email or Password!');
-      });
+    try {
+      await onLogin(data);
+      toast.success(`Welcome`);
+      history.replace('/');
+    } catch (e) {
+      toast.error('Invalid Email or Password!');
+    }
   };
 
   return (

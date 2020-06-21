@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setTheme } from './theme';
 
 const loginSuccess = (user) => ({
   type: 'LOG_IN',
@@ -18,6 +19,7 @@ const login = (email, password) => async (dispatch) => {
   const user = { ...employee, token };
   localStorage.setItem('user', JSON.stringify(user));
   dispatch(loginSuccess(user));
+  dispatch(setTheme(localStorage.getItem('theme')));
 };
 
 const signUp = (data) => async (dispatch) => {
@@ -36,9 +38,17 @@ const autoLogin = () => async (dispatch) => {
   const user = localStorage.getItem('user');
   if (!user) return;
   dispatch(loginSuccess(JSON.parse(user)));
+  dispatch(setTheme(localStorage.getItem('theme')));
 };
 
-const logOut = () => ({
+const logOutSuccess = () => ({
   type: 'LOG_OUT',
 });
+
+const logOut = () => async (dispatch) => {
+  localStorage.removeItem('user');
+  dispatch(setTheme('light'));
+  dispatch(logOutSuccess());
+};
+
 export { login, logOut, signUp, autoLogin };

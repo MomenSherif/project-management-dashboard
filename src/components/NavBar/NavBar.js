@@ -23,8 +23,9 @@ import Menu from '@material-ui/core/Menu';
 import useStyles from './NavBarStyle';
 
 import { logOut } from '../../actions/authentication';
+import { toggleTheme } from '../../actions/theme';
 
-const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
+const NavBar = ({ theme, onThemeToggle, token, userId, onLogOut }) => {
   const matches = useMediaQuery('(max-width:700px)');
   const classes = useStyles();
 
@@ -55,7 +56,7 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
           <Tooltip title='toggle light/dark theme'>
             <IconButton
               aria-label='toggle theme'
-              onClick={toggleTheme}
+              onClick={onThemeToggle}
               color='inherit'
             >
               {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
@@ -181,9 +182,11 @@ const NavBar = ({ theme, toggleTheme, token, userId, onLogOut }) => {
 const mapStateToProps = (state) => ({
   token: state.auth.token,
   userId: state.auth._id,
+  theme: state.theme,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLogOut: () => dispatch(logOut()),
+  onThemeToggle: () => dispatch(toggleTheme()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

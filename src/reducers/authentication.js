@@ -10,8 +10,6 @@ const authenticationReducer = (
         ...action.user,
       };
     case 'LOG_OUT':
-      // localStorage.removeItem('user'); Will be used to toggle Theme
-      localStorage.clear();
       return {};
     default:
       return state;
