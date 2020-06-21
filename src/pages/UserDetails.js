@@ -203,7 +203,7 @@ const UserDetails = ({ match, userId }) => {
                         </ExpansionPanelDetails>
                       </ExpansionPanel>
                     </Grid>
-                    {switchState != false && userId === match.params.id && (
+                    {switchState != false && (
                       <Grid item>
                         <Switch
                           checked={switchState[`taskCheck-${task?._id}`]}
@@ -211,6 +211,7 @@ const UserDetails = ({ match, userId }) => {
                           name={`taskCheck-${task?._id}`}
                           value={task?._id}
                           inputProps={{ 'task-id': task._id }}
+                          disabled={userId !== match.params.id}
                         />
                       </Grid>
                     )}

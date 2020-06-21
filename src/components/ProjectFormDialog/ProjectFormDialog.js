@@ -81,7 +81,7 @@ const ProjectFormDialog = ({
     setState(event.target.value);
   };
   return (
-    <Box m={2} p={2}>
+    <Box p={2}>
       <Fab
         className={classes.addBtn}
         color={isEdit ? 'secondary' : 'primary'}

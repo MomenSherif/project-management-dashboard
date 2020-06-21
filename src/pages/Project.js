@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Project = ({ projects, pages, pageSize, getProjects }) => {
+const Project = ({ projects, pages, pageSize, getProjects, role }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [page, setPage] = useState(1);
@@ -141,7 +141,7 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
         </Tabs>
       </Paper>
       {pageLoading}
-      <ProjectFormDialog />
+      {role === 'business-owner' && <ProjectFormDialog />}
     </Container>
   );
 };
@@ -149,6 +149,7 @@ const Project = ({ projects, pages, pageSize, getProjects }) => {
 const mapStateToProps = (state, ownPops) => ({
   projects: state.projects,
   pages: state.projects.length / ownPops.pageSize,
+  role: state.auth.role,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -71,6 +71,7 @@ const ProjectDetails = ({
   history,
   getProjectById,
   fetchTeams,
+  role,
 }) => {
   const [switchState, setSwitchState] = useState({});
   const [project, setProject] = useState(null);
@@ -245,6 +246,7 @@ const ProjectDetails = ({
                       name={`teamCheck-${team._id}`}
                       value={team.id}
                       inputProps={{ 'team-id': team._id }}
+                      disabled={role !== 'business-owner'}
                     />
                   </Grid>
                 </Grid>
@@ -258,21 +260,25 @@ const ProjectDetails = ({
             </ProjectDetailsCard>
           </Grid>
         </Grid>
-        <ProjectFormDialog
-          isEdit={true}
-          editingProject={project}
-          handleProjectUpdate={handleProjectUpdate}
-        />
 
-        <div className={classes.deleteBtn}>
-          <ConfirmDialog
-            title='Delete Project'
-            content='Are you sure you want to delete this Project?'
-            onConfirm={handelDelete}
-          >
-            <DeleteIcon />
-          </ConfirmDialog>
-        </div>
+        {role === 'business-owner' && (
+          <Fragment>
+            <ProjectFormDialog
+              isEdit={true}
+              editingProject={project}
+              handleProjectUpdate={handleProjectUpdate}
+            />
+            <div className={classes.deleteBtn}>
+              <ConfirmDialog
+                title='Delete Project'
+                content='Are you sure you want to delete this Project?'
+                onConfirm={handelDelete}
+              >
+                <DeleteIcon />
+              </ConfirmDialog>
+            </div>{' '}
+          </Fragment>
+        )}
       </Fragment>
     );
   }
@@ -282,6 +288,7 @@ const ProjectDetails = ({
 
 const mapStateToProps = (state, ownProps) => ({
   teams: state.teams,
+  role: state.auth.role,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
