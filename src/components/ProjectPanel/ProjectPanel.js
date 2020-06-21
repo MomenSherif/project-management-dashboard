@@ -27,14 +27,16 @@ const ProjectPanel = ({ Projects, pageSize }) => {
   }, [page]);
   return (
     <Paper elevation={2} className={classes.root}>
-      <Typography variant='h4' className={classes.titleMargin} align='center'>
+      <Typography variant="h4" className={classes.titleMargin} align="center">
         Team's Project
       </Typography>
       <div className={cx(classes.mb, classes.projects)}>
         {projects?.length ? (
-          projects.map(p => <ProjectItem key={p._id} project={p}></ProjectItem>)
+          projects.map((p) => (
+            <ProjectItem key={p._id} project={p}></ProjectItem>
+          ))
         ) : (
-          <Typography align='center'>No projects yet!</Typography>
+          <Typography align="center">No projects yet!</Typography>
         )}
       </div>
 
@@ -43,7 +45,7 @@ const ProjectPanel = ({ Projects, pageSize }) => {
           count={Math.ceil(Projects.length / pageSize)}
           page={page}
           onChange={handlePageChange}
-          color='primary'
+          color="primary"
           className={classes.paging}
         />
       ) : (
@@ -54,7 +56,7 @@ const ProjectPanel = ({ Projects, pageSize }) => {
 };
 
 ProjectPanel.defaultProps = {
-  pageSize: 4
+  pageSize: 4,
 };
 
 export default ProjectPanel;

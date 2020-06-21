@@ -19,15 +19,15 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
       <Grid container className={classes.flexCol} spacing={2}>
         <Grid item>
           <Avatar
-            title='Team Name'
-            variant='rounded'
+            title="Team Name"
+            variant="rounded"
             className={classes.avatar}
           >
             {team.name.charAt(0)}
           </Avatar>
         </Grid>
         <Grid item>
-          <Typography variant='h4'> {team.name}</Typography>
+          <Typography variant="h4"> {team.name}</Typography>
         </Grid>
       </Grid>
       <Grid container className={classes.m}>
@@ -35,8 +35,8 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           className={cx(classes.flexCol, classes.mr, classes.box)}
           borderRadius={8}
         >
-          <AssignmentIcon fontSize='large' />
-          <Typography variant='caption'>
+          <AssignmentIcon fontSize="large" color="secondary" />
+          <Typography variant="caption">
             {team.projects?.length
               ? `${team.projects?.length} projects`
               : `0 projects`}
@@ -46,8 +46,8 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
           className={cx(classes.flexCol, classes.mr, classes.box)}
           borderRadius={8}
         >
-          <GroupIcon fontSize='large' />
-          <Typography variant='caption'>
+          <GroupIcon fontSize="large" color="secondary" />
+          <Typography variant="caption">
             {team.employees?.length
               ? `${team.employees?.length} members`
               : `0 members`}
@@ -55,14 +55,14 @@ const TeamInfo = ({ deleteTeam, team, role }) => {
         </Box>
       </Grid>
       <Paper className={classes.paper} elevation={1}>
-        <Typography variant='body1'>{team.description}</Typography>
-        <Grid container alignItems='center' spacing={2} className={classes.mt}>
+        <Typography variant="body1">{team.description}</Typography>
+        <Grid container alignItems="center" spacing={2} className={classes.mt}>
           <Grid item>
-            <Avatar alt='leader' className={classes.avatar}>
+            <Avatar alt="leader" className={classes.avatar}>
               {team.leaderId?.firstName.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>
-          <Typography variant='body1' color='textSecondary'>
+          <Typography variant="body1" color="textSecondary">
             {team.leaderId
               ? team.leaderId?.firstName + ' ' + team.leaderId?.lastName
               : 'No team leader yet!'}

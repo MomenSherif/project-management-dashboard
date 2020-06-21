@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: ' #F3F7FA',
     padding: '4px 16px',
     border: 1,
-    marginBottom: '8px',
+    marginBottom: '20px',
     [theme.breakpoints.down('xs')]: {
       display: 'flex',
       flexDirection: 'column',
