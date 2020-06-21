@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: '7px',
     marginLeft: '140px',
   },
+  link: {
+    textDecoration: 'none',
+  },
 }));
 
 export default useStyles;

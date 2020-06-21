@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import cx from 'clsx';
 
 import useStyles from './MemberCardStyle';
+import { Link } from 'react-router-dom';
 
 const MemberCard = ({ member }) => {
   const classes = useStyles();
@@ -22,8 +23,8 @@ const MemberCard = ({ member }) => {
         <CardHeader
           avatar={
             <Avatar
-              alt='team member'
-              variant='square'
+              alt="team member"
+              variant="square"
               className={classes.avatar}
             >
               {member.firstName.charAt(0).toUpperCase() +
@@ -32,13 +33,18 @@ const MemberCard = ({ member }) => {
           }
         />
         <CardContent>
-          <Typography variant='h6' component='h2'>
+          <Typography
+            variant="h6"
+            component={Link}
+            to={`/profile/${member._id}`}
+            className={classes.link}
+          >
             {member.firstName + ' ' + member.lastName}
           </Typography>
-          <Typography className={classes.mb} color='textSecondary'>
+          <Typography className={classes.mb} color="textSecondary">
             {member.role}
           </Typography>
-          <Typography variant='body2' component='p'>
+          <Typography variant="body2" component="p">
             {member.phoneNumber}
             <br />
             {member.email}
