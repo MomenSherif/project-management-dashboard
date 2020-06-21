@@ -82,7 +82,7 @@ const SignUp = ({ history, onSignUp }) => {
     try {
       await onSignUp(data);
       toast.success(`Signed up Successfully & You're logged in now`);
-      history.replace('/');
+      history.replace('/dashboard');
     } catch (err) {
       err.response.data.forEach(({ message }) => toast.error(message));
     }

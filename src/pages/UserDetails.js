@@ -84,7 +84,7 @@ const UserDetails = ({ match, userId }) => {
 
   return (
     <Container>
-      <Typography variant='h2' gutterBottom>
+      <Typography variant='h2' align='center' gutterBottom>
         User Info
       </Typography>
       {isLoading && (

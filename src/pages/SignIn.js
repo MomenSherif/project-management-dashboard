@@ -67,7 +67,7 @@ const SignIn = ({ history, onLogin }) => {
     try {
       await onLogin(data);
       toast.success(`Welcome`);
-      history.replace('/');
+      history.replace('/dashboard');
     } catch (e) {
       toast.error('Invalid Email or Password!');
     }

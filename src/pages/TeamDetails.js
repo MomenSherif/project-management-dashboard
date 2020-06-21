@@ -15,26 +15,26 @@ import MembersPanel from '../components/MemberCard/MembersPanel';
 import TeamInfo from '../components/TeamInfo/TeamInfo';
 import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column'
-    }
+      flexDirection: 'column',
+    },
   },
   mt: {
-    marginTop: '25px'
+    marginTop: '25px',
   },
   grid: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   edtBtn: {
     position: 'fixed',
     bottom: '120px',
-    right: '40px'
-  }
+    right: '40px',
+  },
 }));
 
 const TeamDetails = ({ match, role, history }) => {
@@ -61,7 +61,7 @@ const TeamDetails = ({ match, role, history }) => {
   const onDeleteTeam = () => {
     axios.delete(`${process.env.REACT_APP_BACKEND_BASE_URL}/teams/${team.id}`);
     deleteTeam(team.id);
-    history.replace('/');
+    history.replace('/teams');
   };
 
   useEffect(() => {
@@ -120,11 +120,11 @@ const TeamDetails = ({ match, role, history }) => {
     </>
   );
 };
-const mapStateToProps = state => ({
-  role: state.auth.role
+const mapStateToProps = (state) => ({
+  role: state.auth.role,
 });
-const mapDispatchToProps = dispatch => ({
-  deleteTeam: teamId => dispatch(deleteTeam(teamId))
+const mapDispatchToProps = (dispatch) => ({
+  deleteTeam: (teamId) => dispatch(deleteTeam(teamId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamDetails);

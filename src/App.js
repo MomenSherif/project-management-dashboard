@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -45,6 +45,7 @@ function App({ token, theme }) {
       >
         {token && <NavBar />}
         <Switch>
+          <Route path='/' exact component={AnonymousHomepage} />
           <Route
             path='/projects'
             exact
@@ -57,8 +58,8 @@ function App({ token, theme }) {
           <Route path='/teams' exact component={Teams} />
           <Route path='/user-details/:id' exact component={UserDetails} />
           <Route path='/profile/:id' exact component={UserDetails} />
-          <Route path='/anonymous' exact component={AnonymousHomepage} />
-          <Route path='/' exact component={Homepage} />
+          <Route path='/dashboard' exact component={Homepage} />
+          <Redirect to='/dashboard' />
         </Switch>
         <ToastContainer />
       </Paper>

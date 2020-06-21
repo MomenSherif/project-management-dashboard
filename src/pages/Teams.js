@@ -15,7 +15,7 @@ const Teams = ({ teams, fetchTeams, role }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async function() {
+    (async function () {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BACKEND_BASE_URL}/teams`
       );
@@ -26,7 +26,7 @@ const Teams = ({ teams, fetchTeams, role }) => {
     })();
   }, []);
 
-  const teamList = teams.map(team => (
+  const teamList = teams.map((team) => (
     <Grid
       key={team.id}
       item
@@ -47,7 +47,7 @@ const Teams = ({ teams, fetchTeams, role }) => {
         <LinearProgress variant='query' color='primary' />
       ) : (
         <Fragment>
-          <Typography variant='h2' gutterBottom>
+          <Typography variant='h2' align='center' gutterBottom>
             Teams
           </Typography>
           <Grid container justify='space-between' alignItems='flex-start'>
@@ -60,11 +60,11 @@ const Teams = ({ teams, fetchTeams, role }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   teams: state.teams,
-  role: state.auth.role
+  role: state.auth.role,
 });
-const mapDispatchToProps = dispatch => ({
-  fetchTeams: () => dispatch(fetchTeams())
+const mapDispatchToProps = (dispatch) => ({
+  fetchTeams: () => dispatch(fetchTeams()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Teams);
