@@ -66,7 +66,14 @@ const Homepage = ({ projects, teams, auth, getProjects, fetchTeams }) => {
           <RevenueYear projects={projects}></RevenueYear>
         </Grid>
       </Grid>
-
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6} className={classes.mb}>
+          <TeamsChart teams={teams}></TeamsChart>
+        </Grid>
+        <Grid item xs={12} md={6} className={classes.mb}>
+          <RevenueYearChart projects={projects}></RevenueYearChart>
+        </Grid>
+      </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.mb}>
           <ProjectsOverview projects={projects.slice(0, 5)}></ProjectsOverview>
@@ -76,15 +83,6 @@ const Homepage = ({ projects, teams, auth, getProjects, fetchTeams }) => {
             employees={employees.slice(0, 5)}
             role={auth.role}
           ></TopEmployees>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6} className={classes.mb}>
-          <TeamsChart teams={teams}></TeamsChart>
-        </Grid>
-        <Grid item xs={12} md={6} className={classes.mb}>
-          <RevenueYearChart projects={projects}></RevenueYearChart>
         </Grid>
       </Grid>
     </Container>
