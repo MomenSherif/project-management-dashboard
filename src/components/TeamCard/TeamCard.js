@@ -19,7 +19,7 @@ const TeamCard = ({
   leaderId,
   projects,
   employees,
-  createdAt
+  createdAt,
 }) => {
   const classes = useStyles();
 
@@ -70,7 +70,7 @@ const TeamCard = ({
         <Grid container alignItems='center' spacing={2} className={classes.mt}>
           <Grid item>
             <Avatar alt={leaderId?.firstName} className={classes.avatar}>
-              {leaderId?.firstName.charAt(0).toUpperCase()}
+              {leaderId?.firstName?.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>
           {leaderId ? (
