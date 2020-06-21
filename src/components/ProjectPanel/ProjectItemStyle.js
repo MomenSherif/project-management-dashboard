@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: '20px',
   },
-  mr: {
-    marginRight: '40px',
-  },
+  // mr: {
+  //   marginRight: '40px',
+  // },
   margin: {
     margin: theme.spacing(1),
   },

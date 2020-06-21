@@ -19,6 +19,7 @@ import ProjectPanel from '../components/ProjectPanel/ProjectPanel';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
+    justifyContent: 'center',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
