@@ -107,7 +107,6 @@ const NavBar = ({ theme, onThemeToggle, userId, onLogOut }) => {
                 <Typography> Logout</Typography>
               </MenuItem>
             </div>
-            )}
           </Menu>
 
           {!matches && (
