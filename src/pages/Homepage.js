@@ -34,6 +34,10 @@ const Homepage = ({ projects, teams, auth, getProjects, fetchTeams }) => {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [employees, setEmployees] = useState([]);
 
+  const handleEmployeeAdded = (emp) => {
+    setEmployees((prevEmps) => [emp, ...prevEmps]);
+  };
+
   useEffect(() => {
     getProjects().then((res) => {
       setFilteredProjects(
@@ -82,6 +86,7 @@ const Homepage = ({ projects, teams, auth, getProjects, fetchTeams }) => {
           <TopEmployees
             employees={employees.slice(0, 5)}
             role={auth.role}
+            handleEmployeeAdded={handleEmployeeAdded}
           ></TopEmployees>
         </Grid>
       </Grid>

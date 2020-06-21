@@ -16,7 +16,7 @@ import ChipProjectStatus from '../ChipProjectStatus/ChipProjectStatus';
 import TeamFormDialog from '../TeamFormDialog/TeamFormDialog';
 import EmployeeFormDialog from '../EmployeeFormDialog.js/EmployeeFormDialog';
 
-const TopEmployees = ({ employees, role }) => {
+const TopEmployees = ({ employees, role, handleEmployeeAdded }) => {
   const classes = useStyles();
 
   const employeeList = employees.map((e) => {
@@ -26,18 +26,18 @@ const TopEmployees = ({ employees, role }) => {
           <Avatar alt="Wes Bos" src="/avatar.png" />
         </TableCell> */}
         <TableCell>
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             {e.firstName} {e.lastName}
           </Typography>
         </TableCell>
         <TableCell>
-          <Typography variant="subtitle1">{e.teamId?.name}</Typography>
+          <Typography variant='subtitle1'>{e.teamId?.name}</Typography>
         </TableCell>
         <TableCell>
-          <Typography variant="subtitle1">{e.role}</Typography>
+          <Typography variant='subtitle1'>{e.role}</Typography>
         </TableCell>
         <TableCell>
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             {moment(e.createdAt).format('MMM DD, YYYY')}
           </Typography>
         </TableCell>
@@ -48,7 +48,7 @@ const TopEmployees = ({ employees, role }) => {
   return (
     <Fragment>
       <Paper className={classes.paper}>
-        <Typography variant="subtitle2" color="textSecondary">
+        <Typography variant='subtitle2' color='textSecondary'>
           Recent Employees
         </Typography>
         <Table>
@@ -63,7 +63,11 @@ const TopEmployees = ({ employees, role }) => {
           </TableHead>
           <TableBody>{employeeList}</TableBody>
         </Table>
-        {role === 'business-owner' && <EmployeeFormDialog></EmployeeFormDialog>}
+        {role === 'business-owner' && (
+          <EmployeeFormDialog
+            handleEmployeeAdded={handleEmployeeAdded}
+          ></EmployeeFormDialog>
+        )}
       </Paper>
     </Fragment>
   );

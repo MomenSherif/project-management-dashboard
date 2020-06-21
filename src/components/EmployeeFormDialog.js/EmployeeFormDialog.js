@@ -53,7 +53,12 @@ function sleep(delay = 0) {
   });
 }
 
-const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
+const EmployeeFormDialog = ({
+  addTeam,
+  addTeamMemberByName,
+  teams,
+  handleEmployeeAdded,
+}) => {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -92,6 +97,10 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
     addTeamMemberByName(data.team, res.data);
     toast.success(`${data.firstName} ${data.lastName} is added!`);
     setOpen(false);
+    res.data.teamId = {
+      name: data.teamId,
+    };
+    handleEmployeeAdded(res.data);
   };
 
   const handleClickOpen = () => {
@@ -199,6 +208,7 @@ const EmployeeFormDialog = ({ addTeam, addTeamMemberByName, teams }) => {
                   variant='standard'
                   fullWidth
                   id='password'
+                  type='password'
                   label='Password'
                   name='password'
                   error={!!errors.password}
