@@ -42,8 +42,6 @@ const addProjectSuccess = (project) => (dispatch) => {
   return axios
     .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/projects`, project)
     .then((response) => {
-      console.log('hi');
-
       dispatch(addProject(response.data));
     });
 };

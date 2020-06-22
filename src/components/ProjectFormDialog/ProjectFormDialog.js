@@ -53,13 +53,14 @@ const ProjectFormDialog = ({
     mode: 'onBlur',
   });
   const onSubmit = (data) => {
+    console.log(data, 'data');
+
     if (!isEdit) {
       addProjectSuccess({
         ...data,
       });
       toast.success(`Project ${data.title} created successfully!`);
     } else {
-      console.log(data);
       updateProjectSuccess(editingProject._id, { ...data, state }).then(
         (res) => {
           handleProjectUpdate({ ...res.data, state });

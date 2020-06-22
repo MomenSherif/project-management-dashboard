@@ -148,7 +148,10 @@ const ProjectDetails = ({
             </ProjectDetailsCard>
           </Grid>
           <Grid item xs={12} md={6}>
-            <ProjectDetailsCard title='Organization/Company' description='ITI'>
+            <ProjectDetailsCard
+              title='Organization/Company'
+              description={project.organizationId.name}
+            >
               <BusinessIcon
                 color='secondary'
                 fontSize='large'
