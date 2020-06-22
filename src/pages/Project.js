@@ -101,19 +101,19 @@ const Project = ({ projects, pages, pageSize, getProjects, role }) => {
 
   let pageLoading = (
     <div className={classes.progress}>
-      <CircularProgress color="primary" thickness={4} size={100} />
+      <CircularProgress color='primary' thickness={4} size={100} />
     </div>
   );
   if (!load) {
     pageLoading = (
-      <Grid container spacing={1} direction="row" justify="center">
+      <Grid container spacing={1} direction='row' justify='center'>
         {projectList}
-        {page > 1 && (
+        {numOfPages > 1 && (
           <Grid item className={classes.paging}>
             <Pagination
               count={numOfPages}
               onChange={handelPagination}
-              color="primary"
+              color='primary'
               page={page}
             />
           </Grid>
@@ -124,22 +124,22 @@ const Project = ({ projects, pages, pageSize, getProjects, role }) => {
 
   return (
     <Container className={classes.paper}>
-      <Typography variant="h2" gutterBottom align="center">
+      <Typography variant='h2' gutterBottom align='center'>
         Projects
       </Typography>
       <Paper square className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
-          variant="fullWidth"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="icon label tabs example"
+          variant='fullWidth'
+          indicatorColor='primary'
+          textColor='primary'
+          aria-label='icon label tabs example'
         >
-          <Tab icon={<GitHubIcon />} label="ALL" />
-          <Tab icon={<AutoRenewIcon />} label="IN PROGRESS" />
-          <Tab icon={<RateReviewIcon />} label="IN REVIEW" />
-          <Tab icon={<DoneIcon />} label="DONE" />
+          <Tab icon={<GitHubIcon />} label='ALL' />
+          <Tab icon={<AutoRenewIcon />} label='IN PROGRESS' />
+          <Tab icon={<RateReviewIcon />} label='IN REVIEW' />
+          <Tab icon={<DoneIcon />} label='DONE' />
         </Tabs>
       </Paper>
       {pageLoading}
