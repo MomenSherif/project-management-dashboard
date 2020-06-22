@@ -215,37 +215,39 @@ const ProjectDetails = ({
               title='Teams'
               description={teams.map((team) => (
                 <Grid container alignItems='center' key={team._id} spacing={3}>
-                  <ExpansionPanel className={classes.panel}>
-                    <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls='panel1a-content'
-                      id='panel1a-header'
-                    >
-                      <Grid item className={classes.mr}>
-                        <Avatar
-                          title={team.name}
-                          variant='rounded'
-                          className={classes.avatar}
-                        >
-                          {team.name.charAt(0)}
-                        </Avatar>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant='h5'>{team.name}</Typography>
-                      </Grid>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      <Typography variant='body1' gutterBottom>
-                        {team.description}
-                      </Typography>
-                    </ExpansionPanelDetails>
-                    <ExpansionPanelDetails>
-                      <Typography variant='subtitle2' gutterBottom>
-                        Leader:{' '}
-                        {`${team?.leaderId?.firstName} ${team?.leaderId?.lastName}`}
-                      </Typography>
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
+                  <Grid item xs>
+                    <ExpansionPanel className={classes.panel}>
+                      <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls='panel1a-content'
+                        id='panel1a-header'
+                      >
+                        <Grid item className={classes.mr}>
+                          <Avatar
+                            title={team.name}
+                            variant='rounded'
+                            className={classes.avatar}
+                          >
+                            {team.name.charAt(0)}
+                          </Avatar>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant='h5'>{team.name}</Typography>
+                        </Grid>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <Typography variant='body1' gutterBottom>
+                          {team.description}
+                        </Typography>
+                      </ExpansionPanelDetails>
+                      <ExpansionPanelDetails>
+                        <Typography variant='subtitle2' gutterBottom>
+                          Leader:{' '}
+                          {`${team?.leaderId?.firstName} ${team?.leaderId?.lastName}`}
+                        </Typography>
+                      </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                  </Grid>
                   <Grid item>
                     <Switch
                       checked={switchState[`teamCheck-${team._id}`]}
