@@ -14,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
 
 const ProjectCard = ({ project }) => {
-  const { title, description, state, deadline } = project;
+  const { title, description, state } = project;
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -32,7 +32,7 @@ const ProjectCard = ({ project }) => {
         <Grid container spacing={1} justify="space-between">
           <Grid item xs={12}>
             <Typography variant="subtitle1" component="p" gutterBottom>
-              {description.slice(0, 200)}
+              {description}
             </Typography>
           </Grid>
           <Grid item>
