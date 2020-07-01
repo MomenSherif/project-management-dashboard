@@ -1,5 +1,4 @@
 # project-management-dashboard 🔥 
- MERN blogging website [ Front End Repo ]
 [👋 Backend Repo](https://github.com/MomenSherif/project-management-dashboard-nodejs)
 [👋 Give a try](https://project-management-dashboard.herokuapp.com/dashboard)
 
